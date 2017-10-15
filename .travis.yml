@@ -5,3 +5,6 @@ jdk:
 script:
   - mvn install
   - mvn test
+
+notifications:
+    slack: grovecitycollege:xnpecXiJ6qMfnHdFEzxkSUeE
