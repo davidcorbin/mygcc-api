@@ -31,11 +31,10 @@
             <artifactId>jersey-hk2</artifactId>
         </dependency>
 
-        <!-- uncomment this to get JSON support
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-json-binding</artifactId>
-        </dependency> -->
+        </dependency>
 
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
@@ -84,6 +83,7 @@
             <artifactId>json</artifactId>
             <version>20170516</version>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -128,8 +128,45 @@
                     <war>${project.build.directory}/${project.build.finalName}.war</war>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.17</version>
+                <executions>
+                    <execution>
+                        <id>validate</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <configLocation>docs/sun_checks.xml</configLocation>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.17</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>checkstyle</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+                <configuration>
+                    <configLocation>docs/sun_checks.xml</configLocation>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
 
     <properties>
         <jersey.version>2.26</jersey.version>

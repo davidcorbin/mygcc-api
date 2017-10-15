@@ -5,4 +5,3 @@ jdk:
 script:
   - mvn install
   - mvn test
-  - checkstyle **/*.java -c docs/sun_checks.xml

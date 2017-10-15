@@ -26,7 +26,7 @@ public class WelcomeResource {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<String, Object> getWelcomeMessage() {
+    public final Map<String, Object> getWelcomeMessage() {
         Map<String, Object> response = new HashMap<>();
         response.put("message", welcomeMsg);
         response.put("date", Instant.now().getEpochSecond());
