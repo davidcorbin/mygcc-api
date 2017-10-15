@@ -1,0 +1,8 @@
+language: java
+jdk:
+  - oraclejdk8
+
+script:
+  - mvn install
+  - mvn test
+  - checkstyle **/*.java -c docs/sun_checks.xml
