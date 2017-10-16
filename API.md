@@ -187,14 +187,94 @@ All API calls require an authentication token that is generated after the user i
 ###### Response
 
     {
-        attended: 10,
-        remaining: 5
+        required: 16,
+        makeups: 9,
+        attended: 12,
+        remaining: 13,
+        special: 0
     }
 
 ###### Errors
 
 - User not found (400)
 - Chapel Attendance not found (404)
+
+### Class Schedule
+
+###### Request
+
+    GET/1/user/schedule
+    {
+        token: asdf1234asdf1234
+    }
+       
+###### Response
+
+    {
+        {
+            course: BIOL 101 A,
+            title: GENERAL BIOLOGY I,
+            professor: Dr. Gerald Stauff,
+            times: {
+                {
+                    day: M,
+                    time: 09:00-09:50
+                },
+                {
+                    day: W,
+                    time: 09:00-09:50
+                },
+                {
+                    day: F,
+                    time: 09:00-09:50
+                }
+            }
+        },
+        {
+            course: MATH 213 B,
+            title: DISCRETE MATH/COMP SCI,
+            professor: Dr. Eric Bancroft,
+            times: {
+                {
+                    day: M,
+                    time: 14:00-14:50
+                },
+                {
+                    day: W,
+                    time: 14:00-14:50
+                },
+                {
+                    day: F,
+                    time: 14:00-14:50
+                }
+            }
+        },
+        {
+            course: MATH 261 C,
+            title: CALCULUS III,
+            professor: Dr. Dale McIntyre,
+            times: {
+                {
+                    day: M,
+                    time: 11:00-11:50
+                },
+                {
+                    day: T,
+                    time: 11:30-12:20
+                },
+                {
+                    day: W,
+                    time: 11:00-11:50
+                },
+                {
+                    day: F,
+                    time: 11:00-11:50
+                },
+            }
+        }
+    }
+       
+###### Errors
     
 ## Rate Limiting
 
