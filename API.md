@@ -38,7 +38,7 @@ All API calls require an authentication token that is generated after the user i
 ###### Response
 
     {
-        message: "Deauthenticated"
+        message: "deauthenticated"
     }
     
 ###### Errors
@@ -93,7 +93,7 @@ All API calls require an authentication token that is generated after the user i
 
 ###### Request
 
-    GET/1/user/contact
+    GET /1/user/contact
     {
         token: asdf1234asdf1234
     }
@@ -110,8 +110,8 @@ All API calls require an authentication token that is generated after the user i
                 country: UNITED STATES
             },
             phone: {
-                home: 123-456-7890,
-                mobile: 098-765-4321
+                home: 1234567890,
+                mobile: 0987654321
             },
             email: legomaster79@gmail.com
         },
@@ -119,8 +119,8 @@ All API calls require an authentication token that is generated after the user i
             name: James Smith,
             occupation: Plumber,
             phone: {
-                work: 123-456-7890,
-                mobile: 098-765-4321
+                work: 1234567890,
+                mobile: 0987654321
             },
             email: DoeJohn1970@hotmail.com
         },
@@ -128,8 +128,8 @@ All API calls require an authentication token that is generated after the user i
             name: Mary Smith,
             occupation: none,
             phone: {
-                work: 000-000-0000,
-                mobile: 890-567-1234
+                work: 0000000000,
+                mobile: 8905671234
             }
         },
         secondary: {
@@ -153,33 +153,191 @@ All API calls require an authentication token that is generated after the user i
 
 ###### Request
 
+    POST /1/user/contact
+    {
+            student: {
+                address: {
+                    street: 1234 Johnny Cake Ridge Rd.,
+                    city: Apple Valley,
+                    state: MN,
+                    zipcode: 55124,
+                    country: UNITED STATES
+                },
+                phone: {
+                    home: 1234567890,
+                    mobile: 0987654321
+                },
+                email: legomaster79@gmail.com
+            },
+            father: {
+                name: James Smith,
+                occupation: Plumber,
+                phone: {
+                    work: 1234567890,
+                    mobile: 0987654321
+                },
+                email: DoeJohn1970@hotmail.com
+            },
+            mother: {
+                name: Mary Smith,
+                occupation: none,
+                phone: {
+                    work: 0000000000,
+                    mobile: 8905671234
+                }
+            },
+            secondary: {
+                name: Robert Smith,
+                address: {
+                    street: 4321 Johnny Cake Ridge Rd.,
+                    city: Apple Valley,
+                    state: MN,
+                    zipcode: 55124,
+                    country: UNITED STATES
+                }
+            }
+        }
+
 ###### Response
 
+    {
+        time: 902419320,
+        message: "success"
+    }
+
 ###### Errors
+
+- User not found (400)
+- Data invalid/Wrong format (422)
 
 ### Health Insurance
 
 ##### GET
 
 ###### Request
+
+    GET /1/user/insurance
+    {
+        token: asdf1234asdf1234
+    }
        
 ###### Response
+If under the college's insurance:
+
+    {
+        usesCollegeInsurance: true,
+        insurance: {}
+    }
+If uses their own insurance:
+
+    {
+        usesCollegeInsurance: false,
+        insurance: {
+            primary: {
+                companyName: Blue Cross Blue Shield,
+                phone: 8668735943,
+                address: 3535 Blue Cross Road Eagan, MN 55122,
+                policy: XYZ123123123123,
+                group: 78978978912,
+                subscriber: {
+                    name: James Jones,
+                    employer: {
+                        name: Target,
+                        address: 900 Nicollet Mall, Minneapolis, MN 55403
+                    },
+                    relationship: guardian
+                }
+            },
+            secondary: {
+                companyName: Blue Cross Blue Shield,
+                phone: 8668735943,
+                address: 3535 Blue Cross Road Eagan, MN 55122,
+                policy: XYZ123123123123,
+                group: 78978978912,
+                subscriber: {
+                    name: James Jones,
+                    employer: {
+                        name: Target,
+                        address: 900 Nicollet Mall, Minneapolis, MN 55403
+                    },
+                    relationship: guardian
+                }
+            },
+            physician: {
+                name: Dr. James Lewis,
+                phone: 8905671234
+            }
+        } 
+    }
        
 ###### Errors
+
+- User not found (400)
+- Insurance not found (404)
 
 ##### POST
 
 ###### Request
+
+    POST /1/user/insurance
+    
+    {
+        usesCollegeInsurance: false,
+        insurance: {
+            primary: {
+                companyName: Blue Cross Blue Shield,
+                phone: 8668735943,
+                address: 3535 Blue Cross Road Eagan, MN 55122,
+                policy: XYZ123123123123,
+                group: 78978978912,
+                subscriber: {
+                    name: James Jones,
+                    employer: {
+                        name: Target,
+                        address: 900 Nicollet Mall, Minneapolis, MN 55403
+                    },
+                    relationship: guardian
+                }
+            },
+            secondary: {
+                companyName: Blue Cross Blue Shield,
+                phone: 8668735943,
+                address: 3535 Blue Cross Road Eagan, MN 55122,
+                policy: XYZ123123123123,
+                group: 78978978912,
+                subscriber: {
+                    name: James Jones,
+                    employer: {
+                        name: Target,
+                        address: 900 Nicollet Mall, Minneapolis, MN 55403
+                    },
+                    relationship: guardian
+                }
+            },
+            physician: {
+                name: Dr. James Lewis,
+                phone: 8905671234
+            }
+        } 
+    }
        
 ###### Response
+
+    {
+        time: 902419320,
+        message: "success"
+    }
        
 ###### Errors
+
+- User not found (400)
+- Data invalid/Wrong format (422)
 
 ### Chapel Attendance
 
 ###### Request
 
-    GET/1/user/chapel
+    GET /1/user/chapel
     {
         token: asdf1234asdf1234
     }
@@ -203,7 +361,7 @@ All API calls require an authentication token that is generated after the user i
 
 ###### Request
 
-    GET/1/user/schedule
+    GET /1/user/schedule
     {
         token: asdf1234asdf1234
     }
@@ -215,67 +373,91 @@ All API calls require an authentication token that is generated after the user i
             course: BIOL 101 A,
             title: GENERAL BIOLOGY I,
             professor: Dr. Gerald Stauff,
-            times: {
+            times: [
                 {
                     day: M,
-                    time: 09:00-09:50
+                    start: 09:00,
+                    end: 09:50
                 },
                 {
                     day: W,
-                    time: 09:00-09:50
+                    start: 09:00,
+                    end: 09:50
                 },
                 {
                     day: F,
-                    time: 09:00-09:50
+                    start: 09:00,
+                    end: 09:50
                 }
-            }
+            ]
         },
         {
             course: MATH 213 B,
             title: DISCRETE MATH/COMP SCI,
             professor: Dr. Eric Bancroft,
-            times: {
+            times: [
                 {
                     day: M,
-                    time: 14:00-14:50
+                    start: 14:00,
+                    end: 14:50
                 },
                 {
                     day: W,
-                    time: 14:00-14:50
+                    start: 14:00,
+                    end: 14:50
                 },
                 {
                     day: F,
-                    time: 14:00-14:50
+                    start: 14:00,
+                    end: 14:50
                 }
-            }
+            ]
         },
         {
             course: MATH 261 C,
             title: CALCULUS III,
             professor: Dr. Dale McIntyre,
-            times: {
+            times: [
                 {
                     day: M,
-                    time: 11:00-11:50
-                },
-                {
-                    day: T,
-                    time: 11:30-12:20
+                    start: 11:00,
+                    end: 11:50
                 },
                 {
                     day: W,
-                    time: 11:00-11:50
+                    start: 11:00,
+                    end: 11:50
+                },
+                {
+                    day: T,
+                    start: 11:30,
+                    end: 12:20
                 },
                 {
                     day: F,
-                    time: 11:00-11:50
+                    start: 11:00,
+                    end: 11:50
                 },
-            }
+            ]
         }
     }
-       
+
+Days of the week correspond to letters:
+- Sunday: U
+- Monday: M
+- Tuesday: T
+- Wednesday: W
+- Thursday: R
+- Friday: F
+- Saturday: S
+
 ###### Errors
-    
+- User not found (400)
+- Insurance not found (404)
+
+## Other Errors:
+- myGCC not responding (502)
+
 ## Rate Limiting
 
 Rate limiting should be based on authentication token.
