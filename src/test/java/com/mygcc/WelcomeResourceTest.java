@@ -14,16 +14,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.time.Instant;
+import java.util.Map;
 
 /**
  * Welcome Resource test class.
  */
 public final class WelcomeResourceTest extends JerseyTest {
-
-    /**
-     * HTTP success status code.
-     */
-    private static final int STATUS_SUCCESS = 200;
 
     @Override
     protected Application configure() {
@@ -40,7 +36,7 @@ public final class WelcomeResourceTest extends JerseyTest {
         final Response response = target().path("/").request().get();
         int status = response.getStatus();
         assertEquals("should return status code 200",
-                STATUS_SUCCESS,
+                Response.Status.OK.getStatusCode(),
                 status);
     }
 
@@ -69,7 +65,6 @@ public final class WelcomeResourceTest extends JerseyTest {
     }
 
     /**
-     public void testWelcomeDate() {
      * Test Welcome message response data.
      */
     @Test
@@ -78,5 +73,17 @@ public final class WelcomeResourceTest extends JerseyTest {
         JSONObject obj = new JSONObject(response);
         boolean geq = Instant.now().getEpochSecond() >= obj.getInt("date");
         assertTrue("should return current UTC time", geq);
+    }
+
+    /**
+     * Test Welcome returned data.
+     */
+    @Test
+    public void testWelcomeReturnedData() {
+        WelcomeResource wr = new WelcomeResource();
+        Map<String, Object> returned = wr.getWelcomeMessage();
+        assertEquals("Welcome to the Unofficial myGCC API v1", wr.getWelcomeMessage().get("message")); //returned.get("message"));
+        boolean geq = Instant.now().getEpochSecond() >= (long)returned.get("date");
+        assertTrue(geq);
     }
 }
