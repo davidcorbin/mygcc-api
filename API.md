@@ -226,7 +226,6 @@ If under the college's insurance:
 
     {
         usesCollegeInsurance: true,
-        insurance: {}
     }
 If uses their own insurance:
 
