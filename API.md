@@ -79,13 +79,19 @@ All API calls require an authentication token that is generated after the user i
 ###### Response
 
     {
-        major: Computer Science
+        major: [
+            Computer Science,
+            Biblical and Religious Studies
+        ],
+        advisor: [
+            Dr. Lory J. Al Moakar
+        ]
     }
     
 ###### Errors
 
 - User not found (400)
-- Major not found (404)
+- Major information not found (404)
 
 ### Contact Information
 
@@ -128,7 +134,7 @@ All API calls require an authentication token that is generated after the user i
             name: Mary Smith,
             occupation: none,
             phone: {
-                work: 0000000000,
+                work: 4561237890,
                 mobile: 8905671234
             }
         },
@@ -454,6 +460,71 @@ Days of the week correspond to letters:
 ###### Errors
 - User not found (400)
 - Insurance not found (404)
+
+### Crimson Cash
+
+###### Request
+
+    GET /1/user/ccash
+    {
+        token: asdf1234asdf1234
+    }
+
+###### Response
+
+    {
+        balance: 0.25
+    }
+
+###### Errors
+
+- User not found (400)
+- Crimson Cash balance not found (404)
+
+### Vehicle Information
+
+###### Request
+
+    GET /1/user/vehicle
+    {
+        token: asdf1234asdf1234
+    }
+    
+###### Response
+
+If no vehicle registered:
+
+    {
+        vehicles: null
+    }
+
+Else if vehicle is registered:
+
+    {
+        vehicles: [
+            {
+                desc: 2003 HONDA ACCORD,
+                location: GCC Main Campus,
+                permit: RS-20666,
+                expiration: expired,
+                license: KKK2849,
+                violations: null
+            },
+            {
+                desc: 2005 VOLVO S60,
+                location: GCC Main Campus,
+                permit: RS-20733,
+                expiration: 8/15/2018,
+                license: LMN3214,
+                violations: null
+            }
+        ]
+    }
+
+###### Errors
+
+- User not found (400)
+- Vehicle Information not found (404)
 
 ## Other Errors:
 - myGCC not responding (502)
