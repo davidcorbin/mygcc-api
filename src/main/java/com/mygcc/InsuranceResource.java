@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,20 +32,24 @@ public class InsuranceResource {
     public final Response insuranceResponse(
             @HeaderParam("Authorization") final String token)
             throws Exception {
+        Map<String, Object> response = new HashMap<>();
         // Check if token is null.
         if (token == null) {
+            response.put("date", Instant.now().getEpochSecond());
+            response.put("message", "Authorization header empty or does not exist.");
             return Response.status(Response.Status.BAD_REQUEST)
-                    .entity("No token in authorization header.")
+                    .entity(response)
                     .build();
         }
         // Else get insurance info.
-        Map<String, Object> response = new HashMap<>();
         String insuranceInfo = getContentFromUrl(token);
 
         //Check if insurance info exists.
         if (insuranceInfo.equals("null")) {
+            response.put("date", Instant.now().getEpochSecond());
+            response.put("message", "Insurance info not found");
             return Response.status(Response.Status.NOT_FOUND)
-                    .entity("Insurance info not found.")
+                    .entity(response)
                     .build();
         }
         response.put("insurance", insuranceInfo);
