@@ -236,12 +236,11 @@ If under the college's insurance:
 If uses their own insurance:
 
     {
-        usesCollegeInsurance: false,
         insurance: {
             primary: {
                 companyName: Blue Cross Blue Shield,
                 phone: 8668735943,
-                address: 3535 Blue Cross Road Eagan, MN 55122,
+                address: 3535 Blue Cross Road Eagan\nMN 55122,
                 policy: XYZ123123123123,
                 group: 78978978912,
                 subscriber: {
@@ -256,7 +255,7 @@ If uses their own insurance:
             secondary: {
                 companyName: Blue Cross Blue Shield,
                 phone: 8668735943,
-                address: 3535 Blue Cross Road Eagan, MN 55122,
+                address: 3535 Blue Cross Road Eagan\nMN 55122,
                 policy: XYZ123123123123,
                 group: 78978978912,
                 subscriber: {
@@ -267,12 +266,13 @@ If uses their own insurance:
                     },
                     relationship: guardian
                 }
-            },
-            physician: {
-                name: Dr. James Lewis,
-                phone: 8905671234
             }
-        } 
+        },
+        physician: {
+            name: Dr. James Lewis,
+            phone: 8905671234
+        },
+        usesCollegeInsurance: false
     }
        
 ###### Errors
