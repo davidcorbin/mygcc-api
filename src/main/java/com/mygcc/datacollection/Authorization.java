@@ -34,6 +34,11 @@ public class Authorization {
     private String password;
 
     /**
+     * myGCC sessionID.
+     */
+    private String sessionID;
+
+    /**
      * IIS boundary string.
      *
      * The boundary string is a randomly generated string of dashes followed by
@@ -69,7 +74,7 @@ public class Authorization {
      */
     public final String getASPXAuth() throws InvalidCredentialsException {
         try {
-            String seshid = getNewSessionID();
+            String seshid = getSessionID();
             String postdata = authdata();
 
             // Build connection
@@ -196,11 +201,34 @@ public class Authorization {
     }
 
     /**
-     * Get new session ID from myGCC.
-     * @throws NetworkError bad connection to my.gcc.edu
+     * Gets session ID.
      * @return session ID string
      */
-    public static String getNewSessionID() throws NetworkError {
+    public final String getSessionID() {
+        // Set session ID if not set already
+        if (sessionID == null) {
+            try {
+                setSessionID();
+            } catch (NetworkError e) {
+                e.printStackTrace();
+            }
+        }
+        return sessionID;
+    }
+
+    /**
+     * Set session ID from previous session ID.
+     * @param sid session ID
+     */
+    public final void setSessionID(final String sid) {
+        this.sessionID = sid;
+    }
+
+    /**
+     * Gets a new sessionID from myGCC.
+     * @throws NetworkError bad connection to my.gcc.edu
+     */
+    public final void setSessionID() throws NetworkError {
         try {
             URLConnection connection = new URL(BASEURL).openConnection();
             List<String> cookies = connection.
@@ -212,7 +240,7 @@ public class Authorization {
             String seshidstr = cookies.get(1);
 
             // Get the session ID parameter
-            return StringUtils.substringBetween(seshidstr,
+            this.sessionID = StringUtils.substringBetween(seshidstr,
                     "ASP.NET_SessionId=",
                     "; path=/; HttpOnly");
         } catch (ConnectException e) {
@@ -220,7 +248,6 @@ public class Authorization {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "";
     }
 
     /**

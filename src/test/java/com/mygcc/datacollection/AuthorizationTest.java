@@ -24,7 +24,8 @@ public class AuthorizationTest extends JerseyTest {
      */
     @Test
     public void testGetNewSessionID() throws NetworkError {
-        String seshid = Authorization.getNewSessionID();
+        Authorization auth = new Authorization();
+        String seshid = auth.getSessionID();
         assertEquals("should be 24 characters long",
                 seshid.length(),
                 24);
