@@ -1,4 +1,4 @@
-package com.mygcc;
+package com.mygcc.api;
 
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;

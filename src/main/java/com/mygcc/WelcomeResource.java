@@ -1,4 +1,4 @@
-package com.mygcc;
+package com.mygcc.api;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
