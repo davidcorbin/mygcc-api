@@ -3,6 +3,7 @@ package com.mygcc.datacollection;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
+import org.junit.Assume;
 import org.junit.Test;
 
 import javax.ws.rs.core.Application;
@@ -37,16 +38,15 @@ public class AuthorizationTest extends JerseyTest {
      */
     @Test
     public void testGetASPXAuth() throws InvalidCredentialsException {
-        // Use environment variables if possible
-        if (System.getenv("myGCC-username") != null
-                && System.getenv("myGCC-password") != null) {
-            String un = System.getenv("myGCC-username");
-            String pw = System.getenv("myGCC-password");
+        Assume.assumeTrue(System.getenv("myGCC-username") != null
+                && System.getenv("myGCC-password") != null);
 
-            Authorization auth = new Authorization(un, pw);
-            String st = auth.getASPXAuth();
-            assertTrue("ASPXAUTH cookie should be more than 1 character", st.length() > 1);
-        }
+        String un = System.getenv("myGCC-username");
+        String pw = System.getenv("myGCC-password");
+
+        Authorization auth = new Authorization(un, pw);
+        String st = auth.getASPXAuth();
+        assertTrue("ASPXAUTH cookie should be more than 1 character", st.length() > 1);
     }
 
     /**
