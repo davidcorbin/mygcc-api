@@ -1,23 +1,20 @@
-package com.mygcc;
+package com.mygcc.api;
 
+import com.mygcc.api.InsuranceResource;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
-import org.json.JSONObject;
 import org.junit.Test;
 
 import javax.ws.rs.core.Application;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.time.Instant;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Welcome Resource test class.
+ * Insurance Resource test class.
  */
 public final class InsuranceResourceTest extends JerseyTest {
 

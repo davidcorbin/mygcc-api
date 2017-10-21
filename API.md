@@ -38,7 +38,7 @@ All API calls require an authentication token that is generated after the user i
 ###### Response
 
     {
-        message: "deauthenticated"
+        message: deauthenticated
     }
     
 ###### Errors
@@ -208,7 +208,7 @@ All API calls require an authentication token that is generated after the user i
 
     {
         time: 902419320,
-        message: "success"
+        message: success
     }
 
 ###### Errors
@@ -330,7 +330,7 @@ If uses their own insurance:
 
     {
         time: 902419320,
-        message: "success"
+        message: success
     }
        
 ###### Errors
@@ -373,79 +373,70 @@ If uses their own insurance:
        
 ###### Response
 
-    {
+    [
         {
-            course: BIOL 101 A,
-            title: GENERAL BIOLOGY I,
-            professor: Dr. Gerald Stauff,
+            course: BIOL 101 A, 
+            credits: 4.00, 
+            location: [
+                MAIN - HAL - 108
+            ], 
+            professor: [
+                Stauff, Dr. Devin Lee
+            ], 
             times: [
                 {
-                    day: M,
-                    start: 09:00,
-                    end: 09:50
-                },
+                    day: M, 
+                    end: 9:50, 
+                    start: 9:00
+                }, 
                 {
-                    day: W,
-                    start: 09:00,
-                    end: 09:50
-                },
+                    day: W, 
+                    end: 9:50, 
+                    start: 9:00
+                }, 
                 {
-                    day: F,
-                    start: 09:00,
-                    end: 09:50
+                    day: F, 
+                    end: 9:50, 
+                    start: 9:00
                 }
-            ]
+            ], 
+            title: GENERAL BIOLOGY I
         },
         {
-            course: MATH 213 B,
-            title: DISCRETE MATH/COMP SCI,
-            professor: Dr. Eric Bancroft,
+            course: MATH 261 C, 
+            credits: 4.00, 
+            location: [
+                MAIN - HAL - 204, 
+                MAIN - HAL - 204
+            ], 
+            professor: [
+                McIntyre, Dr. Dale L.
+            ], 
             times: [
                 {
-                    day: M,
-                    start: 14:00,
-                    end: 14:50
-                },
+                    day: M, 
+                    end: 11:50, 
+                    start: 11:00
+                }, 
                 {
-                    day: W,
-                    start: 14:00,
-                    end: 14:50
-                },
+                    day: W, 
+                    end: 11:50, 
+                    start: 11:00
+                }, 
                 {
-                    day: F,
-                    start: 14:00,
-                    end: 14:50
+                    day: F, 
+                    end: 11:50, 
+                    start: 11:00
+                }, 
+                {
+                    day: T, 
+                    end: 12:20, 
+                    start: 11:30
                 }
-            ]
-        },
-        {
-            course: MATH 261 C,
-            title: CALCULUS III,
-            professor: Dr. Dale McIntyre,
-            times: [
-                {
-                    day: M,
-                    start: 11:00,
-                    end: 11:50
-                },
-                {
-                    day: W,
-                    start: 11:00,
-                    end: 11:50
-                },
-                {
-                    day: T,
-                    start: 11:30,
-                    end: 12:20
-                },
-                {
-                    day: F,
-                    start: 11:00,
-                    end: 11:50
-                },
-            ]
+            ], 
+            title: CALCULUS III
         }
-    }
+    ]
 
 Days of the week correspond to letters:
 - Sunday: U
@@ -458,7 +449,7 @@ Days of the week correspond to letters:
 
 ###### Errors
 - User not found (400)
-- Insurance not found (404)
+- Schedule not found (404)
 
 ### Crimson Cash
 

@@ -1,4 +1,4 @@
-package com.mygcc;
+package com.mygcc.api;
 
 import org.json.JSONObject;
 
@@ -42,6 +42,7 @@ public class InsuranceResource {
                     "Authorization header empty or does not exist.");
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(response)
+                    .type(MediaType.APPLICATION_JSON_TYPE)
                     .build();
         }
         // Else get insurance info.
@@ -53,6 +54,7 @@ public class InsuranceResource {
             response.put("message", "Insurance info not found");
             return Response.status(Response.Status.NOT_FOUND)
                     .entity(response)
+                    .type(MediaType.APPLICATION_JSON_TYPE)
                     .build();
         }
 
@@ -60,6 +62,7 @@ public class InsuranceResource {
 
         return Response.status(Response.Status.OK)
                 .entity(insuranceInfo)
+                .type(MediaType.APPLICATION_JSON_TYPE)
                 .build();
     }
 
