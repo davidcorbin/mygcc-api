@@ -5,11 +5,11 @@ package com.mygcc.datacollection;
  *
  * Thrown when there is an issue connection to my.gcc.edu.
  */
-public class NetworkError extends Exception {
+public class NetworkException extends Exception {
     /**
      * Default constructor.
      */
-    public NetworkError() {
+    public NetworkException() {
 
     }
 
@@ -17,7 +17,7 @@ public class NetworkError extends Exception {
      * Constructor with message.
      * @param message message about issue
      */
-    public NetworkError(final String message) {
+    public NetworkException(final String message) {
         super(message);
     }
 }

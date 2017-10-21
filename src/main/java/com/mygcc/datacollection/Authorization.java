@@ -209,7 +209,7 @@ public class Authorization {
         if (sessionID == null) {
             try {
                 setSessionID();
-            } catch (NetworkError e) {
+            } catch (NetworkException e) {
                 e.printStackTrace();
             }
         }
@@ -226,9 +226,9 @@ public class Authorization {
 
     /**
      * Gets a new sessionID from myGCC.
-     * @throws NetworkError bad connection to my.gcc.edu
+     * @throws NetworkException bad connection to my.gcc.edu
      */
-    public final void setSessionID() throws NetworkError {
+    public final void setSessionID() throws NetworkException {
         try {
             URLConnection connection = new URL(BASEURL).openConnection();
             List<String> cookies = connection.
@@ -244,7 +244,7 @@ public class Authorization {
                     "ASP.NET_SessionId=",
                     "; path=/; HttpOnly");
         } catch (ConnectException e) {
-            throw new NetworkError();
+            throw new NetworkException();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -20,10 +20,10 @@ public class AuthorizationTest extends JerseyTest {
 
     /**
      * Test that session ID string is 24 characters.
-     * @throws NetworkError Bad connection to mygcc
+     * @throws NetworkException Bad connection to mygcc
      */
     @Test
-    public void testGetNewSessionID() throws NetworkError {
+    public void testGetNewSessionID() throws NetworkException {
         Authorization auth = new Authorization();
         String seshid = auth.getSessionID();
         assertEquals("should be 24 characters long",
