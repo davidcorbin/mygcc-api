@@ -254,7 +254,7 @@ public class Authorization {
      * Get username.
      * @return username
      */
-    private String getUsername() {
+    public final String getUsername() {
         return username;
     }
 

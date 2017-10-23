@@ -1,10 +1,13 @@
-package com.mygcc.api;
+package com.mygcc.datacollection;
 
-import com.mygcc.api.InsuranceResource;
+import com.mygcc.datacollection.Insurance;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
+import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Test;
+import sun.reflect.annotation.ExceptionProxy;
 
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
@@ -16,49 +19,28 @@ import static org.junit.Assert.assertTrue;
 /**
  * Insurance Resource test class.
  */
-public final class InsuranceResourceTest extends JerseyTest {
+public final class InsuranceTest extends JerseyTest {
 
     @Override
     protected Application configure() {
         enable(TestProperties.LOG_TRAFFIC);
         enable(TestProperties.DUMP_ENTITY);
-        return new ResourceConfig(InsuranceResource.class);
+        return new ResourceConfig(Insurance.class);
     }
 
     /**
      * Test Insurance response status with valid Id.
      */
     @Test
-    public void testValidInsuranceId() {
-        final Response response = target().path("/1/user/insurance").request().header("Authorization", 207783).get();
-        int status = response.getStatus();
-        assertEquals("should return status code 200",
-                Response.Status.OK.getStatusCode(),
-                status);
-        assertNotNull("should not return null", response.getEntity());
-    }
+    public void testValidInsuranceId() throws Exception {
+        Assume.assumeTrue(System.getenv("myGCC-username") != null
+        && System.getenv("myGCC-password") != null);
 
-    /**
-     * Test Insurance response status with missing Id.
-     */
-    @Test
-    public void testMissingInsuranceId() {
-        final Response response = target().path("/1/user/insurance").request().get();
-        int status = response.getStatus();
-        assertEquals("should return status code 400",
-                Response.Status.BAD_REQUEST.getStatusCode(),
-                status);
-    }
+        Insurance in = new Insurance(new Authorization(
+                System.getenv("myGCC-username"),
+                System.getenv("myGCC-password")
+        ));
 
-    /**
-     * Test Insurance response status with invalid Id.
-     */
-    @Test
-    public void testInvalidInsuranceId() {
-        final Response response = target().path("/1/user/insurance").request().header("Authorization", "666").get();
-        int status = response.getStatus();
-        assertEquals("should return status code 404",
-                Response.Status.NOT_FOUND.getStatusCode(),
-                status);
+        Assert.assertNotNull(in.getInsuranceData());
     }
 }

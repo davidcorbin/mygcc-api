@@ -1,91 +1,75 @@
-package com.mygcc.api;
+package com.mygcc.datacollection;
 
 import org.json.JSONObject;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Class for getting insurance information.
  */
-@Path("/1/user/")
-public class InsuranceResource {
+public class Insurance {
 
     /**
-     * Main function for getting insurance.
-     * @param token Student id.
-     * @return formatted insurance information.
-     * @throws Exception When url is not formatted right.
+     * The URL to request health insurance information.
      */
-    @GET
-    @Path("insurance")
-    @Produces(MediaType.APPLICATION_JSON)
-    public final Response insuranceResponse(
-            @HeaderParam("Authorization") final String token)
-            throws Exception {
-        Map<String, Object> response = new HashMap<>();
-        // Check if token is null.
-        if (token == null) {
-            response.put("date", Instant.now().getEpochSecond());
-            response.put("message",
-                    "Authorization header empty or does not exist.");
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(response)
-                    .type(MediaType.APPLICATION_JSON_TYPE)
-                    .build();
-        }
-        // Else get insurance info.
-        String rawIns = getContentFromUrl(token);
+    private static final String MYINS =
+            "https://my.gcc.edu/html5/apps/fin/models/JSON.ashx"
+            + "?entity=healthinsurance&qry=get&id_num=";
 
-        //Check if insurance info exists.
+    /**
+     * Authorization needed in order to get Insurance data.
+     */
+    private Authorization auth;
+
+    /**
+     * Insurance constructor.
+     * @param authorization the authorization object for the user.
+     */
+    public Insurance(final Authorization authorization) {
+        this.auth = authorization;
+    }
+
+    /**
+     * Gets the insurance data formatted nicely.
+     * @return The insurance data in a Map.
+     * @throws UnexpectedResponseException If no insurance data is returned.
+     * @throws IOException If getting the data from URL has problems.
+     */
+    public final Map<String, Object> getInsuranceData()
+            throws UnexpectedResponseException, IOException {
+        String rawIns = getContentFromUrl();
         if (rawIns == null) {
-            response.put("date", Instant.now().getEpochSecond());
-            response.put("message", "Insurance info not found");
-            return Response.status(Response.Status.NOT_FOUND)
-                    .entity(response)
-                    .type(MediaType.APPLICATION_JSON_TYPE)
-                    .build();
+            throw new UnexpectedResponseException();
         }
-
-        Map<String, Object> insuranceInfo = parseInsuranceJSON(rawIns);
-
-        return Response.status(Response.Status.OK)
-                .entity(insuranceInfo)
-                .type(MediaType.APPLICATION_JSON_TYPE)
-                .build();
+        Map<String, Object> response = parseInsuranceJSON(rawIns);
+        return response;
     }
 
     /**
      * Get insurance info for given id.
-     * @param id student id number.
      * @return JSON string from myGCC
-     * @throws Exception When url is not formatted right.
+     * @throws IOException When url is not formatted right.
      */
-    private String getContentFromUrl(final String id) throws Exception {
+    private String getContentFromUrl() throws IOException {
         final int nullLength = 4;
-        String gccUrl = "https://my.gcc.edu/html5/apps/fin/models/JSON.ashx";
-        String insParams = "?entity=healthinsurance&qry=get&id_num=";
-        URL gccIns = new URL(gccUrl + insParams + id);
-        HttpURLConnection yc = (HttpURLConnection) gccIns.openConnection();
+        URL gccIns = new URL(MYINS + auth.getUsername());
+        HttpURLConnection http = (HttpURLConnection) gccIns.openConnection();
+        http.setRequestProperty("Cookie",
+                "ASP.NET_SessionId=" + auth.getSessionID());
 
         // Check for invalid id.
         // If the info does not exist then 'null' is returned from gcc.
-        if (yc.getContentLength() == nullLength) {
+        if (http.getContentLength() == nullLength) {
             return null;
         }
         BufferedReader in = new BufferedReader(new InputStreamReader(
-                yc.getInputStream()));
+                http.getInputStream()));
         String inputLine;
         StringBuilder output = new StringBuilder();
         while ((inputLine = in.readLine()) != null) {
