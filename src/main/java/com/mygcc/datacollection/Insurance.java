@@ -20,7 +20,7 @@ public class Insurance {
      */
     private static final String MYINS =
             "https://my.gcc.edu/html5/apps/fin/models/JSON.ashx"
-            + "?entity=healthinsurance&qry=get&id_num=";
+                    + "?entity=healthinsurance&qry=get&id_num=";
 
     /**
      * Authorization needed in order to get Insurance data.
