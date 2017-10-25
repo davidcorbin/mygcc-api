@@ -37,7 +37,8 @@ public class AuthorizationTest extends JerseyTest {
      * @throws InvalidCredentialsException invalid credentials
      */
     @Test
-    public void testGetASPXAuth() throws InvalidCredentialsException {
+    public void testGetASPXAuth() throws InvalidCredentialsException,
+            UnexpectedResponseException {
         Assume.assumeTrue(System.getenv("myGCC-username") != null
                 && System.getenv("myGCC-password") != null);
 
@@ -53,9 +54,23 @@ public class AuthorizationTest extends JerseyTest {
      * Test getting ASPXAUTH without valid myGCC credentials.
      */
     @Test
-    public void testGetASPXAuthWOValidCred() {
+    public void testGetASPXAuthWOValidCred() throws
+            UnexpectedResponseException {
         try {
             Authorization auth = new Authorization("test", "test");
+            auth.getASPXAuth();
+        } catch (InvalidCredentialsException e) {
+            assertTrue(e instanceof InvalidCredentialsException);
+        }
+    }
+
+    /**
+     * Test getting ASPXAUTH without valid myGCC credentials.
+     */
+    @Test
+    public void testGetASPXAuthEmpty() throws UnexpectedResponseException {
+        try {
+            Authorization auth = new Authorization("", "");
             auth.getASPXAuth();
         } catch (InvalidCredentialsException e) {
             assertTrue(e instanceof InvalidCredentialsException);
@@ -66,12 +81,66 @@ public class AuthorizationTest extends JerseyTest {
      * Test getting ASPXAUTH without myGCC credentials.
      */
     @Test
-    public void testGetASPXAuthWOCred() {
+    public void testGetASPXAuthWOCred() throws UnexpectedResponseException {
         try {
             Authorization auth = new Authorization();
             auth.getASPXAuth();
         } catch (InvalidCredentialsException e) {
             assertTrue(e instanceof InvalidCredentialsException);
         }
+    }
+
+    @Test
+    public void testEncryptToken() throws InvalidCredentialsException,
+            UnexpectedResponseException {
+        Assume.assumeTrue(System.getenv("myGCC-username") != null
+                && System.getenv("myGCC-password") != null
+                && System.getenv("initvect") != null
+                && System.getenv("enckey") != null);
+
+        String un = System.getenv("myGCC-username");
+        String pw = System.getenv("myGCC-password");
+
+        Authorization auth = new Authorization(un, pw);
+        String token = auth.encryptToken();
+        assertTrue(token.length() > 1);
+    }
+
+    @Test
+    public void testDecryptToken() {
+        Assume.assumeTrue(System.getenv("myGCC-username") != null
+                && System.getenv("myGCC-password") != null
+                && System.getenv("initvect") != null
+                && System.getenv("enckey") != null);
+
+        String un = System.getenv("myGCC-username");
+        String pw = System.getenv("myGCC-password");
+
+        Authorization auth = new Authorization(un, pw);
+
+        try {
+            auth.decryptToken("testfakedata");
+            assertTrue(false);
+        } catch (InvalidCredentialsException e) {
+            assertTrue(true);
+        }
+    }
+
+    @Test
+    public void testEncryptDecryptToken() throws InvalidCredentialsException,
+            UnexpectedResponseException {
+        Assume.assumeTrue(System.getenv("myGCC-username") != null
+                && System.getenv("myGCC-password") != null
+                && System.getenv("initvect") != null
+                && System.getenv("enckey") != null);
+
+        String un = System.getenv("myGCC-username");
+        String pw = System.getenv("myGCC-password");
+
+        Authorization auth = new Authorization(un, pw);
+        String token = auth.encryptToken();
+        auth.decryptToken(token);
+
+        assertTrue("session ID longer than 1", auth.getSessionID().length() > 1);
     }
 }
