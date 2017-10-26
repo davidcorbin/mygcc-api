@@ -11,7 +11,6 @@ See [API.md](API.md) for examples and a reference.
 ### Packaging
 ```mvn clean package```
 
-##### Testing
 If tests are failing or skipping make sure you have four environmental variables set:
 - `myGCC-username` A **valid** myGCC username/id number.
 - `myGCC-password` The password for that username.
