@@ -15,9 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Chapel resource endpoint.
+ * Insurance resource endpoint.
  *
- * Endpoint resource for accessing chapel information.
+ * Endpoint resource for accessing Insurance information.
  */
 @Path("/1/user")
 public class InsuranceResource {
@@ -54,9 +54,9 @@ public class InsuranceResource {
 
         Insurance ins = new Insurance(auth);
         try {
-            Map<String, Object> chapelData = ins.getInsuranceData();
+            Map<String, Object> insuranceData = ins.getInsuranceData();
             return Response.status(Response.Status.OK)
-                    .entity(chapelData)
+                    .entity(insuranceData)
                     .type("application/json")
                     .build();
         } catch (UnexpectedResponseException e) {

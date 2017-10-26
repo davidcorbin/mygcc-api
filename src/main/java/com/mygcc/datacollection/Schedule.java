@@ -42,9 +42,10 @@ public class Schedule {
     /**
      * Get the class schedule of a user.
      * @return A list of the user's schedule.
-     * @throws IOException If the request goes wrong.
+     * @throws UnexpectedResponseException If the request goes wrong.
      */
-    public final List<Object> getScheduleData() throws IOException {
+    public final List<Object> getScheduleData()
+            throws UnexpectedResponseException {
         String rawHTML = getContentFromUrl();
         List<Object> prettyJSON = parseScheduleHTML(rawHTML);
         return prettyJSON;
@@ -125,22 +126,29 @@ public class Schedule {
     /**
      * Gets the raw HTML schedule from myGCC.
      * @return The raw HTML schedule.
-     * @throws IOException When internet has problems.
+     * @throws UnexpectedResponseException When internet has problems.
      */
     private String getContentFromUrl()
-            throws IOException {
-        URL gccUrl = new URL(MYSCH);
-        HttpURLConnection http = (HttpURLConnection) gccUrl.openConnection();
-        http.setRequestProperty("Cookie",
-                "ASP.NET_SessionId=" + auth.getSessionID());
-        BufferedReader in = new BufferedReader(new InputStreamReader(
-                http.getInputStream()));
-        String inputLine;
-        StringBuilder output = new StringBuilder();
-        while ((inputLine = in.readLine()) != null) {
-            output.append(inputLine);
+            throws UnexpectedResponseException {
+        try {
+            URL gccUrl = new URL(MYSCH);
+            HttpURLConnection http = (HttpURLConnection) gccUrl
+                    .openConnection();
+            http.setRequestProperty("Cookie",
+                    "ASP.NET_SessionId=" + auth.getSessionID());
+            BufferedReader in = new BufferedReader(new InputStreamReader(
+                    http.getInputStream()));
+            String inputLine;
+            StringBuilder output = new StringBuilder();
+            while ((inputLine = in.readLine()) != null) {
+                output.append(inputLine);
+            }
+            in.close();
+            return output.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new UnexpectedResponseException("unknown IOException "
+                    + "occurred");
         }
-        in.close();
-        return output.toString();
     }
 }
