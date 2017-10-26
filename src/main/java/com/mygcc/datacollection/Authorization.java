@@ -2,18 +2,25 @@ package com.mygcc.datacollection;
 
 import org.apache.commons.lang3.StringUtils;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.InvalidParameterException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.List;
 import java.util.Random;
@@ -424,7 +431,10 @@ public class Authorization {
             setPassword(keyvalues[pwindex]);
             setSessionID(keyvalues[siindex]);
             setASPXAuth(keyvalues[aaindex]);
-        } catch (Exception ex) {
+        } catch (UnsupportedEncodingException | InvalidKeyException
+                | NoSuchAlgorithmException | NoSuchPaddingException
+                | InvalidParameterException | InvalidAlgorithmParameterException
+                | BadPaddingException ex) {
             throw new InvalidCredentialsException("Token invalid");
         }
     }
