@@ -35,6 +35,10 @@ public final class CrimsonCashResourceTest extends JerseyTest {
      */
     @Test
     public void testFakeAuth() {
+        Assume.assumeTrue(System.getenv("myGCC-username") != null
+                && System.getenv("myGCC-password") != null
+                && System.getenv("initvect") != null
+                && System.getenv("enckey") != null);
         CrimsonCashResource cc = new CrimsonCashResource();
         Response r = cc.getCrimsonCashData("asdf");
         assertEquals("token should be invalid; status should be 400", Response.Status.BAD_REQUEST.getStatusCode(), r.getStatus());

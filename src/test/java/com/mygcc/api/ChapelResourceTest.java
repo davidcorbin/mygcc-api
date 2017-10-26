@@ -34,6 +34,10 @@ public final class ChapelResourceTest extends JerseyTest {
      */
     @Test
     public void testFakeAuth() {
+        Assume.assumeTrue(System.getenv("myGCC-username") != null
+                && System.getenv("myGCC-password") != null
+                && System.getenv("initvect") != null
+                && System.getenv("enckey") != null);
         ChapelResource chap = new ChapelResource();
         Response r = chap.getChapelData("asdf");
         assertEquals("token should be invalid; status should be 400", Response.Status.BAD_REQUEST.getStatusCode(), r.getStatus());
