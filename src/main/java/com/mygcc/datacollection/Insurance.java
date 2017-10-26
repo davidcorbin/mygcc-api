@@ -39,10 +39,9 @@ public class Insurance {
      * Gets the insurance data formatted nicely.
      * @return The insurance data in a Map.
      * @throws UnexpectedResponseException If no insurance data is returned.
-     * @throws IOException If getting the data from URL has problems.
      */
     public final Map<String, Object> getInsuranceData()
-            throws UnexpectedResponseException, IOException {
+            throws UnexpectedResponseException {
         String rawIns = getContentFromUrl();
         if (rawIns == null) {
             throw new UnexpectedResponseException();
@@ -54,29 +53,36 @@ public class Insurance {
     /**
      * Get insurance info for given id.
      * @return JSON string from myGCC
-     * @throws IOException When url is not formatted right.
+     * @throws UnexpectedResponseException Unexpected response from myGCC.
      */
-    private String getContentFromUrl() throws IOException {
+    private String getContentFromUrl() throws UnexpectedResponseException {
         final int nullLength = 4;
-        URL gccIns = new URL(MYINS + auth.getUsername());
-        HttpURLConnection http = (HttpURLConnection) gccIns.openConnection();
-        http.setRequestProperty("Cookie",
-                "ASP.NET_SessionId=" + auth.getSessionID());
+        try {
+            URL gccIns = new URL(MYINS + auth.getUsername());
+            HttpURLConnection http = (HttpURLConnection) gccIns
+                    .openConnection();
+            http.setRequestProperty("Cookie",
+                    "ASP.NET_SessionId=" + auth.getSessionID());
 
-        // Check for invalid id.
-        // If the info does not exist then 'null' is returned from gcc.
-        if (http.getContentLength() == nullLength) {
-            return null;
+            // Check for invalid id.
+            // If the info does not exist then 'null' is returned from gcc.
+            if (http.getContentLength() == nullLength) {
+                return null;
+            }
+            BufferedReader in = new BufferedReader(new InputStreamReader(
+                    http.getInputStream()));
+            String inputLine;
+            StringBuilder output = new StringBuilder();
+            while ((inputLine = in.readLine()) != null) {
+                output.append(inputLine);
+            }
+            in.close();
+            return output.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new UnexpectedResponseException("unknown IOException "
+                    + "occurred");
         }
-        BufferedReader in = new BufferedReader(new InputStreamReader(
-                http.getInputStream()));
-        String inputLine;
-        StringBuilder output = new StringBuilder();
-        while ((inputLine = in.readLine()) != null) {
-            output.append(inputLine);
-        }
-        in.close();
-        return output.toString();
     }
 
     /**
