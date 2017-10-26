@@ -41,7 +41,7 @@ public final class CrimsonCashResourceTest extends JerseyTest {
     }
 
     /**
-     * Test when key is null.
+     * Test when token is valid.
      */
     @Test
     public void testWorkingKey() {
