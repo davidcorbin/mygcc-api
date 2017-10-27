@@ -1,5 +1,21 @@
 # Unofficial myGCC API reference
 
+[Authentication Endpoint](#authentication-endpoint)
+- [Authenticate User](#authenticate-user)
+- [Deuthenticate User](#deauthenticate-user)
+
+[User Endpoint](#user-endpoint)
+- [Name](#name)
+- [Major](#major)
+- [Contact Information](#contact-information)
+- [Health Insurance](#health-insurance)
+- [Chapel Attendance](#chapel-attendance)
+- [Class Schedule](#class-schedule)
+- [Homework](#homework)
+- [Grades](#grades)
+- [Crimson Cash](#crimson-cash)
+- [Vehicle Information](#vehicle-information)
+
 ## Authentication Endpoint
 
 All API calls require an authentication token that is generated after the user is logged in with their myGCC username and password.
@@ -450,6 +466,77 @@ Days of the week correspond to letters:
 ###### Errors
 - User not found (400)
 - Schedule not found (404)
+
+### Homework
+
+For graded work see [grades](#grades).
+
+###### Request
+
+    GET /1/user/homework
+    {
+        token: asdf1234asdf1234
+        class: MATH 213 B
+    }
+    
+###### Response
+
+    {
+        next: [
+            {
+                due: 20171103,
+                title: Celebration of Learning 3,
+                points: 90,
+                finalGrade: true
+                grade: 0;
+            },
+            {
+                due: 20171117,
+                title: Celebration of Learning 4,
+                points: 70,
+                finalGrade: true
+                grade: 0;
+            }
+        ],
+        assigned: {
+            {
+                due: 20171211,
+                title: Celebration of Learning 5,
+                points: 70,
+                finalGrade: true
+                grade: 0;
+            }
+        },
+        finished: {
+            {
+                due: 20170922,
+                title: Celebration of Learning 1,
+                points: 70,
+                finalGrade: true
+                grade: 90;
+            },
+            {
+                due: 20171013,
+                title: Celebration of Learning 2,
+                points: 90,
+                finalGrade: true
+                grade: 90;
+            }
+        }
+    }
+
+###### Errors
+
+- User not found (404)
+- User not in class (422)
+
+### Grades
+
+###### Request
+
+###### Response
+
+###### Errors
 
 ### Crimson Cash
 
