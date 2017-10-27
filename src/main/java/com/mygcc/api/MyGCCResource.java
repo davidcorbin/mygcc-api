@@ -13,7 +13,7 @@ abstract class MyGCCResource {
      * Tell client that myGCC returned an unknown response.
      * @return Response object
      */
-    Response unexpectedResponseException() {
+    public Response unexpectedResponseException() {
         return sendErrorMessage("Internal server error",
                 Response.Status.BAD_REQUEST);
     }
@@ -22,7 +22,7 @@ abstract class MyGCCResource {
      * Tell client that myGCC is unavailable.
      * @return Response object
      */
-    Response networkException() {
+    public Response networkException() {
         return sendErrorMessage("myGCC is unavailable",
                 Response.Status.BAD_REQUEST);
     }
@@ -31,7 +31,7 @@ abstract class MyGCCResource {
      * Tell client that their myGCC login credentials are invalid.
      * @return Response object
      */
-    Response invalidCredentialsException() {
+    public Response invalidCredentialsException() {
         return sendErrorMessage("Invalid myGCC credentials",
                 Response.Status.BAD_REQUEST);
     }
@@ -40,7 +40,7 @@ abstract class MyGCCResource {
      * Tell client that their session has expired.
      * @return Response object
      */
-    Response sessionExpiredMessage() {
+    public Response sessionExpiredMessage() {
         return sendErrorMessage("Session expired",
                 Response.Status.BAD_REQUEST);
     }
@@ -51,7 +51,7 @@ abstract class MyGCCResource {
      * @param status HTTP status code
      * @return Response object
      */
-    final Response sendErrorMessage(final String message,
+    public final Response sendErrorMessage(final String message,
                                      final Response.Status status) {
         Map<String, Object> response = new HashMap<>();
         response.put("message", message);
