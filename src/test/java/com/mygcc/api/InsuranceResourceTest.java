@@ -35,6 +35,10 @@ public final class InsuranceResourceTest extends JerseyTest {
      */
     @Test
     public void testFakeAuth() {
+        Assume.assumeTrue(System.getenv("myGCC-username") != null
+                && System.getenv("myGCC-password") != null
+                && System.getenv("initvect") != null
+                && System.getenv("enckey") != null);
         InsuranceResource ins = new InsuranceResource();
         Response r = ins.getInsuranceData("asdf");
         assertEquals("token should be invalid; status should be 400", Response.Status.BAD_REQUEST.getStatusCode(), r.getStatus());

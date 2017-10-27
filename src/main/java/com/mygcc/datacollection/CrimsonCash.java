@@ -64,8 +64,14 @@ public class CrimsonCash {
 
             // Get HTML data from request
             BufferedReader in = new BufferedReader(new InputStreamReader(
-                    conn.getInputStream()));
+                    conn.getInputStream(), "UTF-8"));
+
+            // Get HTML data
             String htmldata = in.lines().collect(Collectors.joining());
+
+            // Close input stream
+            in.close();
+
             String cashurl = getCrimsonCashUrlFromDocument(htmldata);
 
             // Replace spaces in URL with HTML %20 encoding
@@ -80,8 +86,11 @@ public class CrimsonCash {
 
             // Get HTML data from request
             BufferedReader in2 = new BufferedReader(new InputStreamReader(
-                    conn2.getInputStream()));
+                    conn2.getInputStream(), "UTF-8"));
             String data = in2.lines().collect(Collectors.joining());
+
+            // Close input stream
+            in2.close();
 
             return getCrimsonCashDataFromTable(data);
         } catch (IOException e) {

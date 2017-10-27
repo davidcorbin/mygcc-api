@@ -70,7 +70,7 @@ public class Insurance {
                 return null;
             }
             BufferedReader in = new BufferedReader(new InputStreamReader(
-                    http.getInputStream()));
+                    http.getInputStream(), "UTF-8"));
             String inputLine;
             StringBuilder output = new StringBuilder();
             while ((inputLine = in.readLine()) != null) {

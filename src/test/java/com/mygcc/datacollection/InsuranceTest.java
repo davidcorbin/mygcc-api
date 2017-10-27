@@ -1,20 +1,13 @@
 package com.mygcc.datacollection;
 
-import com.mygcc.datacollection.Insurance;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
-import sun.reflect.annotation.ExceptionProxy;
 
 import javax.ws.rs.core.Application;
-import javax.ws.rs.core.Response;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Insurance Resource test class.

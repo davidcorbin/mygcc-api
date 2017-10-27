@@ -17,7 +17,8 @@ public class WelcomeResource {
     /**
      * Welcome message.
      */
-    private final String welcomeMsg = "Welcome to the Unofficial myGCC API v1";
+    private static final String WELCOME = "Welcome to the Unofficial myGCC "
+            + "API v1";
 
     /**
      * Method handling HTTP GET requests to the root domain.
@@ -28,7 +29,7 @@ public class WelcomeResource {
     @Produces(MediaType.APPLICATION_JSON)
     public final Map<String, Object> getWelcomeMessage() {
         Map<String, Object> response = new HashMap<>();
-        response.put("message", welcomeMsg);
+        response.put("message", WELCOME);
         response.put("date", Instant.now().getEpochSecond());
         return response;
     }

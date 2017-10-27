@@ -95,6 +95,11 @@ public class Authorization {
      */
     public final String getASPXAuth() throws InvalidCredentialsException,
             UnexpectedResponseException {
+        // Return previously retrieved ASPXAuth
+        if (this.aspxauth != null) {
+            return this.aspxauth;
+        }
+
         String seshid = getSessionID();
         String postdata = authdata();
 
@@ -383,7 +388,7 @@ public class Authorization {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
             cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
 
-            byte[] encrypted = cipher.doFinal(tkraw.getBytes());
+            byte[] encrypted = cipher.doFinal(tkraw.getBytes("UTF-8"));
             return Base64.getEncoder().encodeToString(encrypted);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -421,7 +426,7 @@ public class Authorization {
                 throw new InvalidCredentialsException("Token invalid");
             }
 
-            String decoded = new String(original);
+            String decoded = new String(original, "UTF-8");
             String[] keyvalues = decoded.split("\\|");
             if (keyvalues.length != expectedTokenLength) {
                 throw new InvalidCredentialsException("Expected 4 values in "

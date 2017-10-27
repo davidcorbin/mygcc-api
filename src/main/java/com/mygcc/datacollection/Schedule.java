@@ -64,7 +64,6 @@ public class Schedule {
         Document doc = Jsoup.parse(raw);
         Elements rows = doc.select(".gbody > tr:not(.subitem)");
         List<Object> classArray = new ArrayList<>();
-        Map<String, Object> classes = new HashMap<>();
         for (Element c : rows) {
             Map<String, Object> clas = new HashMap<>();
             clas.put("course", c.select("td").get(1).text());
@@ -137,7 +136,7 @@ public class Schedule {
             http.setRequestProperty("Cookie",
                     "ASP.NET_SessionId=" + auth.getSessionID());
             BufferedReader in = new BufferedReader(new InputStreamReader(
-                    http.getInputStream()));
+                    http.getInputStream(), "UTF-8"));
             String inputLine;
             StringBuilder output = new StringBuilder();
             while ((inputLine = in.readLine()) != null) {
