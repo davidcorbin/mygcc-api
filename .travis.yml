@@ -5,6 +5,10 @@ jdk:
 script:
   - mvn install
   - mvn test
+  - mvn cobertura:cobertura
 
 notifications:
     slack: grovecitycollege:xnpecXiJ6qMfnHdFEzxkSUeE
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
