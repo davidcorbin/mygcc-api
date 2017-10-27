@@ -13,7 +13,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -22,7 +21,7 @@ import java.util.Map;
  * Endpoint resource for accessing chapel information.
  */
 @Path("/1/user")
-public class ChapelResource {
+public class ChapelResource extends MyGCCResource {
     /**
      * Handles authenticating user and returning their encrypted token.
      *
@@ -35,23 +34,17 @@ public class ChapelResource {
     public final Response getChapelData(
             @HeaderParam("Authorization") final String token) {
         if (token == null) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Missing authorization token");
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(response)
-                    .type("application/json")
-                    .build();
+            return sendErrorMessage("Missing authorization token",
+                    Response.Status.BAD_REQUEST);
         }
         Authorization auth = new Authorization();
+
+        // Try to decrypt token sent by client
         try {
             auth.decryptToken(token);
         } catch (InvalidCredentialsException e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Invalid credentials");
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(response)
-                    .type("application/json")
-                    .build();
+            return sendErrorMessage("Invalid credentials",
+                    Response.Status.BAD_REQUEST);
         }
 
         Chapel chap = new Chapel(auth);
@@ -62,33 +55,13 @@ public class ChapelResource {
                     .type("application/json")
                     .build();
         } catch (ExpiredSessionException e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Session expired");
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(response)
-                    .type("application/json")
-                    .build();
+            return sessionExpiredMessage();
         } catch (InvalidCredentialsException e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Invalid myGCC credentials");
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(response)
-                    .type("application/json")
-                    .build();
+            return invalidCredentialsException();
         } catch (NetworkException e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Error connection to myGCC");
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(response)
-                    .type("application/json")
-                    .build();
+            return networkException();
         } catch (UnexpectedResponseException e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Internal server error");
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(response)
-                    .type("application/json")
-                    .build();
+            return unexpectedResponseException();
         }
     }
 }
