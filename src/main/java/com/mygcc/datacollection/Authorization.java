@@ -377,6 +377,13 @@ public class Authorization {
         String pw = getPassword();
         String si = getSessionID();
         String aa = getASPXAuth();
+
+        // Escape pipes in string so they can be used in
+        pw = escapePipe(pw);
+        un = escapePipe(un);
+        si = escapePipe(si);
+        aa = escapePipe(aa);
+
         String tkraw = un + "|" + pw + "|" + si + "|" + aa;
 
         try {
@@ -390,10 +397,13 @@ public class Authorization {
 
             byte[] encrypted = cipher.doFinal(tkraw.getBytes("UTF-8"));
             return Base64.getEncoder().encodeToString(encrypted);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (UnsupportedEncodingException | NoSuchAlgorithmException
+                | NoSuchPaddingException | InvalidKeyException
+                | InvalidAlgorithmParameterException | IllegalBlockSizeException
+                | BadPaddingException e) {
+            e.printStackTrace();
+            throw new InvalidCredentialsException("Error encrypting token");
         }
-        return null;
     }
 
     /**
@@ -428,19 +438,41 @@ public class Authorization {
 
             String decoded = new String(original, "UTF-8");
             String[] keyvalues = decoded.split("\\|");
+
             if (keyvalues.length != expectedTokenLength) {
                 throw new InvalidCredentialsException("Expected 4 values in "
                         + "token");
             }
-            setUsername(keyvalues[unindex]);
-            setPassword(keyvalues[pwindex]);
-            setSessionID(keyvalues[siindex]);
-            setASPXAuth(keyvalues[aaindex]);
+
+            setUsername(unescapePipe(keyvalues[unindex]));
+            setPassword(unescapePipe(keyvalues[pwindex]));
+            setSessionID(unescapePipe(keyvalues[siindex]));
+            setASPXAuth(unescapePipe(keyvalues[aaindex]));
         } catch (UnsupportedEncodingException | InvalidKeyException
                 | NoSuchAlgorithmException | NoSuchPaddingException
                 | InvalidParameterException | InvalidAlgorithmParameterException
                 | BadPaddingException ex) {
             throw new InvalidCredentialsException("Token invalid");
         }
+    }
+
+    /**
+     * Escape pipe character in string.
+     * Replaces pipe ASCII character with HTML character code.
+     * @param unescaped unescaped string
+     * @return escaped string
+     */
+    private String escapePipe(final String unescaped) {
+        return unescaped.replace("|", "&#124;");
+    }
+
+    /**
+     * Unescape pipe character in string.
+     * Replaces HTML character code with pipe ASCII character.
+     * @param escaped escaped string
+     * @return unescaped string
+     */
+    private String unescapePipe(final String escaped) {
+        return escaped.replace("&#124;", "|");
     }
 }
