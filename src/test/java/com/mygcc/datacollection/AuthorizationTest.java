@@ -90,6 +90,9 @@ public class AuthorizationTest extends JerseyTest {
         }
     }
 
+    /**
+     * Test encrypting token.
+     */
     @Test
     public void testEncryptToken() throws InvalidCredentialsException,
             UnexpectedResponseException {
@@ -106,6 +109,9 @@ public class AuthorizationTest extends JerseyTest {
         assertTrue(token.length() > 1);
     }
 
+    /**
+     * Test decrypting token.
+     */
     @Test
     public void testDecryptToken() {
         Assume.assumeTrue(System.getenv("myGCC-username") != null
@@ -126,6 +132,9 @@ public class AuthorizationTest extends JerseyTest {
         }
     }
 
+    /**
+     * Test token encryption and decryption.
+     */
     @Test
     public void testEncryptDecryptToken() throws InvalidCredentialsException,
             UnexpectedResponseException {
@@ -142,5 +151,17 @@ public class AuthorizationTest extends JerseyTest {
         auth.decryptToken(token);
 
         assertTrue("session ID longer than 1", auth.getSessionID().length() > 1);
+    }
+
+    /**
+     * Test returning previously set ASPXAuth.
+     */
+    @Test
+    public void testPreviouslyRetrievedASPXAuth() throws
+            InvalidCredentialsException, UnexpectedResponseException {
+        String testStr = "random_data";
+        Authorization auth = new Authorization();
+        auth.setASPXAuth(testStr);
+        assertTrue(auth.getASPXAuth().equals(testStr));
     }
 }
