@@ -75,7 +75,6 @@ public class Authorization {
     public Authorization(final String un, final String pw) {
         setUsername(un);
         setPassword(pw);
-
         setBoundary();
     }
 
@@ -83,7 +82,6 @@ public class Authorization {
      * Default constructor.
      */
     public Authorization() {
-
     }
 
     /**
