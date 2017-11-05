@@ -106,8 +106,7 @@ public class Authorization {
         try {
             con = new URL(BASEURL).openConnection();
         } catch (MalformedURLException e) {
-            e.printStackTrace();
-            throw new UnexpectedResponseException("Malformed URL");
+            throw new IllegalStateException("Malformed url", e);
         } catch (IOException e) {
             e.printStackTrace();
             throw new UnexpectedResponseException("Unknown IOException");
