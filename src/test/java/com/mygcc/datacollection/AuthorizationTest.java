@@ -9,6 +9,7 @@ import org.junit.Test;
 import javax.ws.rs.core.Application;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class AuthorizationTest extends JerseyTest {
@@ -33,8 +34,19 @@ public class AuthorizationTest extends JerseyTest {
     }
 
     /**
+     * Test getting a null session ID
+     */
+    @Test
+    public void testSetSessionIDNull() {
+        Authorization auth = new Authorization();
+        auth.setSessionID(null);
+        assertNotNull(auth.getSessionID());
+    }
+
+    /**
      * Test getting ASPXAUTH with valid myGCC credentials.
      * @throws InvalidCredentialsException invalid credentials
+     * @throws UnexpectedResponseException unexpected response from mygcc
      */
     @Test
     public void testGetASPXAuth() throws InvalidCredentialsException,
@@ -52,6 +64,7 @@ public class AuthorizationTest extends JerseyTest {
 
     /**
      * Test getting ASPXAUTH without valid myGCC credentials.
+     * @throws UnexpectedResponseException unexpected response from mygcc
      */
     @Test
     public void testGetASPXAuthWOValidCred() throws
@@ -66,6 +79,7 @@ public class AuthorizationTest extends JerseyTest {
 
     /**
      * Test getting ASPXAUTH without valid myGCC credentials.
+     * @throws UnexpectedResponseException unexpected response from mygcc
      */
     @Test
     public void testGetASPXAuthEmpty() throws UnexpectedResponseException {
@@ -79,6 +93,7 @@ public class AuthorizationTest extends JerseyTest {
 
     /**
      * Test getting ASPXAUTH without myGCC credentials.
+     * @throws UnexpectedResponseException unexpected response from mygcc
      */
     @Test
     public void testGetASPXAuthWOCred() throws UnexpectedResponseException {
@@ -92,6 +107,8 @@ public class AuthorizationTest extends JerseyTest {
 
     /**
      * Test encrypting token.
+     * @throws InvalidCredentialsException invalid credentials
+     * @throws UnexpectedResponseException unexpected response from mygcc
      */
     @Test
     public void testEncryptToken() throws InvalidCredentialsException,
@@ -107,6 +124,17 @@ public class AuthorizationTest extends JerseyTest {
         Authorization auth = new Authorization(un, pw);
         String token = auth.encryptToken();
         assertTrue(token.length() > 1);
+    }
+
+    /**
+     * Test encrypting without credentials
+     * @throws InvalidCredentialsException invalid credentials
+     */
+    @Test(expected=InvalidCredentialsException.class)
+    public void testEncryptTokenNoCredentials() throws InvalidCredentialsException,
+            UnexpectedResponseException {
+        Authorization auth = new Authorization();
+        String token = auth.encryptToken();
     }
 
     /**
@@ -134,6 +162,8 @@ public class AuthorizationTest extends JerseyTest {
 
     /**
      * Test token encryption and decryption.
+     * @throws InvalidCredentialsException invalid credentials
+     * @throws UnexpectedResponseException unexpected response from mygcc
      */
     @Test
     public void testEncryptDecryptToken() throws InvalidCredentialsException,
@@ -155,6 +185,8 @@ public class AuthorizationTest extends JerseyTest {
 
     /**
      * Test returning previously set ASPXAuth.
+     * @throws InvalidCredentialsException invalid credentials
+     * @throws UnexpectedResponseException unexpected response from mygcc
      */
     @Test
     public void testPreviouslyRetrievedASPXAuth() throws
@@ -163,5 +195,11 @@ public class AuthorizationTest extends JerseyTest {
         Authorization auth = new Authorization();
         auth.setASPXAuth(testStr);
         assertTrue(auth.getASPXAuth().equals(testStr));
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testMissingEnvironmentalV() throws InvalidCredentialsException {
+        Authorization auth = new Authorization();
+        auth.decryptToken("test_string");
     }
 }
