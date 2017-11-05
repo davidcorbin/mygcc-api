@@ -15,27 +15,20 @@ public class User {
     private String password;
 
     /**
-     * Session ID string.
-     */
-    private String sessionid;
-
-    /**
      * User constructor.
      * @param un username
      * @param pw password
-     * @param ssid session ID
      */
-    public User(final String un, final String pw, final String ssid) {
+    public User(final String un, final String pw) {
         this.username = un;
         this.password = pw;
-        this.sessionid = ssid;
+        //this.sessionid = ssid;
     }
 
     /**
      * Default constructor.
      */
     public User() {
-
     }
 
     /**
@@ -68,22 +61,6 @@ public class User {
      */
     public final void setPassword(final String pw) {
         this.password = pw;
-    }
-
-    /**
-     * Get session identifier.
-     * @return session ID string
-     */
-    public final String getSessionid() {
-        return this.sessionid;
-    }
-
-    /**
-     * Set session identifier.
-     * @param sid session ID
-     */
-    public final void setSessionid(final String sid) {
-        this.sessionid = sid;
     }
 
     /**
