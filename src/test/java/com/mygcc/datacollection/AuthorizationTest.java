@@ -134,7 +134,7 @@ public class AuthorizationTest extends JerseyTest {
     public void testEncryptTokenNoCredentials() throws InvalidCredentialsException,
             UnexpectedResponseException {
         Authorization auth = new Authorization();
-        String token = auth.encryptToken();
+        auth.encryptToken();
     }
 
     /**
