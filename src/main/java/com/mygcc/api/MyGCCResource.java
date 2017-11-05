@@ -33,7 +33,7 @@ abstract class MyGCCResource {
      */
     public Response invalidCredentialsException() {
         return sendErrorMessage("Invalid myGCC credentials",
-                Response.Status.BAD_REQUEST);
+                Response.Status.UNAUTHORIZED);
     }
 
     /**
