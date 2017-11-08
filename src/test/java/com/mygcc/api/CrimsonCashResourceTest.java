@@ -27,7 +27,7 @@ public final class CrimsonCashResourceTest extends JerseyTest {
     public void testNullAuthorization() {
         CrimsonCashResource cc = new CrimsonCashResource();
         Response r = cc.getCrimsonCashData(null);
-        assertEquals("status should be 400", Response.Status.BAD_REQUEST.getStatusCode(), r.getStatus());
+        assertEquals("status should be 401", Response.Status.UNAUTHORIZED.getStatusCode(), r.getStatus());
     }
 
     /**
@@ -41,7 +41,7 @@ public final class CrimsonCashResourceTest extends JerseyTest {
                 && System.getenv("enckey") != null);
         CrimsonCashResource cc = new CrimsonCashResource();
         Response r = cc.getCrimsonCashData("asdf");
-        assertEquals("token should be invalid; status should be 400", Response.Status.BAD_REQUEST.getStatusCode(), r.getStatus());
+        assertEquals("token should be invalid; status should be 400", Response.Status.UNAUTHORIZED.getStatusCode(), r.getStatus());
     }
 
     /**
