@@ -20,7 +20,7 @@ import java.util.Map;
  * Endpoint resource for accessing Insurance information.
  */
 @Path("/1/user")
-public class InsuranceResource {
+public class InsuranceResource extends MyGCCResource {
     /**
      * Handles authenticating user and returning their encrypted token.
      *

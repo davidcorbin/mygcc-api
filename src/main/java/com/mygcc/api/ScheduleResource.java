@@ -21,7 +21,7 @@ import java.util.Map;
  * Endpoint resource for accessing schedule information.
  */
 @Path("/1/user")
-public class ScheduleResource {
+public class ScheduleResource extends MyGCCResource {
     /**
      * Handles authenticating user and returning their encrypted token.
      *

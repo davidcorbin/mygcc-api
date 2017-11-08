@@ -22,7 +22,7 @@ import java.util.Map;
  * Endpoint resource for accessing Crimson Cash information.
  */
 @Path("/1/user")
-public class CrimsonCashResource {
+public class CrimsonCashResource extends MyGCCResource {
     /**
      * Handles authenticating user and returning their encrypted token.
      *
@@ -35,23 +35,13 @@ public class CrimsonCashResource {
     public final Response getCrimsonCashData(
             @HeaderParam("Authorization") final String token) {
         if (token == null) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Missing authorization token");
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(response)
-                    .type("application/json")
-                    .build();
+            return invalidCredentialsException();
         }
         Authorization auth = new Authorization();
         try {
             auth.decryptToken(token);
         } catch (InvalidCredentialsException e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Invalid credentials");
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(response)
-                    .type("application/json")
-                    .build();
+            return invalidCredentialsException();
         }
 
         CrimsonCash cc = new CrimsonCash(auth);
@@ -62,33 +52,13 @@ public class CrimsonCashResource {
                     .type("application/json")
                     .build();
         } catch (ExpiredSessionException e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Session expired");
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(response)
-                    .type("application/json")
-                    .build();
+            return sessionExpiredMessage();
         } catch (InvalidCredentialsException e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Invalid myGCC credentials");
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(response)
-                    .type("application/json")
-                    .build();
+            return invalidCredentialsException();
         } catch (NetworkException e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Error connection to myGCC");
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(response)
-                    .type("application/json")
-                    .build();
+            return networkException();
         } catch (UnexpectedResponseException e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Internal server error");
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(response)
-                    .type("application/json")
-                    .build();
+            return unexpectedResponseException();
         }
     }
 }
