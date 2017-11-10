@@ -1,4 +1,4 @@
-package com.mygcc;
+package com.mygcc.api;
 
 /**
  * User class.
