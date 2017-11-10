@@ -19,6 +19,7 @@
 ## Authentication Endpoint
 
 All API calls require an authentication token that is generated after the user is logged in with their myGCC username and password.
+You must send this token as the content of a HTTP header named `Authorization` in every request.
 
 ### Authenticate User
 
@@ -53,9 +54,6 @@ User deauthentication is not currently supported since myGCC automatically kills
 ###### Request
 
     GET /1/user/name
-    {
-        token: asdf1234asdf1234
-    }
     
 ###### Response
 
@@ -73,9 +71,6 @@ User deauthentication is not currently supported since myGCC automatically kills
 ###### Request
 
     GET /1/user/major
-    {
-        token: asdf1234asdf1234
-    }
     
 ###### Response
 
@@ -101,9 +96,6 @@ User deauthentication is not currently supported since myGCC automatically kills
 ###### Request
 
     GET /1/user/contact
-    {
-        token: asdf1234asdf1234
-    }
     
 ###### Response
 
@@ -137,7 +129,8 @@ User deauthentication is not currently supported since myGCC automatically kills
             phone: {
                 work: 4561237890,
                 mobile: 8905671234
-            }
+            },
+            email: DoeJane1969@yahoo.com
         },
         secondary: {
             name: Robert Smith,
@@ -224,9 +217,6 @@ User deauthentication is not currently supported since myGCC automatically kills
 ###### Request
 
     GET /1/user/insurance
-    {
-        token: asdf1234asdf1234
-    }
        
 ###### Response
 If under the college's insurance:
@@ -344,9 +334,6 @@ If uses their own insurance:
 ###### Request
 
     GET /1/user/chapel
-    {
-        token: asdf1234asdf1234
-    }
     
 ###### Response
 
@@ -368,9 +355,6 @@ If uses their own insurance:
 ###### Request
 
     GET /1/user/schedule
-    {
-        token: asdf1234asdf1234
-    }
        
 ###### Response
 
@@ -528,9 +512,6 @@ For graded work see [grades](#grades).
 ###### Request
 
     GET /1/user/ccash
-    {
-        token: asdf1234asdf1234
-    }
 
 ###### Response
 
@@ -548,9 +529,6 @@ For graded work see [grades](#grades).
 ###### Request
 
     GET /1/user/vehicle
-    {
-        token: asdf1234asdf1234
-    }
     
 ###### Response
 
