@@ -1,6 +1,5 @@
 package com.mygcc.api;
 
-import com.mygcc.User;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;

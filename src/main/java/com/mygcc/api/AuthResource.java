@@ -1,6 +1,5 @@
 package com.mygcc.api;
 
-import com.mygcc.User;
 import com.mygcc.datacollection.Authorization;
 import com.mygcc.datacollection.InvalidCredentialsException;
 import com.mygcc.datacollection.UnexpectedResponseException;
