@@ -44,22 +44,7 @@ All API calls require an authentication token that is generated after the user i
     
 ### Deauthenticate User
 
-###### Request
-
-    DELETE /1/auth
-    {
-        token: adsf1234asdf1234
-    }
-
-###### Response
-
-    {
-        message: deauthenticated
-    }
-    
-###### Errors
-
-- User not found (400)
+User deauthentication is not currently supported since myGCC automatically kills sessions after they haven't been used for a certain amount of time.
     
 ## User Endpoint
 
