@@ -26,8 +26,8 @@ public final class ScheduleResourceTest extends JerseyTest {
     @Test
     public void testNullAuthorization() {
         ScheduleResource sch = new ScheduleResource();
-        Response r = sch.getChapelData(null);
-        assertEquals("status should be 400", Response.Status.BAD_REQUEST.getStatusCode(), r.getStatus());
+        Response r = sch.getScheduleData(null);
+        assertEquals("status should be 400", Response.Status.UNAUTHORIZED.getStatusCode(), r.getStatus());
     }
 
     /**
@@ -40,7 +40,7 @@ public final class ScheduleResourceTest extends JerseyTest {
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
         ScheduleResource sch = new ScheduleResource();
-        Response r = sch.getChapelData("asdf");
+        Response r = sch.getScheduleData("asdf");
         assertEquals("token should be invalid; status should be 400", Response.Status.BAD_REQUEST.getStatusCode(), r.getStatus());
     }
 
@@ -61,7 +61,7 @@ public final class ScheduleResourceTest extends JerseyTest {
             String token = auth.encryptToken();
 
             ScheduleResource sch = new ScheduleResource();
-            Response r = sch.getChapelData(token);
+            Response r = sch.getScheduleData(token);
             assertEquals("test working key", Response.Status.OK.getStatusCode(), r.getStatus());
         } catch (Exception e) {
             e.printStackTrace();

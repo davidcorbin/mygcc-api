@@ -27,7 +27,7 @@ public final class InsuranceResourceTest extends JerseyTest {
     public void testNullAuthorization() {
         InsuranceResource ins = new InsuranceResource();
         Response r = ins.getInsuranceData(null);
-        assertEquals("status should be 400", Response.Status.BAD_REQUEST.getStatusCode(), r.getStatus());
+        assertEquals("status should be 400", Response.Status.UNAUTHORIZED.getStatusCode(), r.getStatus());
     }
 
     /**
