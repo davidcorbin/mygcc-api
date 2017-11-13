@@ -23,7 +23,7 @@ import java.util.Map;
 @Path("/1/user")
 public class ScheduleResource extends MyGCCResource {
     /**
-     * Handles authenticating user and returning their encrypted token.
+     * Gets schedule data using the Schedule class.
      *
      * @param token Authorization token
      * @return Response to client
@@ -31,26 +31,16 @@ public class ScheduleResource extends MyGCCResource {
     @Path("/schedule")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public final Response getChapelData(
+    public final Response getScheduleData(
             @HeaderParam("Authorization") final String token) {
         if (token == null) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Missing authorization token");
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(response)
-                    .type("application/json")
-                    .build();
+            return invalidCredentialsException();
         }
         Authorization auth = new Authorization();
         try {
             auth.decryptToken(token);
         } catch (InvalidCredentialsException e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Invalid credentials");
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(response)
-                    .type("application/json")
-                    .build();
+            return invalidCredentialsException();
         }
 
         Schedule sch = new Schedule(auth);
@@ -61,12 +51,7 @@ public class ScheduleResource extends MyGCCResource {
                     .type("application/json")
                     .build();
         } catch (UnexpectedResponseException e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Internal server error");
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(response)
-                    .type("application/json")
-                    .build();
+            return unexpectedResponseException();
         }
     }
 }
