@@ -37,7 +37,9 @@ public class Insurance {
 
     /**
      * Gets the insurance data formatted nicely.
-     * @return The insurance data in a Map.
+     * @return The insurance data in a Map collection, where the key is the
+     *  name of the insurance field (e.g. Address, etc.) and the value is
+     *  entered data of that field.
      * @throws UnexpectedResponseException If no insurance data is returned.
      */
     public final Map<String, Object> getInsuranceData()

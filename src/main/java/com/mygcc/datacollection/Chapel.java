@@ -41,7 +41,7 @@ public class Chapel {
 
     /**
      * Get chapel data from myGCC.
-     * @return Map with chapel data
+     * @return The same map from {@link #getChapelDataFromTable(String)}.
      * @throws ExpiredSessionException myGCC session expired
      * @throws UnexpectedResponseException unexpected response from myGCC
      * @throws NetworkException bad connection to myGCC
@@ -120,7 +120,8 @@ public class Chapel {
     /**
      * Gets a map of five parameters from HTML.
      * @param html string of HTML to parse
-     * @return Map 5 parameters
+     * @return Map collection that contains type of chapel as a key
+     *  and the number of those chapels as a value.
      * @throws UnexpectedResponseException HTML not formatted as expected
      */
     private Map<String, Integer> getChapelDataFromTable(final String html)
