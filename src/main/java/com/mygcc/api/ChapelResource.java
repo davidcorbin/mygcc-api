@@ -1,10 +1,10 @@
 package com.mygcc.api;
 
-import com.mygcc.datacollection.Authorization;
 import com.mygcc.datacollection.Chapel;
 import com.mygcc.datacollection.ExpiredSessionException;
 import com.mygcc.datacollection.InvalidCredentialsException;
 import com.mygcc.datacollection.NetworkException;
+import com.mygcc.datacollection.Token;
 import com.mygcc.datacollection.UnexpectedResponseException;
 
 import javax.ws.rs.GET;
@@ -34,17 +34,15 @@ public class ChapelResource extends MyGCCResource {
     public final Response getChapelData(
             @HeaderParam("Authorization") final String token) {
         if (token == null) {
-            return sendErrorMessage("Missing authorization token",
-                    Response.Status.BAD_REQUEST);
+            return invalidCredentialsException();
         }
-        Authorization auth = new Authorization();
+        Token auth;
 
         // Try to decrypt token sent by client
         try {
-            auth.decryptToken(token);
+            auth = new Token(token);
         } catch (InvalidCredentialsException e) {
-            return sendErrorMessage("Invalid credentials",
-                    Response.Status.BAD_REQUEST);
+            return invalidCredentialsException();
         }
 
         Chapel chap = new Chapel(auth);

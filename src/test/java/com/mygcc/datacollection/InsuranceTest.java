@@ -29,7 +29,7 @@ public final class InsuranceTest extends JerseyTest {
         Assume.assumeTrue(System.getenv("myGCC-username") != null
         && System.getenv("myGCC-password") != null);
 
-        Insurance in = new Insurance(new Authorization(
+        Insurance in = new Insurance(new Token(
                 System.getenv("myGCC-username"),
                 System.getenv("myGCC-password")
         ));

@@ -1,8 +1,8 @@
 package com.mygcc.api;
 
-import com.mygcc.datacollection.Authorization;
 import com.mygcc.datacollection.Insurance;
 import com.mygcc.datacollection.InvalidCredentialsException;
+import com.mygcc.datacollection.Token;
 import com.mygcc.datacollection.UnexpectedResponseException;
 
 import javax.ws.rs.GET;
@@ -34,9 +34,9 @@ public class InsuranceResource extends MyGCCResource {
         if (token == null) {
             return invalidCredentialsException();
         }
-        Authorization auth = new Authorization();
+        Token auth;
         try {
-            auth.decryptToken(token);
+            auth = new Token(token);
         } catch (InvalidCredentialsException e) {
             return invalidCredentialsException();
         }

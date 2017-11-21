@@ -1,6 +1,5 @@
 package com.mygcc.api;
 
-import com.mygcc.datacollection.Authorization;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
@@ -22,7 +21,7 @@ public class MainTest extends JerseyTest {
     protected Application configure() {
         enable(TestProperties.LOG_TRAFFIC);
         enable(TestProperties.DUMP_ENTITY);
-        return new ResourceConfig(Authorization.class);
+        return new ResourceConfig(Main.class);
     }
 
     /**

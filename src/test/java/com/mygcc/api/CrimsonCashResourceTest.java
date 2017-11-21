@@ -1,6 +1,6 @@
 package com.mygcc.api;
 
-import com.mygcc.datacollection.Authorization;
+import com.mygcc.datacollection.Token;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
@@ -56,9 +56,9 @@ public final class CrimsonCashResourceTest extends JerseyTest {
         String un = System.getenv("myGCC-username");
         String pw = System.getenv("myGCC-password");
 
-        Authorization auth = new Authorization(un, pw);
+        Token auth = new Token(un, pw);
         try {
-            String token = auth.encryptToken();
+            String token = auth.encrypt();
 
             CrimsonCashResource cc = new CrimsonCashResource();
             Response r = cc.getCrimsonCashData(token);

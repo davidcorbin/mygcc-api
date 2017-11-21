@@ -105,9 +105,6 @@ public final class AuthResourceTest extends JerseyTest {
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
-        String un = System.getenv("myGCC-username");
-        String pw = System.getenv("myGCC-password");
-
         AuthResource ar = new AuthResource();
         User u = new User("asdf", "asdf");
         Response r = ar.authenticateUser(u);

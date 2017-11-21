@@ -1,6 +1,6 @@
 package com.mygcc.api;
 
-import com.mygcc.datacollection.Authorization;
+import com.mygcc.datacollection.Token;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
@@ -17,7 +17,7 @@ public final class ScheduleResourceTest extends JerseyTest {
     protected Application configure() {
         enable(TestProperties.LOG_TRAFFIC);
         enable(TestProperties.DUMP_ENTITY);
-        return new ResourceConfig(WelcomeResource.class);
+        return new ResourceConfig(ScheduleResource.class);
     }
 
     /**
@@ -41,7 +41,7 @@ public final class ScheduleResourceTest extends JerseyTest {
                 && System.getenv("enckey") != null);
         ScheduleResource sch = new ScheduleResource();
         Response r = sch.getScheduleData("asdf");
-        assertEquals("token should be invalid; status should be 400", Response.Status.BAD_REQUEST.getStatusCode(), r.getStatus());
+        assertEquals("token should be invalid; status should be 400", Response.Status.UNAUTHORIZED.getStatusCode(), r.getStatus());
     }
 
     /**
@@ -56,9 +56,9 @@ public final class ScheduleResourceTest extends JerseyTest {
         String un = System.getenv("myGCC-username");
         String pw = System.getenv("myGCC-password");
 
-        Authorization auth = new Authorization(un, pw);
+        Token auth = new Token(un, pw);
         try {
-            String token = auth.encryptToken();
+            String token = auth.encrypt();
 
             ScheduleResource sch = new ScheduleResource();
             Response r = sch.getScheduleData(token);

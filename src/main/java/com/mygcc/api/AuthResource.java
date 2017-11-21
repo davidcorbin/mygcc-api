@@ -1,7 +1,9 @@
 package com.mygcc.api;
 
-import com.mygcc.datacollection.Authorization;
 import com.mygcc.datacollection.InvalidCredentialsException;
+import com.mygcc.datacollection.NetworkException;
+import com.mygcc.datacollection.Session;
+import com.mygcc.datacollection.Token;
 import com.mygcc.datacollection.UnexpectedResponseException;
 
 import javax.ws.rs.POST;
@@ -37,10 +39,13 @@ public class AuthResource extends MyGCCResource {
         String username = user.getUsername();
         String password = user.getPassword();
 
-        Authorization auth = new Authorization(username, password);
+        Token auth = new Token(username, password);
         String token;
         try {
-            token = auth.encryptToken();
+
+            Session ses = new Session(auth);
+            ses.createSession();
+            token = auth.encrypt();
             Map<String, Object> usermap = new HashMap<>();
             usermap.put("date", Instant.now().getEpochSecond());
             usermap.put("token", token);
@@ -52,7 +57,8 @@ public class AuthResource extends MyGCCResource {
             return invalidCredentialsException();
         } catch (UnexpectedResponseException e) {
             return unexpectedResponseException();
+        } catch (NetworkException e) {
+            return networkException();
         }
     }
 }
-

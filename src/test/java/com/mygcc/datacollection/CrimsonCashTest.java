@@ -16,7 +16,7 @@ public class CrimsonCashTest extends JerseyTest {
     protected Application configure() {
         enable(TestProperties.LOG_TRAFFIC);
         enable(TestProperties.DUMP_ENTITY);
-        return new ResourceConfig(Authorization.class);
+        return new ResourceConfig(CrimsonCash.class);
     }
 
     /**
@@ -28,7 +28,7 @@ public class CrimsonCashTest extends JerseyTest {
         Assume.assumeTrue(System.getenv("myGCC-username") != null
                 && System.getenv("myGCC-password") != null);
 
-        CrimsonCash cc = new CrimsonCash(new Authorization(
+        CrimsonCash cc = new CrimsonCash(new Token(
                 System.getenv("myGCC-username"),
                 System.getenv("myGCC-password")));
         Map<String, Object> ccdata = cc.getCrimsonCashData();

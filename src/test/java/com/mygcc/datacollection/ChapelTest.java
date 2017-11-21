@@ -17,7 +17,7 @@ public class ChapelTest extends JerseyTest {
     protected Application configure() {
         enable(TestProperties.LOG_TRAFFIC);
         enable(TestProperties.DUMP_ENTITY);
-        return new ResourceConfig(Authorization.class);
+        return new ResourceConfig(Chapel.class);
     }
 
     /**
@@ -29,9 +29,10 @@ public class ChapelTest extends JerseyTest {
         Assume.assumeTrue(System.getenv("myGCC-username") != null
                 && System.getenv("myGCC-password") != null);
 
-        Chapel ch = new Chapel(new Authorization(
+        Token tok = new Token(
                 System.getenv("myGCC-username"),
-                System.getenv("myGCC-password")));
+                System.getenv("myGCC-password"));
+        Chapel ch = new Chapel(tok);
         Map<String, Integer> chapdata = ch.getChapelData();
         assertEquals(chapdata.size(), 5);
     }

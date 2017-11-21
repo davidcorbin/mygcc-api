@@ -29,14 +29,14 @@ public class CrimsonCash {
     /**
      * myGCC credentials authorization object.
      */
-    private Authorization auth;
+    private Session auth;
 
     /**
      * Crimson Cash constructor.
-     * @param authorization myGCC login credentials
+     * @param token myGCC login credentials
      */
-    public CrimsonCash(final Authorization authorization) {
-        this.auth = authorization;
+    public CrimsonCash(final Token token) {
+        this.auth = new Session(token);
     }
 
     /**
@@ -50,6 +50,9 @@ public class CrimsonCash {
     public final Map<String, Object> getCrimsonCashData() throws
             ExpiredSessionException, UnexpectedResponseException,
             NetworkException, InvalidCredentialsException {
+        // Create session
+        auth.createSession();
+
         String aspxauth = auth.getASPXAuth();
         String seshid = auth.getSessionID();
         try {

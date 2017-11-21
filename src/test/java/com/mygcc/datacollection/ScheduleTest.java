@@ -29,7 +29,7 @@ public final class ScheduleTest extends JerseyTest {
         Assume.assumeTrue(System.getenv("myGCC-username") != null
         && System.getenv("myGCC-password") != null);
 
-        Schedule in = new Schedule(new Authorization(
+        Schedule in = new Schedule(new Token(
                 System.getenv("myGCC-username"),
                 System.getenv("myGCC-password")
         ));

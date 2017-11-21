@@ -25,14 +25,14 @@ public class Insurance {
     /**
      * Authorization needed in order to get Insurance data.
      */
-    private Authorization auth;
+    private Session auth;
 
     /**
      * Insurance constructor.
-     * @param authorization the authorization object for the user.
+     * @param token the authorization object for the user.
      */
-    public Insurance(final Authorization authorization) {
-        this.auth = authorization;
+    public Insurance(final Token token) {
+        this.auth = new Session(token);
     }
 
     /**
@@ -60,7 +60,7 @@ public class Insurance {
     private String getContentFromUrl() throws UnexpectedResponseException {
         final int nullLength = 4;
         try {
-            URL gccIns = new URL(MYINS + auth.getUsername());
+            URL gccIns = new URL(MYINS + auth.getToken().getUsername());
             HttpURLConnection http = (HttpURLConnection) gccIns
                     .openConnection();
             http.setRequestProperty("Cookie",

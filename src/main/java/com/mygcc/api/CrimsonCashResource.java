@@ -1,10 +1,10 @@
 package com.mygcc.api;
 
-import com.mygcc.datacollection.Authorization;
 import com.mygcc.datacollection.CrimsonCash;
 import com.mygcc.datacollection.ExpiredSessionException;
 import com.mygcc.datacollection.InvalidCredentialsException;
 import com.mygcc.datacollection.NetworkException;
+import com.mygcc.datacollection.Token;
 import com.mygcc.datacollection.UnexpectedResponseException;
 
 import javax.ws.rs.GET;
@@ -36,14 +36,14 @@ public class CrimsonCashResource extends MyGCCResource {
         if (token == null) {
             return invalidCredentialsException();
         }
-        Authorization auth = new Authorization();
+        Token tok;
         try {
-            auth.decryptToken(token);
+            tok = new Token(token);
         } catch (InvalidCredentialsException e) {
             return invalidCredentialsException();
         }
 
-        CrimsonCash cc = new CrimsonCash(auth);
+        CrimsonCash cc = new CrimsonCash(tok);
         try {
             Map<String, Object> ccData = cc.getCrimsonCashData();
             return Response.status(Response.Status.OK)

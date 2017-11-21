@@ -1,8 +1,9 @@
 package com.mygcc.api;
 
-import com.mygcc.datacollection.Authorization;
+import com.mygcc.datacollection.NetworkException;
 import com.mygcc.datacollection.Schedule;
 import com.mygcc.datacollection.InvalidCredentialsException;
+import com.mygcc.datacollection.Token;
 import com.mygcc.datacollection.UnexpectedResponseException;
 
 import javax.ws.rs.GET;
@@ -34,9 +35,9 @@ public class ScheduleResource extends MyGCCResource {
         if (token == null) {
             return invalidCredentialsException();
         }
-        Authorization auth = new Authorization();
+        Token auth;
         try {
-            auth.decryptToken(token);
+            auth = new Token(token);
         } catch (InvalidCredentialsException e) {
             return invalidCredentialsException();
         }
@@ -50,6 +51,10 @@ public class ScheduleResource extends MyGCCResource {
                     .build();
         } catch (UnexpectedResponseException e) {
             return unexpectedResponseException();
+        } catch (NetworkException e) {
+            return networkException();
+        } catch (InvalidCredentialsException e) {
+            return invalidCredentialsException();
         }
     }
 }

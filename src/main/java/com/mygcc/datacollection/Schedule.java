@@ -29,23 +29,29 @@ public class Schedule {
     /**
      * Authorization object to get schedule.
      */
-    private Authorization auth;
+    private Session auth;
 
     /**
      * Default constructor.
-     * @param authorization The auth token.
+     * @param token myGCC username and password.
      */
-    public Schedule(final Authorization authorization) {
-        this.auth = authorization;
+    public Schedule(final Token token) {
+        this.auth = new Session(token);
     }
 
     /**
      * Get the class schedule of a user.
      * @return A list of the user's schedule.
      * @throws UnexpectedResponseException If the request goes wrong.
+     * @throws NetworkException error connection to myGCC
+     * @throws InvalidCredentialsException username or password incorrect
      */
     public final List<Object> getScheduleData()
-            throws UnexpectedResponseException {
+            throws UnexpectedResponseException, NetworkException,
+            InvalidCredentialsException {
+        // Create session
+        auth.createSession();
+
         String rawHTML = getContentFromUrl();
         List<Object> prettyJSON = parseScheduleHTML(rawHTML);
         return prettyJSON;
