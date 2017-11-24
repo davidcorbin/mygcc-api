@@ -1,22 +1,16 @@
 package com.mygcc.datacollection;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  * Implements authorization into myGCC, usually done manually by the user.
@@ -66,7 +60,7 @@ import java.util.Scanner;
  * password do not persist beyond the request. Credentials are not stored in a
  * database or persistent mechanism in order to limit attack vectors.</p>
  */
-public class Session {
+public class Session extends MyGCCDataCollection {
     /**
      * myGCC login URL.
      */
@@ -193,44 +187,28 @@ public class Session {
             return;
         }
 
-        String sesPostData = sessionAuthData();
+        LinkedHashMap<String, String> postValues = new
+                LinkedHashMap<String, String>() { {
+            put("_scriptManager_HiddenField", "");
+            put("__EVENTTARGET", "");
+            put("__EVENTARGUMENT", "");
+            put("__VIEWSTATE", "");
+            put("__VIEWSTATEGENERATOR", "");
+            put("___BrowserRefresh", "");
+            put("userName", token.getUsername());
+            put("password", token.getPassword());
+            put("btnLogin", "Login");
+            put("ctl04$tbSearch", "Search...");
+        } };
 
-        // Build connection
-        URLConnection con;
-        try {
-            con = new URL(BASEURL).openConnection();
-        } catch (MalformedURLException e) {
-            throw new IllegalStateException("Malformed url", e);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new UnexpectedResponseException("Unknown IOException");
-        }
+        String postData = postData(postValues, getBoundary());
 
-        HttpURLConnection http = (HttpURLConnection) con;
-        try {
-            http.setRequestMethod("POST");
-        } catch (ProtocolException e) {
-            throw new UnexpectedResponseException("Unknown protocol "
-                    + "exception");
-        }
-
-        http.setDoOutput(true);
-        http.setInstanceFollowRedirects(false);
-
-        // Send the boundary string in the content type
-        http.setRequestProperty("Content-Type",
-                "multipart/form-data; boundary=" + getBoundary());
-        http.setRequestProperty("Cookie",
-                "ASP.NET_SessionId=" + sessionID + ";");
-
-        DataOutputStream wr;
-        try {
-            wr = new DataOutputStream(http.getOutputStream());
-            wr.writeBytes(sesPostData);
-            wr.close();
-        } catch (IOException e) {
-            throw new UnexpectedResponseException("Unknown IOException");
-        }
+        HttpURLConnection http = createPOST(BASEURL, new
+                HashMap<String, String>() { {
+                    put("Content-Type",
+                            "multipart/form-data; boundary=" + getBoundary());
+                    put("Cookie", "ASP.NET_SessionId=" + sessionID + ";");
+                } }, postData);
 
         // Check if logged in
         List<String> cookies = http.getHeaderFields().get("Set-Cookie");
@@ -251,106 +229,6 @@ public class Session {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Get POST request body for login form.
-     * @return POST request body
-     */
-    private String sessionAuthData() {
-        return "--" + getBoundary() + "\n"
-                + "Content-Disposition: form-data;"
-                + " name=\"_scriptManager_HiddenField\"\n"
-                + "\n"
-                + "\n"
-                + "--" + getBoundary() + "\n"
-                + "Content-Disposition: form-data; name=\"__EVENTTARGET\"\n"
-                + "\n"
-                + "\n"
-                + "--" + getBoundary() + "\n"
-                + "Content-Disposition: form-data; name=\"__EVENTARGUMENT\"\n"
-                + "\n"
-                + "\n"
-                + "--" + getBoundary() + "\n"
-                + "Content-Disposition: form-data; name=\"__VIEWSTATE\"\n"
-                + "\n"
-                + "\n"
-                + "--" + getBoundary() + "\n"
-                + "Content-Disposition: form-data;"
-                + " name=\"__VIEWSTATEGENERATOR\"\n"
-                + "\n"
-                + "\n"
-                + "--" + getBoundary() + "\n"
-                + "Content-Disposition: form-data; name=\"___BrowserRefresh\"\n"
-                + "\n"
-                + "\n"
-                + "--" + getBoundary() + "\n"
-                + "Content-Disposition: form-data; name=\"userName\"\n"
-                + "\n"
-                + token.getUsername() + "\n"
-                + "--" + getBoundary() + "\n"
-                + "Content-Disposition: form-data; name=\"password\"\n"
-                + "\n"
-                + token.getPassword() + "\n"
-                + "--" + getBoundary() + "\n"
-                + "Content-Disposition: form-data; name=\"btnLogin\"\n"
-                + "\n"
-                + "Login\n"
-                + "--" + getBoundary() + "\n"
-                + "Content-Disposition: form-data; name=\"ctl04$tbSearch\"\n"
-                + "\n"
-                + "Search...\n"
-                + "--" + getBoundary() + "--\n";
-    }
-
-    /**
-     * Convert InputStream to String.
-     * @param is InputStream to convert
-     * @return String of InputStream data
-     */
-    private static String convertStreamToString(final InputStream is) {
-        Scanner s = new Scanner(is).useDelimiter("\\A");
-        if (s.hasNext()) {
-            return s.next();
-        } else {
-            return "";
-        }
-    }
-
-    /**
-     * Get ASPXAuth from list of cookies.
-     * @param cookies list of cookies
-     * @return ASPXAuth string
-     */
-    private String parseAspxauth(final List<String> cookies) {
-        String aspRaw = cookies.get(0);
-
-        // Trim everything but the cookie value itself
-        return StringUtils.substringBetween(aspRaw,
-                ".ASPXAUTH=",
-                "; path=/");
-    }
-
-    /**
-     * Get VIEWSTATE hidden input value.
-     * @param html html to parse
-     * @return VIEWSTATE value
-     */
-    private String parseViewState(final String html) {
-        Document doc = Jsoup.parse(html);
-        Elements name = doc.select("input[name=__VIEWSTATE]");
-        return name.attr("value");
-    }
-
-    /**
-     * Get browserrefresh hidden input value.
-     * @param html html to parse
-     * @return browserrefresh value
-     */
-    private String parseBrowserRefresh(final String html) {
-        Document doc = Jsoup.parse(html);
-        Elements name = doc.select("input[name=__VIEWSTATE]");
-        return name.attr("value");
     }
 
     /**
