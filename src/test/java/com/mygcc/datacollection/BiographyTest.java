@@ -10,8 +10,6 @@ import javax.ws.rs.core.Application;
 
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-
 public class BiographyTest extends JerseyTest {
     @Override
     protected Application configure() {
@@ -27,13 +25,7 @@ public class BiographyTest extends JerseyTest {
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
-        String un = System.getenv("myGCC-username");
-        String pw = System.getenv("myGCC-password");
-
-        Token auth = new Token(un, pw);
-        Biography bio = new Biography(auth);
-        Map<String, String> data = bio.getData();
-        assert (data.get("name").length() > 1);
+        assert (getData().get("name").length() > 1);
     }
 
     @Test
@@ -43,13 +35,7 @@ public class BiographyTest extends JerseyTest {
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
-        String un = System.getenv("myGCC-username");
-        String pw = System.getenv("myGCC-password");
-
-        Token auth = new Token(un, pw);
-        Biography bio = new Biography(auth);
-        Map<String, String> data = bio.getData();
-        assert (data.get("major").length() > 1);
+        assert (getData().get("major").length() > 1);
     }
 
     @Test
@@ -59,13 +45,7 @@ public class BiographyTest extends JerseyTest {
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
-        String un = System.getenv("myGCC-username");
-        String pw = System.getenv("myGCC-password");
-
-        Token auth = new Token(un, pw);
-        Biography bio = new Biography(auth);
-        Map<String, String> data = bio.getData();
-        assert(data.get("degree").length() > 1);
+        assert(getData().get("degree").length() > 1);
     }
 
     @Test
@@ -75,13 +55,7 @@ public class BiographyTest extends JerseyTest {
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
-        String un = System.getenv("myGCC-username");
-        String pw = System.getenv("myGCC-password");
-
-        Token auth = new Token(un, pw);
-        Biography bio = new Biography(auth);
-        Map<String, String> data = bio.getData();
-        assert(data.get("email").length() > 1);
+        assert(getData().get("email").length() > 1);
     }
 
     @Test
@@ -91,13 +65,7 @@ public class BiographyTest extends JerseyTest {
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
-        String un = System.getenv("myGCC-username");
-        String pw = System.getenv("myGCC-password");
-
-        Token auth = new Token(un, pw);
-        Biography bio = new Biography(auth);
-        Map<String, String> data = bio.getData();
-        assert(data.get("birth").length() > 1);
+        assert(getData().get("birth").length() > 1);
     }
 
     @Test
@@ -107,13 +75,7 @@ public class BiographyTest extends JerseyTest {
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
-        String un = System.getenv("myGCC-username");
-        String pw = System.getenv("myGCC-password");
-
-        Token auth = new Token(un, pw);
-        Biography bio = new Biography(auth);
-        Map<String, String> data = bio.getData();
-        assert(data.get("marital").length() > 1);
+        assert(getData().get("marital").length() > 1);
     }
 
     @Test
@@ -123,13 +85,7 @@ public class BiographyTest extends JerseyTest {
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
-        String un = System.getenv("myGCC-username");
-        String pw = System.getenv("myGCC-password");
-
-        Token auth = new Token(un, pw);
-        Biography bio = new Biography(auth);
-        Map<String, String> data = bio.getData();
-        assert(data.get("gender").length() > 1);
+        assert(getData().get("gender").length() > 1);
     }
 
     @Test
@@ -139,13 +95,7 @@ public class BiographyTest extends JerseyTest {
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
-        String un = System.getenv("myGCC-username");
-        String pw = System.getenv("myGCC-password");
-
-        Token auth = new Token(un, pw);
-        Biography bio = new Biography(auth);
-        Map<String, String> data = bio.getData();
-        assert(data.get("ethnicity").length() > 1);
+        assert(getData().get("ethnicity").length() > 1);
     }
 
     @Test
@@ -155,12 +105,17 @@ public class BiographyTest extends JerseyTest {
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
+        assert(getData().get("ID").length() > 1);
+    }
+
+    public Map<String, String> getData() throws ExpiredSessionException,
+            UnexpectedResponseException, NetworkException,
+            InvalidCredentialsException {
         String un = System.getenv("myGCC-username");
         String pw = System.getenv("myGCC-password");
 
         Token auth = new Token(un, pw);
         Biography bio = new Biography(auth);
-        Map<String, String> data = bio.getData();
-        assert(data.get("ID").length() > 1);
+        return bio.getData();
     }
 }
