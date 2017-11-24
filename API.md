@@ -49,45 +49,27 @@ User deauthentication is not currently supported since myGCC automatically kills
     
 ## User Endpoint
 
-### Name
-
 ###### Request
 
-    GET /1/user/name
+    GET /1/user/
     
 ###### Response
 
     {
-        name: Bob Smith
+        "ID": "123456",
+        "birth": "1/1/2000",
+        "degree": "Bachelor of Science",
+        "email": "LastFM1@gcc.edu",
+        "ethnicity": "White",
+        "gender": "Male",
+        "major": "Computer Science",
+        "marital": "Single",
+        "name": "Mr. First Middle Last"
     }
     
 ###### Errors
 
 - User not found (400)
-- Name not found (404)
-
-### Major
-
-###### Request
-
-    GET /1/user/major
-    
-###### Response
-
-    {
-        major: [
-            Computer Science,
-            Biblical and Religious Studies
-        ],
-        advisor: [
-            Dr. Lory J. Al Moakar
-        ]
-    }
-    
-###### Errors
-
-- User not found (400)
-- Major information not found (404)
 
 ### Contact Information
 
