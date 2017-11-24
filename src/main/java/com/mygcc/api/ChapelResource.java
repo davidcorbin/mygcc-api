@@ -33,9 +33,6 @@ public class ChapelResource extends MyGCCResource {
     @Produces(MediaType.APPLICATION_JSON)
     public final Response getChapelData(
             @HeaderParam("Authorization") final String token) {
-        if (token == null) {
-            return invalidCredentialsException();
-        }
         Token auth;
 
         // Try to decrypt token sent by client

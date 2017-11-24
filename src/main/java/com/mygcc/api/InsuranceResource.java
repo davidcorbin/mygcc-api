@@ -31,9 +31,6 @@ public class InsuranceResource extends MyGCCResource {
     @Produces(MediaType.APPLICATION_JSON)
     public final Response getInsuranceData(
             @HeaderParam("Authorization") final String token) {
-        if (token == null) {
-            return invalidCredentialsException();
-        }
         Token auth;
         try {
             auth = new Token(token);

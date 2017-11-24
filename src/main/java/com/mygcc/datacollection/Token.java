@@ -147,6 +147,11 @@ public class Token {
             InvalidCredentialsException {
         final int expectedTokenLength = 2;
 
+        // Check that token is a string
+        if (token == null || token.trim().isEmpty()) {
+            throw new InvalidCredentialsException("Token invalid");
+        }
+
         try {
             IvParameterSpec iv = new IvParameterSpec(
                     getInitVector().getBytes("UTF-8"));

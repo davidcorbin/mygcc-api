@@ -32,9 +32,6 @@ public class ScheduleResource extends MyGCCResource {
     @Produces(MediaType.APPLICATION_JSON)
     public final Response getScheduleData(
             @HeaderParam("Authorization") final String token) {
-        if (token == null) {
-            return invalidCredentialsException();
-        }
         Token auth;
         try {
             auth = new Token(token);

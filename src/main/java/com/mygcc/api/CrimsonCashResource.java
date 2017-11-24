@@ -33,9 +33,6 @@ public class CrimsonCashResource extends MyGCCResource {
     @Produces(MediaType.APPLICATION_JSON)
     public final Response getCrimsonCashData(
             @HeaderParam("Authorization") final String token) {
-        if (token == null) {
-            return invalidCredentialsException();
-        }
         Token tok;
         try {
             tok = new Token(token);
