@@ -45,7 +45,11 @@ abstract class MyGCCResource {
      */
     public Response invalidCredentialsException(
             final InvalidCredentialsException e) {
-        return sendErrorMessage(e.getMessage(), Response.Status.UNAUTHORIZED);
+        if (e.getMessage().equals("Password may not contain '&#124;'")) {
+            return sendErrorMessage(e.getMessage(),
+                    Response.Status.UNAUTHORIZED);
+        }
+        return invalidCredentialsException();
     }
 
     /**
