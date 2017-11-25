@@ -1,5 +1,7 @@
 package com.mygcc.api;
 
+import com.mygcc.datacollection.InvalidCredentialsException;
+
 import javax.ws.rs.core.Response;
 import java.time.Instant;
 import java.util.HashMap;
@@ -34,6 +36,16 @@ abstract class MyGCCResource {
     public Response invalidCredentialsException() {
         return sendErrorMessage("Invalid myGCC credentials",
                 Response.Status.UNAUTHORIZED);
+    }
+
+    /**
+     * Tell client that their myGCC login credentials are invalid with message.
+     * @param e InvalidCredentialsException object with message to print
+     * @return Response object
+     */
+    public Response invalidCredentialsException(
+            final InvalidCredentialsException e) {
+        return sendErrorMessage(e.getMessage(), Response.Status.UNAUTHORIZED);
     }
 
     /**

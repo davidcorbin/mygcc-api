@@ -98,7 +98,13 @@ public class Token {
     public static String encrypt(final String rawUsername,
                                  final String rawPassword) throws
             InvalidCredentialsException, UnexpectedResponseException {
-        // Escape pipes in string so they can be used in
+        // Check that password doesn't contain '&#124;'
+        if (rawPassword.contains("&#124;")) {
+            throw new InvalidCredentialsException(
+                    "Password may not contain '&#124;'");
+        }
+
+        // Escape pipes
         String pw = escapePipe(rawPassword);
         String un = escapePipe(rawUsername);
 
@@ -171,9 +177,9 @@ public class Token {
             String decoded = new String(original, "UTF-8");
             String[] keyvalues = decoded.split("\\|");
 
-            // Verify that there are 4 values in the token
+            // Verify that there are 2 values in the token
             if (keyvalues.length != expectedTokenLength) {
-                throw new InvalidCredentialsException("Expected 4 values in "
+                throw new InvalidCredentialsException("Expected 2 values in "
                         + "token");
             }
 
