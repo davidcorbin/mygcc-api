@@ -2,7 +2,7 @@
 
 [Authentication Endpoint](#authentication-endpoint)
 - [Authenticate User](#authenticate-user)
-- [Deuthenticate User](#deauthenticate-user)
+- [Deauthenticate User](#deauthenticate-user)
 
 [User Endpoint](#user-endpoint)
 - [Personal Information](#user-endpoint)
