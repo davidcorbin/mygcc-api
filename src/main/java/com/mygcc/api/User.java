@@ -26,12 +26,6 @@ public class User {
     }
 
     /**
-     * Default constructor.
-     */
-    public User() {
-    }
-
-    /**
      * Get username.
      * @return username string
      */

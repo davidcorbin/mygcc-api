@@ -7,13 +7,6 @@ package com.mygcc.datacollection;
  */
 public class InvalidCredentialsException extends Exception {
     /**
-     * Default constructor.
-     */
-    public InvalidCredentialsException() {
-
-    }
-
-    /**
      * Constructor with message.
      * @param message message about login issue
      */
