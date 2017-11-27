@@ -5,8 +5,7 @@
 - [Deuthenticate User](#deauthenticate-user)
 
 [User Endpoint](#user-endpoint)
-- [Name](#name)
-- [Major](#major)
+- [Personal Information](#user-endpoint)
 - [Contact Information](#contact-information)
 - [Health Insurance](#health-insurance)
 - [Chapel Attendance](#chapel-attendance)
