@@ -118,11 +118,13 @@ public abstract class MyGCCDataCollection {
      * @param requestProperties HTTP request properties
      * @param postData data to be sent
      * @return HttpURLConnection
+     * @throws NetworkException error connection to URL
      */
     public static HttpURLConnection createPOST(final String url,
                                                final Map<String, String>
                                                        requestProperties,
-                                               final String postData) {
+                                               final String postData)
+            throws NetworkException {
         URLConnection con;
         try {
             con = new URL(url).openConnection();
@@ -151,7 +153,7 @@ public abstract class MyGCCDataCollection {
             wr.writeBytes(postData);
             wr.close();
         } catch (IOException e) {
-            throw new IllegalStateException("Unknown IOException");
+            throw new NetworkException("Could not connect to myGCC");
         }
 
         return http;

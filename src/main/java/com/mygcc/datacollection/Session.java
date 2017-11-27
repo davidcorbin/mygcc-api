@@ -177,9 +177,10 @@ public class Session extends MyGCCDataCollection {
      * Authenticate session and get session data.
      * @throws InvalidCredentialsException username and password incorrect
      * @throws UnexpectedResponseException unexpected response from myGCC
+     * @throws NetworkException error connection to URL
      */
     private void authenticateSession() throws InvalidCredentialsException,
-            UnexpectedResponseException {
+            UnexpectedResponseException, NetworkException {
         // Return previously retrieved ASPXAuth
         if (getASPXAuth() != null
                 && getBrowserRefresh() != null

@@ -54,7 +54,7 @@ public class AuthResource extends MyGCCResource {
                     .type("application/json")
                     .build();
         } catch (InvalidCredentialsException e) {
-            return invalidCredentialsException();
+            return invalidCredentialsException(e);
         } catch (UnexpectedResponseException e) {
             return unexpectedResponseException();
         } catch (NetworkException e) {
