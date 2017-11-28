@@ -46,6 +46,11 @@ public class BiographyResourceTest extends JerseyTest {
 
     @Test
     public void testBiographyStatusInvalidPassword() throws InvalidCredentialsException, UnexpectedResponseException {
+        Assume.assumeTrue(System.getenv("myGCC-username") != null
+                && System.getenv("myGCC-password") != null
+                && System.getenv("initvect") != null
+                && System.getenv("enckey") != null);
+
         Token auth = new Token("asdf", "asdf");
         String token = auth.encrypt();
 
