@@ -23,13 +23,13 @@ public final class AuthResourceTest extends JerseyTest {
      */
     @Test
     public void testAuthenticateUserStatus() {
-        Assume.assumeTrue(System.getenv("myGCC-username") != null
-                && System.getenv("myGCC-password") != null
+        Assume.assumeTrue(System.getenv("myGCC_username") != null
+                && System.getenv("myGCC_password") != null
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
-        String un = System.getenv("myGCC-username");
-        String pw = System.getenv("myGCC-password");
+        String un = System.getenv("myGCC_username");
+        String pw = System.getenv("myGCC_password");
 
         AuthResource ar = new AuthResource();
         User u = new User(un, pw);
@@ -42,13 +42,13 @@ public final class AuthResourceTest extends JerseyTest {
      */
     @Test
     public void testAuthenticateNullUsername() {
-        Assume.assumeTrue(System.getenv("myGCC-username") != null
-                && System.getenv("myGCC-password") != null
+        Assume.assumeTrue(System.getenv("myGCC_username") != null
+                && System.getenv("myGCC_password") != null
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
-        String un = System.getenv("myGCC-username");
-        String pw = System.getenv("myGCC-password");
+        String un = System.getenv("myGCC_username");
+        String pw = System.getenv("myGCC_password");
 
         AuthResource ar = new AuthResource();
         User u = new User(un, pw);
@@ -62,13 +62,13 @@ public final class AuthResourceTest extends JerseyTest {
      */
     @Test
     public void testAuthenticateNullPassword() {
-        Assume.assumeTrue(System.getenv("myGCC-username") != null
-                && System.getenv("myGCC-password") != null
+        Assume.assumeTrue(System.getenv("myGCC_username") != null
+                && System.getenv("myGCC_password") != null
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
-        String un = System.getenv("myGCC-username");
-        String pw = System.getenv("myGCC-password");
+        String un = System.getenv("myGCC_username");
+        String pw = System.getenv("myGCC_password");
 
         AuthResource ar = new AuthResource();
         User u = new User(un, pw);
@@ -82,13 +82,13 @@ public final class AuthResourceTest extends JerseyTest {
      */
     @Test
     public void testAuthenticateNullUser() {
-        Assume.assumeTrue(System.getenv("myGCC-username") != null
-                && System.getenv("myGCC-password") != null
+        Assume.assumeTrue(System.getenv("myGCC_username") != null
+                && System.getenv("myGCC_password") != null
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
-        String un = System.getenv("myGCC-username");
-        String pw = System.getenv("myGCC-password");
+        String un = System.getenv("myGCC_username");
+        String pw = System.getenv("myGCC_password");
 
         AuthResource ar = new AuthResource();
         Response r = ar.authenticateUser(null);
@@ -100,8 +100,8 @@ public final class AuthResourceTest extends JerseyTest {
      */
     @Test
     public void testAuthenticateIncorrectCredentials() {
-        Assume.assumeTrue(System.getenv("myGCC-username") != null
-                && System.getenv("myGCC-password") != null
+        Assume.assumeTrue(System.getenv("myGCC_username") != null
+                && System.getenv("myGCC_password") != null
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 

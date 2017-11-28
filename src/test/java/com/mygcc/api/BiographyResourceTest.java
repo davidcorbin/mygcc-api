@@ -24,13 +24,13 @@ public class BiographyResourceTest extends JerseyTest {
 
     @Test
     public void testBiographyStatus() {
-        Assume.assumeTrue(System.getenv("myGCC-username") != null
-                && System.getenv("myGCC-password") != null
+        Assume.assumeTrue(System.getenv("myGCC_username") != null
+                && System.getenv("myGCC_password") != null
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
-        String un = System.getenv("myGCC-username");
-        String pw = System.getenv("myGCC-password");
+        String un = System.getenv("myGCC_username");
+        String pw = System.getenv("myGCC_password");
 
         Token auth = new Token(un, pw);
         try {
@@ -46,8 +46,8 @@ public class BiographyResourceTest extends JerseyTest {
 
     @Test
     public void testBiographyStatusInvalidPassword() throws InvalidCredentialsException, UnexpectedResponseException {
-        Assume.assumeTrue(System.getenv("myGCC-username") != null
-                && System.getenv("myGCC-password") != null
+        Assume.assumeTrue(System.getenv("myGCC_username") != null
+                && System.getenv("myGCC_password") != null
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 

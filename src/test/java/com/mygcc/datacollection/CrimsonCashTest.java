@@ -25,12 +25,12 @@ public class CrimsonCashTest extends JerseyTest {
      */
     @Test
     public void testGetCrimsonCashDataLength() throws Exception {
-        Assume.assumeTrue(System.getenv("myGCC-username") != null
-                && System.getenv("myGCC-password") != null);
+        Assume.assumeTrue(System.getenv("myGCC_username") != null
+                && System.getenv("myGCC_password") != null);
 
         CrimsonCash cc = new CrimsonCash(new Token(
-                System.getenv("myGCC-username"),
-                System.getenv("myGCC-password")));
+                System.getenv("myGCC_username"),
+                System.getenv("myGCC_password")));
         Map<String, Object> ccdata = cc.getCrimsonCashData();
         assertEquals(ccdata.size(), 1);
     }

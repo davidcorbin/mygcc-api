@@ -26,12 +26,12 @@ public class ChapelTest extends JerseyTest {
      */
     @Test
     public void testGetChapelDataLength() throws Exception {
-        Assume.assumeTrue(System.getenv("myGCC-username") != null
-                && System.getenv("myGCC-password") != null);
+        Assume.assumeTrue(System.getenv("myGCC_username") != null
+                && System.getenv("myGCC_password") != null);
 
         Token tok = new Token(
-                System.getenv("myGCC-username"),
-                System.getenv("myGCC-password"));
+                System.getenv("myGCC_username"),
+                System.getenv("myGCC_password"));
         Chapel ch = new Chapel(tok);
         Map<String, Integer> chapdata = ch.getChapelData();
         assertEquals(chapdata.size(), 5);

@@ -20,8 +20,8 @@ public class BiographyTest extends JerseyTest {
 
     @Test
     public void testGetFullName() throws Exception {
-        Assume.assumeTrue(System.getenv("myGCC-username") != null
-                && System.getenv("myGCC-password") != null
+        Assume.assumeTrue(System.getenv("myGCC_username") != null
+                && System.getenv("myGCC_password") != null
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
@@ -30,8 +30,8 @@ public class BiographyTest extends JerseyTest {
 
     @Test
     public void testGetMajor() throws Exception {
-        Assume.assumeTrue(System.getenv("myGCC-username") != null
-                && System.getenv("myGCC-password") != null
+        Assume.assumeTrue(System.getenv("myGCC_username") != null
+                && System.getenv("myGCC_password") != null
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
@@ -40,8 +40,8 @@ public class BiographyTest extends JerseyTest {
 
     @Test
     public void testGetDegree() throws Exception {
-        Assume.assumeTrue(System.getenv("myGCC-username") != null
-                && System.getenv("myGCC-password") != null
+        Assume.assumeTrue(System.getenv("myGCC_username") != null
+                && System.getenv("myGCC_password") != null
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
@@ -50,8 +50,8 @@ public class BiographyTest extends JerseyTest {
 
     @Test
     public void testGetEmail() throws Exception {
-        Assume.assumeTrue(System.getenv("myGCC-username") != null
-                && System.getenv("myGCC-password") != null
+        Assume.assumeTrue(System.getenv("myGCC_username") != null
+                && System.getenv("myGCC_password") != null
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
@@ -60,8 +60,8 @@ public class BiographyTest extends JerseyTest {
 
     @Test
     public void testGetBirth() throws Exception {
-        Assume.assumeTrue(System.getenv("myGCC-username") != null
-                && System.getenv("myGCC-password") != null
+        Assume.assumeTrue(System.getenv("myGCC_username") != null
+                && System.getenv("myGCC_password") != null
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
@@ -70,8 +70,8 @@ public class BiographyTest extends JerseyTest {
 
     @Test
     public void testGetMarital() throws Exception {
-        Assume.assumeTrue(System.getenv("myGCC-username") != null
-                && System.getenv("myGCC-password") != null
+        Assume.assumeTrue(System.getenv("myGCC_username") != null
+                && System.getenv("myGCC_password") != null
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
@@ -80,8 +80,8 @@ public class BiographyTest extends JerseyTest {
 
     @Test
     public void testGetGender() throws Exception {
-        Assume.assumeTrue(System.getenv("myGCC-username") != null
-                && System.getenv("myGCC-password") != null
+        Assume.assumeTrue(System.getenv("myGCC_username") != null
+                && System.getenv("myGCC_password") != null
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
@@ -90,8 +90,8 @@ public class BiographyTest extends JerseyTest {
 
     @Test
     public void testGetEthnicity() throws Exception {
-        Assume.assumeTrue(System.getenv("myGCC-username") != null
-                && System.getenv("myGCC-password") != null
+        Assume.assumeTrue(System.getenv("myGCC_username") != null
+                && System.getenv("myGCC_password") != null
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
@@ -100,8 +100,8 @@ public class BiographyTest extends JerseyTest {
 
     @Test
     public void testGetIDNumber() throws Exception {
-        Assume.assumeTrue(System.getenv("myGCC-username") != null
-                && System.getenv("myGCC-password") != null
+        Assume.assumeTrue(System.getenv("myGCC_username") != null
+                && System.getenv("myGCC_password") != null
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
@@ -111,8 +111,8 @@ public class BiographyTest extends JerseyTest {
     public Map<String, String> getData() throws ExpiredSessionException,
             UnexpectedResponseException, NetworkException,
             InvalidCredentialsException {
-        String un = System.getenv("myGCC-username");
-        String pw = System.getenv("myGCC-password");
+        String un = System.getenv("myGCC_username");
+        String pw = System.getenv("myGCC_password");
 
         Token auth = new Token(un, pw);
         Biography bio = new Biography(auth);
