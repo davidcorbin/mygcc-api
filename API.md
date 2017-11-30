@@ -139,6 +139,7 @@ User deauthentication is not currently supported since myGCC automatically kills
             student: {
                 address: {
                     street: 1234 Johnny Cake Ridge Rd.,
+                    street2: Box 123,
                     city: Apple Valley,
                     state: MN,
                     zipcode: 55124,
