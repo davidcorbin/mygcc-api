@@ -12,6 +12,37 @@ import java.util.Map;
  */
 abstract class MyGCCResource {
     /**
+     * Default messages returned by the API.
+     */
+    public enum Message {
+        /**
+         * Welcome message.
+         */
+        WELCOME("Welcome to the Unofficial myGCC API");
+
+        /**
+         * Identifier.
+         */
+        private String id;
+
+        /**
+         * Set identifier.
+         * @param ident identifier
+         */
+        Message(final String ident) {
+            this.id = ident;
+        }
+
+        /**
+         * Get identifier.
+         * @return identifier
+         */
+        public String id() {
+            return id;
+        }
+    }
+
+    /**
      * Tell client that myGCC returned an unknown response.
      * @return Response object
      */

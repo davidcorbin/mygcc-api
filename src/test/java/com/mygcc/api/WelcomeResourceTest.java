@@ -60,7 +60,7 @@ public final class WelcomeResourceTest extends JerseyTest {
         final String response = target().path("/").request().get(String.class);
         JSONObject obj = new JSONObject(response);
         assertEquals("should return welcome message",
-                "Welcome to the Unofficial myGCC API v1",
+                MyGCCResource.Message.WELCOME.id(),
                 obj.getString("message"));
     }
 
@@ -82,7 +82,7 @@ public final class WelcomeResourceTest extends JerseyTest {
     public void testWelcomeReturnedData() {
         WelcomeResource wr = new WelcomeResource();
         Map<String, Object> returned = wr.getWelcomeMessage();
-        assertEquals("Welcome to the Unofficial myGCC API v1", wr.getWelcomeMessage().get("message")); //returned.get("message"));
+        assertEquals(MyGCCResource.Message.WELCOME.id(), wr.getWelcomeMessage().get("message"));
         boolean geq = Instant.now().getEpochSecond() >= (long)returned.get("date");
         assertTrue(geq);
     }
