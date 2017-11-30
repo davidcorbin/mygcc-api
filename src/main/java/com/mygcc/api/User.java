@@ -22,7 +22,13 @@ public class User {
     public User(final String un, final String pw) {
         this.username = un;
         this.password = pw;
-        //this.sessionid = ssid;
+    }
+
+    /**
+     * Default constructor.
+     * Required to deserialize the entity from stream.
+     */
+    public User() {
     }
 
     /**
