@@ -45,7 +45,7 @@ public class BiographyResourceTest extends JerseyTest {
     }
 
     @Test
-    public void testBiographyStatusInvalidPassword() throws InvalidCredentialsException, UnexpectedResponseException {
+    public void testBiographyStatusInvalidPassword() throws InvalidCredentialsException {
         Assume.assumeTrue(System.getenv("myGCC_username") != null
                 && System.getenv("myGCC_password") != null
                 && System.getenv("initvect") != null
@@ -60,7 +60,7 @@ public class BiographyResourceTest extends JerseyTest {
     }
 
     @Test
-    public void testBiographyStatusNullToken() throws InvalidCredentialsException, UnexpectedResponseException {
+    public void testBiographyStatusNullToken() {
         BiographyResource br = new BiographyResource();
         Response r = br.getAllData(null);
         assertEquals("test unauthorized status code", Response.Status.UNAUTHORIZED.getStatusCode(), r.getStatus());
