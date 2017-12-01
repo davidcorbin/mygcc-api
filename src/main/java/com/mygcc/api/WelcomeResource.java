@@ -23,7 +23,7 @@ public class WelcomeResource extends MyGCCResource {
     @Produces(MediaType.APPLICATION_JSON)
     public final Map<String, Object> getWelcomeMessage() {
         Map<String, Object> response = new HashMap<>();
-        response.put("message", Message.WELCOME.id());
+        response.put("message", Message.WELCOME.message());
         response.put("date", Instant.now().getEpochSecond());
         return response;
     }
