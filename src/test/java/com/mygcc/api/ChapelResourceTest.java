@@ -66,4 +66,11 @@ public final class ChapelResourceTest extends JerseyTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void testChapelStatusNullToken() {
+        ChapelResource br = new ChapelResource();
+        Response r = br.getChapelData(null);
+        assertEquals("test unauthorized status code", Response.Status.UNAUTHORIZED.getStatusCode(), r.getStatus());
+    }
 }

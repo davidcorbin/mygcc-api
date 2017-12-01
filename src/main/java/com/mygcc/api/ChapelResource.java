@@ -33,17 +33,9 @@ public class ChapelResource extends MyGCCResource {
     @Produces(MediaType.APPLICATION_JSON)
     public final Response getChapelData(
             @HeaderParam("Authorization") final String token) {
-        Token auth;
-
-        // Try to decrypt token sent by client
         try {
-            auth = new Token(token);
-        } catch (InvalidCredentialsException e) {
-            return invalidCredentialsException();
-        }
-
-        Chapel chap = new Chapel(auth);
-        try {
+            Token auth = new Token(token);
+            Chapel chap = new Chapel(auth);
             Map<String, Integer> chapelData = chap.getChapelData();
             return Response.status(Response.Status.OK)
                     .entity(chapelData)
