@@ -424,12 +424,12 @@ For graded work see [grades](#grades).
 
 ###### Request
 
-    GET /1/user/homework
+    GET /1/class/XXXXNNNX/homework
     {
         token: asdf1234asdf1234
-        class: MATH 213 B
     }
     
+Replace XXXXNNNX With the course code of the class you want homework for. (e.g. BIOL101A or MATH213B)
 ###### Response
 
     {
