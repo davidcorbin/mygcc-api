@@ -6,46 +6,38 @@ import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
 import org.junit.Assume;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
 
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 
-public final class ChapelResourceTest extends JerseyTest {
+import static org.junit.Assert.assertEquals;
+
+public class ContactResourceTest extends JerseyTest {
     @Override
     protected Application configure() {
         enable(TestProperties.LOG_TRAFFIC);
         enable(TestProperties.DUMP_ENTITY);
-        return new ResourceConfig(ChapelResource.class);
+        return new ResourceConfig(ContactResource.class);
     }
 
-    /**
-     * Test when token is null.
-     */
     @Test
     public void testNullAuthorization() {
-        ChapelResource chap = new ChapelResource();
-        Response r = chap.getChapelData(null);
+        ContactResource conres = new ContactResource();
+        Response r = conres.getContactData(null);
         assertEquals("status should be unauthorized", Response.Status.UNAUTHORIZED.getStatusCode(), r.getStatus());
     }
 
-    /**
-     * Test when key is null.
-     */
     @Test
     public void testFakeAuth() {
         Assume.assumeTrue(System.getenv("myGCC_username") != null
                 && System.getenv("myGCC_password") != null
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
-        ChapelResource chap = new ChapelResource();
-        Response r = chap.getChapelData("asdf");
-        assertEquals("token should be invalid", Response.Status.UNAUTHORIZED.getStatusCode(), r.getStatus());
+        ContactResource conres = new ContactResource();
+        Response r = conres.getContactData("asdf");
+        assertEquals("status should be unauthorized", Response.Status.UNAUTHORIZED.getStatusCode(), r.getStatus());
     }
 
-    /**
-     * Test when token is valid.
-     */
     @Test
     public void testWorkingKey() {
         Assume.assumeTrue(System.getenv("myGCC_username") != null
@@ -59,18 +51,11 @@ public final class ChapelResourceTest extends JerseyTest {
         try {
             String token = auth.encrypt();
 
-            ChapelResource chap = new ChapelResource();
-            Response r = chap.getChapelData(token);
+            ContactResource conres = new ContactResource();
+            Response r = conres.getContactData(token);
             assertEquals("test working key", Response.Status.OK.getStatusCode(), r.getStatus());
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Test
-    public void testChapelStatusNullToken() {
-        ChapelResource br = new ChapelResource();
-        Response r = br.getChapelData(null);
-        assertEquals("test unauthorized status code", Response.Status.UNAUTHORIZED.getStatusCode(), r.getStatus());
     }
 }

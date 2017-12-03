@@ -18,27 +18,52 @@ abstract class MyGCCResource {
         /**
          * Welcome message.
          */
-        WELCOME("Welcome to the Unofficial myGCC API");
+        WELCOME("Welcome to the Unofficial myGCC API"),
 
         /**
-         * Identifier.
+         * Internal server error message.
          */
-        private String id;
+        INTERNALSERVERERROR("Internal server error"),
 
         /**
-         * Set identifier.
-         * @param ident identifier
+         * Network error message.
          */
-        Message(final String ident) {
-            this.id = ident;
+        NETWORKEXCEPTION("myGCC is unavailable"),
+
+        /**
+         * Invalid credentials message.
+         */
+        INVALIDCREDENTIALS("Invalid myGCC credentials"),
+
+        /**
+         * Invalid password message.
+         */
+        INVALIDPASSWORD("Password may not contain '&#124;'"),
+
+        /**
+         * Session expired message.
+         */
+        SESSIONEXPIRED("Session expired");
+
+        /**
+         * Message.
+         */
+        private String message;
+
+        /**
+         * Set message.
+         * @param msg message
+         */
+        Message(final String msg) {
+            this.message = msg;
         }
 
         /**
          * Get identifier.
          * @return identifier
          */
-        public String id() {
-            return id;
+        public String message() {
+            return message;
         }
     }
 
@@ -47,7 +72,7 @@ abstract class MyGCCResource {
      * @return Response object
      */
     public Response unexpectedResponseException() {
-        return sendErrorMessage("Internal server error",
+        return sendErrorMessage(Message.INTERNALSERVERERROR.message(),
                 Response.Status.BAD_REQUEST);
     }
 
@@ -56,7 +81,7 @@ abstract class MyGCCResource {
      * @return Response object
      */
     public Response networkException() {
-        return sendErrorMessage("myGCC is unavailable",
+        return sendErrorMessage(Message.NETWORKEXCEPTION.message(),
                 Response.Status.BAD_REQUEST);
     }
 
@@ -65,7 +90,7 @@ abstract class MyGCCResource {
      * @return Response object
      */
     public Response invalidCredentialsException() {
-        return sendErrorMessage("Invalid myGCC credentials",
+        return sendErrorMessage(Message.INVALIDCREDENTIALS.message(),
                 Response.Status.UNAUTHORIZED);
     }
 
@@ -76,7 +101,7 @@ abstract class MyGCCResource {
      */
     public Response invalidCredentialsException(
             final InvalidCredentialsException e) {
-        if (e.getMessage().equals("Password may not contain '&#124;'")) {
+        if (e.getMessage().equals(Message.INVALIDPASSWORD.message())) {
             return sendErrorMessage(e.getMessage(),
                     Response.Status.UNAUTHORIZED);
         }
@@ -88,7 +113,7 @@ abstract class MyGCCResource {
      * @return Response object
      */
     public Response sessionExpiredMessage() {
-        return sendErrorMessage("Session expired",
+        return sendErrorMessage(Message.SESSIONEXPIRED.message(),
                 Response.Status.BAD_REQUEST);
     }
 

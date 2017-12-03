@@ -93,11 +93,10 @@ public class Token {
      * @param rawPassword password
      * @return encrypted token
      * @throws InvalidCredentialsException bad credentials
-     * @throws UnexpectedResponseException unhandled response from myGCC
      */
     public static String encrypt(final String rawUsername,
                                  final String rawPassword) throws
-            InvalidCredentialsException, UnexpectedResponseException {
+            InvalidCredentialsException {
         // Check that password doesn't contain '&#124;'
         if (rawPassword.contains("&#124;")) {
             throw new InvalidCredentialsException(
@@ -134,10 +133,8 @@ public class Token {
      * Encrypt instance username and password.
      * @return encrypted string
      * @throws InvalidCredentialsException invalid credentials
-     * @throws UnexpectedResponseException unexpected response from myGCC
      */
-    public final String encrypt() throws InvalidCredentialsException,
-            UnexpectedResponseException {
+    public final String encrypt() throws InvalidCredentialsException {
         return encrypt(getUsername(), getPassword());
     }
 
