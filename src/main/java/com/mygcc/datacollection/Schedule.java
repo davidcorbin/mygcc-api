@@ -73,6 +73,8 @@ public class Schedule {
         for (Element c : rows) {
             Map<String, Object> clas = new HashMap<>();
             clas.put("course", c.select("td").get(1).text());
+            clas.put("code", c.select("td").get(1).text()
+                    .replaceAll(" ", ""));
             clas.put("title", c.select("td").get(2).text());
             clas.put("credits", c.select("td").get(creditNumber).text());
 
