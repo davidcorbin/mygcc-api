@@ -11,7 +11,7 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-public class CrimsonCashTest extends JerseyTest {
+public final class CrimsonCashTest extends JerseyTest {
     @Override
     protected Application configure() {
         enable(TestProperties.LOG_TRAFFIC);

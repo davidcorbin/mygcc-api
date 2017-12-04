@@ -12,7 +12,7 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-public class ChapelTest extends JerseyTest {
+public final class ChapelTest extends JerseyTest {
     @Override
     protected Application configure() {
         enable(TestProperties.LOG_TRAFFIC);

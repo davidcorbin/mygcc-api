@@ -23,6 +23,7 @@ public final class ScheduleTest extends JerseyTest {
 
     /**
      * Test Schedule response status with valid Id.
+     * @throws Exception error occurred
      */
     @Test
     public void testValidScheduleId() throws Exception {

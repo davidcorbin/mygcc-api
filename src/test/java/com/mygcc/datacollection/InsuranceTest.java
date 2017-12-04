@@ -23,6 +23,7 @@ public final class InsuranceTest extends JerseyTest {
 
     /**
      * Test Insurance response status with valid Id.
+     * @throws Exception error occurred
      */
     @Test
     public void testValidInsuranceId() throws Exception {

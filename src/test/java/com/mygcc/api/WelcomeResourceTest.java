@@ -83,7 +83,7 @@ public final class WelcomeResourceTest extends JerseyTest {
         WelcomeResource wr = new WelcomeResource();
         Map<String, Object> returned = wr.getWelcomeMessage();
         assertEquals(MyGCCResource.Message.WELCOME.message(), wr.getWelcomeMessage().get("message"));
-        boolean geq = Instant.now().getEpochSecond() >= (long)returned.get("date");
+        boolean geq = Instant.now().getEpochSecond() >= (long) returned.get("date");
         assertTrue(geq);
     }
 }

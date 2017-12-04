@@ -10,7 +10,7 @@ import javax.ws.rs.core.Application;
 
 import java.util.Map;
 
-public class BiographyTest extends JerseyTest {
+public final class BiographyTest extends JerseyTest {
     @Override
     protected Application configure() {
         enable(TestProperties.LOG_TRAFFIC);
@@ -45,7 +45,7 @@ public class BiographyTest extends JerseyTest {
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
-        assert(getData().get("degree").length() > 1);
+        assert (getData().get("degree").length() > 1);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class BiographyTest extends JerseyTest {
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
-        assert(getData().get("email").length() > 1);
+        assert (getData().get("email").length() > 1);
     }
 
     @Test
@@ -65,7 +65,7 @@ public class BiographyTest extends JerseyTest {
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
-        assert(getData().get("birth").length() > 1);
+        assert (getData().get("birth").length() > 1);
     }
 
     @Test
@@ -75,7 +75,7 @@ public class BiographyTest extends JerseyTest {
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
-        assert(getData().get("marital").length() > 1);
+        assert (getData().get("marital").length() > 1);
     }
 
     @Test
@@ -85,7 +85,7 @@ public class BiographyTest extends JerseyTest {
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
-        assert(getData().get("gender").length() > 1);
+        assert (getData().get("gender").length() > 1);
     }
 
     @Test
@@ -95,7 +95,7 @@ public class BiographyTest extends JerseyTest {
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
-        assert(getData().get("ethnicity").length() > 1);
+        assert (getData().get("ethnicity").length() > 1);
     }
 
     @Test
@@ -105,10 +105,10 @@ public class BiographyTest extends JerseyTest {
                 && System.getenv("initvect") != null
                 && System.getenv("enckey") != null);
 
-        assert(getData().get("ID").length() > 1);
+        assert (getData().get("ID").length() > 1);
     }
 
-    public Map<String, String> getData() throws ExpiredSessionException,
+    private Map<String, String> getData() throws ExpiredSessionException,
             UnexpectedResponseException, NetworkException,
             InvalidCredentialsException {
         String un = System.getenv("myGCC_username");

@@ -2,7 +2,6 @@ package com.mygcc.api;
 
 import com.mygcc.datacollection.InvalidCredentialsException;
 import com.mygcc.datacollection.Token;
-import com.mygcc.datacollection.UnexpectedResponseException;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
@@ -14,7 +13,7 @@ import javax.ws.rs.core.Response;
 
 import static org.junit.Assert.assertEquals;
 
-public class BiographyResourceTest extends JerseyTest {
+public final class BiographyResourceTest extends JerseyTest {
     @Override
     protected Application configure() {
         enable(TestProperties.LOG_TRAFFIC);

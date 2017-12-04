@@ -9,7 +9,7 @@ import org.junit.Test;
 import javax.ws.rs.core.Application;
 import java.util.Map;
 
-public class ContactTest extends JerseyTest {
+public final class ContactTest extends JerseyTest {
     @Override
     protected Application configure() {
         enable(TestProperties.LOG_TRAFFIC);
@@ -30,6 +30,6 @@ public class ContactTest extends JerseyTest {
         Token auth = new Token(un, pw);
         Contact con = new Contact(auth);
         Map<String, Object> data = con.getContactData();
-        assert(data.size() == 4);
+        assert (data.size() == 4);
     }
 }

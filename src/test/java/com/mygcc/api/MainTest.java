@@ -16,7 +16,7 @@ import java.net.URL;
 
 import static junit.framework.TestCase.assertEquals;
 
-public class MainTest extends JerseyTest {
+public final class MainTest extends JerseyTest {
     @Override
     protected Application configure() {
         enable(TestProperties.LOG_TRAFFIC);
@@ -25,25 +25,28 @@ public class MainTest extends JerseyTest {
     }
 
     /**
-     * Test that server starts normally
+     * Test that server starts normally.
      * @throws Exception generic exception throw when something goes wrong
      */
     @Test
     public void testDefaultConstructor() throws Exception {
+        final int serverPort = 8080;
+
         // Create Server
-        Server server = new Server(8080);
+        Server server = new Server(serverPort);
         ServletContextHandler context = new ServletContextHandler();
         ServletHolder defaultServ = new ServletHolder("default", DefaultServlet.class);
         defaultServ.setInitParameter("resourceBase", System.getProperty("user.dir"));
-        defaultServ.setInitParameter("dirAllowed","true");
-        context.addServlet(defaultServ,"/");
+        defaultServ.setInitParameter("dirAllowed", "true");
+        context.addServlet(defaultServ, "/");
         server.setHandler(context);
 
         // Start Server
         server.start();
 
         // Test GET
-        HttpURLConnection http = (HttpURLConnection)new URL("http://localhost:8080/").openConnection();
+        HttpURLConnection http = (HttpURLConnection) new
+                URL("http://localhost:8080/").openConnection();
         http.connect();
         assertEquals("Response Code", http.getResponseCode(), HttpStatus.OK_200);
 

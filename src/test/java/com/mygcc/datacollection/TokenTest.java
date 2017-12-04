@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import javax.ws.rs.core.Application;
 
-public class TokenTest extends JerseyTest {
+public final class TokenTest extends JerseyTest {
     @Override
     protected Application configure() {
         enable(TestProperties.LOG_TRAFFIC);
