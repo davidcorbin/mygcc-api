@@ -1,6 +1,12 @@
 package com.mygcc.api;
 
-import com.mygcc.datacollection.*;
+import com.mygcc.datacollection.ClassDoesNotExistException;
+import com.mygcc.datacollection.Homework;
+import com.mygcc.datacollection.InvalidCredentialsException;
+import com.mygcc.datacollection.NetworkException;
+import com.mygcc.datacollection.StudentNotInClassException;
+import com.mygcc.datacollection.Token;
+import com.mygcc.datacollection.UnexpectedResponseException;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;

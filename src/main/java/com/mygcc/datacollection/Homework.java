@@ -70,6 +70,9 @@ public class Homework extends MyGCCDataCollection {
      * @throws UnexpectedResponseException If the request goes wrong.
      * @throws InvalidCredentialsException If credentials are invalid.
      * @throws NetworkException If network is down.
+     * @throws ClassDoesNotExistException If a class does not exist.
+     * @throws StudentNotInClassException If the student is not enrolled
+     *      in the specified class.
      */
     public final List<Object> getHomeworkData()
             throws UnexpectedResponseException,
@@ -79,11 +82,8 @@ public class Homework extends MyGCCDataCollection {
             StudentNotInClassException {
         auth.createSession();
         String hwURL = courseCodeToURL(ccode);
-        //System.out.println(hwURL);
         String rawHTML = getContentFromUrl(hwURL);
         List<Object> prettyJSON = parseHomeworkHTML(rawHTML);
-        //List<Object> rawboy = new LinkedList<Object>();
-        //rawboy.add(rawHTML);
         return prettyJSON;
     }
 
@@ -111,7 +111,8 @@ public class Homework extends MyGCCDataCollection {
         url.append(String.format("/%s/%s_%s", subject, subject, number));
         if (section.length() > 1) {
             url.append(String.format("/%s_%s-%s_%s-%s____L/Coursework.jnz",
-                    CURRENT_YEAR, MAGIC_URL_NUMBER, subject, number, section.charAt(0)));
+                    CURRENT_YEAR, MAGIC_URL_NUMBER, subject,
+                    number, section.charAt(0)));
         } else {
             url.append(String.format("/%s_%s-%s_%s-%s/Coursework.jnz",
                     CURRENT_YEAR, MAGIC_URL_NUMBER, subject, number, section));
@@ -123,6 +124,8 @@ public class Homework extends MyGCCDataCollection {
      * Turns ugly HTML homework page into pretty JSON homework list.
      * @param raw The raw unformatted HTML from myGCC.
      * @return A JSON formatted homework.
+     * @throws ClassDoesNotExistException If the class does not exist.
+     * @throws StudentNotInClassException If the student is not in a class.
      */
     private List<Object> parseHomeworkHTML(final String raw)
             throws ClassDoesNotExistException, StudentNotInClassException {
@@ -170,9 +173,7 @@ public class Homework extends MyGCCDataCollection {
                 assignmentArray.put("grade", gradeArray);
                 String parsedDate = dateStringToDate(
                         d.select("div.assignmentDue > strong").text());
-                //if (!parsedDate.equals(null) && parsedDate.length() > 0) {
-                    assignmentArray.put("due", parsedDate);
-                //}
+                assignmentArray.put("due", parsedDate);
                 assignmentArray.put("description",
                         d.select("div.assignmentDescription").text());
                 assignmentArray.put("open", d.hasClass("open"));
@@ -204,7 +205,8 @@ public class Homework extends MyGCCDataCollection {
         String pDay = rawParts[2];
         int pHour = Integer.parseInt(rawParts[timeindex].split(":")[0]);
         int pMinute = Integer.parseInt(rawParts[timeindex].split(":")[1]);
-        if (rawParts[timeindicatorindex].equals("AM") && pHour == 12) {
+        if (rawParts[timeindicatorindex].equals("AM")
+                && pHour == timedifference) {
             pHour = 0;
         }
         if (rawParts[timeindicatorindex].equals("PM")) {
