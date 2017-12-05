@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * Class for getting homework information.
  */
-public class Homework {
+public class Homework extends MyGCCDataCollection {
 
     /**
      * This number's significance is unknown.
@@ -71,14 +71,17 @@ public class Homework {
      * @throws InvalidCredentialsException If credentials are invalid.
      * @throws NetworkException If network is down.
      */
-    public final List<Object> getScheduleData()
+    public final List<Object> getHomeworkData()
             throws UnexpectedResponseException,
-            InvalidCredentialsException, NetworkException {
+            InvalidCredentialsException,
+            NetworkException,
+            ClassDoesNotExistException,
+            StudentNotInClassException {
         auth.createSession();
         String hwURL = courseCodeToURL(ccode);
         //System.out.println(hwURL);
         String rawHTML = getContentFromUrl(hwURL);
-        List<Object> prettyJSON = parseScheduleHTML(rawHTML);
+        List<Object> prettyJSON = parseHomeworkHTML(rawHTML);
         //List<Object> rawboy = new LinkedList<Object>();
         //rawboy.add(rawHTML);
         return prettyJSON;
@@ -106,8 +109,13 @@ public class Homework {
         StringBuilder url = new StringBuilder();
         url.append(MYCON);
         url.append(String.format("/%s/%s_%s", subject, subject, number));
-        url.append(String.format("/%s_%s-%s_%s-%s/Coursework.jnz",
-                CURRENT_YEAR, MAGIC_URL_NUMBER, subject, number, section));
+        if (section.length() > 1) {
+            url.append(String.format("/%s_%s-%s_%s-%s____L/Coursework.jnz",
+                    CURRENT_YEAR, MAGIC_URL_NUMBER, subject, number, section.charAt(0)));
+        } else {
+            url.append(String.format("/%s_%s-%s_%s-%s/Coursework.jnz",
+                    CURRENT_YEAR, MAGIC_URL_NUMBER, subject, number, section));
+        }
         return url.toString();
     }
 
@@ -116,11 +124,18 @@ public class Homework {
      * @param raw The raw unformatted HTML from myGCC.
      * @return A JSON formatted homework.
      */
-    private List<Object> parseScheduleHTML(final String raw) {
+    private List<Object> parseHomeworkHTML(final String raw)
+            throws ClassDoesNotExistException, StudentNotInClassException {
         final int gradestringlength = 4;
         final int percentindex = 3;
         Map<String, Object> mainArray = new HashMap<>();
         Document doc = Jsoup.parse(raw);
+        Elements notFound = doc.select(".notFound");
+        if (notFound.text().contains("require you to be")) {
+            throw new ClassDoesNotExistException();
+        } else if (notFound.text().contains("permissions to view")) {
+            throw new StudentNotInClassException();
+        }
         Elements sections = doc.select(
                 "#pg0_V__assignmentView__updatePanel > div.assignmentTitle");
         List<Object> classArray = new ArrayList<>();
@@ -139,8 +154,8 @@ public class Homework {
                 gradeString = Arrays.stream(gradeString)
                         .filter(s -> (s != null && s.length() > 0))
                         .toArray(String[]::new);
-                gradeArray.put("recieved", gradeString[0]);
-                try {
+                gradeArray.put("received", gradeString[0]);
+                if (gradeString.length > 1) {
                     gradeArray.put("points", gradeString[1]);
                     if (gradeString.length >= gradestringlength) {
                         gradeArray.put("letter", gradeString[2]);
@@ -150,8 +165,6 @@ public class Homework {
                         gradeArray.put("percent", gradeString[2]
                                 .replaceAll("%", ""));
                     }
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    e = e;
                 }
 
                 assignmentArray.put("grade", gradeArray);
@@ -183,7 +196,7 @@ public class Homework {
         String[] months = {"January", "February", "March", "April", "May",
                 "June", "July", "August", "September", "October", "November",
                 "December"};
-        if (rawDate.length() <= 0 || rawDate.equals(null)) {
+        if (rawDate.length() <= 0) {
             return "";
         }
         String[] rawParts = rawDate.split(" ");
@@ -191,10 +204,13 @@ public class Homework {
         String pDay = rawParts[2];
         int pHour = Integer.parseInt(rawParts[timeindex].split(":")[0]);
         int pMinute = Integer.parseInt(rawParts[timeindex].split(":")[1]);
+        if (rawParts[timeindicatorindex].equals("AM") && pHour == 12) {
+            pHour = 0;
+        }
         if (rawParts[timeindicatorindex].equals("PM")) {
             pHour += timedifference;
         }
-        String newDate = String.format("%s-%d-%sT%d:%d:00Z",
+        String newDate = String.format("%s-%d-%sT%02d:%02d:00Z",
                 CURRENT_YEAR, pMonth, pDay, pHour, pMinute);
         return newDate;
     }

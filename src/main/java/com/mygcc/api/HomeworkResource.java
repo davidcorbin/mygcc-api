@@ -1,10 +1,6 @@
 package com.mygcc.api;
 
-import com.mygcc.datacollection.Homework;
-import com.mygcc.datacollection.InvalidCredentialsException;
-import com.mygcc.datacollection.NetworkException;
-import com.mygcc.datacollection.Token;
-import com.mygcc.datacollection.UnexpectedResponseException;
+import com.mygcc.datacollection.*;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -44,7 +40,7 @@ public class HomeworkResource extends MyGCCResource {
 
         Homework hmw = new Homework(auth, courseCode);
         try {
-            List<Object> homeworkData = hmw.getScheduleData();
+            List<Object> homeworkData = hmw.getHomeworkData();
             return Response.status(Response.Status.OK)
                     .entity(homeworkData)
                     .type("application/json")
@@ -55,6 +51,10 @@ public class HomeworkResource extends MyGCCResource {
             return networkException();
         } catch (InvalidCredentialsException e) {
             return invalidCredentialsException();
+        } catch (ClassDoesNotExistException e) {
+            return classDoesNotExistException();
+        } catch (StudentNotInClassException e) {
+            return  studentNotInClassException();
         }
     }
 }

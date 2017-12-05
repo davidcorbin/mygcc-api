@@ -43,7 +43,17 @@ abstract class MyGCCResource {
         /**
          * Session expired message.
          */
-        SESSIONEXPIRED("Session expired");
+        SESSIONEXPIRED("Session expired"),
+
+        /**
+         * Class does not exist message.
+         */
+        NOCLASSEXISTS("Class does not exist"),
+
+        /**
+         * Student not in class message.
+         */
+        STUDENTNOTINCLASS("Student not enrolled in class");
 
         /**
          * Message.
@@ -92,6 +102,24 @@ abstract class MyGCCResource {
     public Response invalidCredentialsException() {
         return sendErrorMessage(Message.INVALIDCREDENTIALS.message(),
                 Response.Status.UNAUTHORIZED);
+    }
+
+    /**
+     * Tell client that their myGCC login credentials are invalid.
+     * @return Response object
+     */
+    public Response classDoesNotExistException() {
+        return sendErrorMessage(Message.NOCLASSEXISTS.message(),
+                Response.Status.BAD_REQUEST);
+    }
+
+    /**
+     * Tell client that their myGCC login credentials are invalid.
+     * @return Response object
+     */
+    public Response studentNotInClassException() {
+        return sendErrorMessage(Message.STUDENTNOTINCLASS.message(),
+                Response.Status.BAD_REQUEST);
     }
 
     /**

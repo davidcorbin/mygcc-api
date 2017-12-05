@@ -420,8 +420,6 @@ Days of the week correspond to letters:
 
 ### Homework
 
-For graded work see [grades](#grades).
-
 ###### Request
 
     GET /1/class/XXXXNNNX/homework
@@ -432,49 +430,93 @@ For graded work see [grades](#grades).
 Replace XXXXNNNX With the course code of the class you want homework for. (e.g. BIOL101A or MATH213B)
 ###### Response
 
-    {
-        next: [
-            {
-                due: 20171103,
-                title: Celebration of Learning 3,
-                points: 90,
-                finalGrade: true
-                grade: 0;
-            },
-            {
-                due: 20171117,
-                title: Celebration of Learning 4,
-                points: 70,
-                finalGrade: true
-                grade: 0;
-            }
-        ],
-        assigned: {
-            {
-                due: 20171211,
-                title: Celebration of Learning 5,
-                points: 70,
-                finalGrade: true
-                grade: 0;
-            }
-        },
-        finished: {
-            {
-                due: 20170922,
-                title: Celebration of Learning 1,
-                points: 70,
-                finalGrade: true
-                grade: 90;
-            },
-            {
-                due: 20171013,
-                title: Celebration of Learning 2,
-                points: 90,
-                finalGrade: true
-                grade: 90;
-            }
+    [
+        {
+            "BIOL 101 Lab Grades": [
+                {
+                    "due": "2017-12-19T12:0:00Z",
+                    "grade": {
+                        "received": "Open"
+                    },
+                    "description": "",
+                    "title": "BIOL 101 Lab Grade",
+                    "open": true
+                }
+            ],
+            "Extra Credit": [
+                {
+                    "due": "",
+                    "grade": {
+                        "received": "3",
+                        "percent": "100",
+                        "points": "3"
+                    },
+                    "description": "",
+                    "title": "Extra Credit (Psych Study)",
+                    "open": false
+                }
+            ],
+            "BIOL 101 Exam Grades": [
+                {
+                    "due": "",
+                    "grade": {
+                        "letter": "A",
+                        "received": "49",
+                        "percent": "98",
+                        "points": "50"
+                    },
+                    "description": "",
+                    "title": "EXAM I GRADE",
+                    "open": false
+                },
+                {
+                    "due": "",
+                    "grade": {
+                        "letter": "B-",
+                        "received": "40.5",
+                        "percent": "81",
+                        "points": "50"
+                    },
+                    "description": "",
+                    "title": "EXAM II GRADE",
+                    "open": false
+                },
+                {
+                    "due": "",
+                    "grade": {
+                        "letter": "A",
+                        "received": "49",
+                        "percent": "98",
+                        "points": "50"
+                    },
+                    "description": "",
+                    "title": "EXAM III GRADE",
+                    "open": false
+                },
+                {
+                    "due": "2017-12-19T12:0:00Z",
+                    "grade": {
+                        "received": "Open"
+                    },
+                    "description": "",
+                    "title": "EXAM IV GRADE",
+                    "open": true
+                },
+                {
+                    "due": "2017-12-19T12:0:00Z",
+                    "grade": {
+                        "received": "Open"
+                    },
+                    "description": "",
+                    "title": "FINAL EXAM GRADE",
+                    "open": true
+                }
+            ],
+            "Unit 1": []
         }
-    }
+    ]
+Each element has the title of the section as shown on myGCC.
+The date is given in ISO 8601 format.
 
 ###### Errors
 
