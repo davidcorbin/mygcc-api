@@ -17,43 +17,43 @@ public class CourseNameParserTest extends JerseyTest {
 
     @Test
     public void testBio() {
-        assert(CourseNameParser.courseNameToReadable(
+        assert CourseNameParser.courseNameToReadable(
                         "GENERAL BIOLOGY I",
-                        null).equals("Biology I"));
+                        null).equals("Biology I");
     }
 
     @Test
     public void testLab() {
-        assert(CourseNameParser.courseNameToReadable(
+        assert CourseNameParser.courseNameToReadable(
                 "LABORATORY",
-                null).equals("Lab"));
+                null).equals("Lab");
     }
 
     @Test
     public void testProgramming2() {
-        assert(CourseNameParser.courseNameToReadable(
+        assert CourseNameParser.courseNameToReadable(
                 "COMP PROGRAMMING II",
-                null).equals("Comp Programming II"));
+                null).equals("Comp Programming II");
     }
 
     @Test
     public void testCivLit() {
-        assert(CourseNameParser.courseNameToReadable(
+        assert CourseNameParser.courseNameToReadable(
                 "CIV/LITERATURE",
-                null).equals("Civ. Lit."));
+                null).equals("Civ. Lit.");
     }
 
     @Test
     public void testDiscrete() {
-        assert(CourseNameParser.courseNameToReadable(
+        assert CourseNameParser.courseNameToReadable(
                 "DISCRETE MATH/COMP SCI",
-                null).equals("Discrete"));
+                null).equals("Discrete");
     }
 
     @Test
     public void testCalc3() {
-        assert(CourseNameParser.courseNameToReadable(
+        assert CourseNameParser.courseNameToReadable(
                 "CALCULUS III",
-                null).equals("Calculus III"));
+                null).equals("Calculus III");
     }
 }
