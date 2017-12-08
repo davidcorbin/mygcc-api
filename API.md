@@ -367,7 +367,8 @@ If uses their own insurance:
                     start: 9:00
                 }
             ], 
-            title: GENERAL BIOLOGY I
+            title: GENERAL BIOLOGY I,
+            name: Biology 1
         },
         {
             course: MATH 261 C, 
@@ -401,7 +402,8 @@ If uses their own insurance:
                     start: 11:30
                 }
             ], 
-            title: CALCULUS III
+            title: CALCULUS III,
+            name: Calculus III
         }
     ]
 

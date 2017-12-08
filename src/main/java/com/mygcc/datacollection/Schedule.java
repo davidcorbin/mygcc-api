@@ -77,6 +77,9 @@ public class Schedule {
                     .replaceAll(" ", ""));
             clas.put("title", c.select("td").get(2).text());
             clas.put("credits", c.select("td").get(creditNumber).text());
+            clas.put("name", CourseNameParser.courseNameToReadable(
+                    (String) clas.get("title"),
+                    (String) clas.get("code")));
 
             Elements profs = c.select("td").get(profNumber)
                     .select("ul > li");
