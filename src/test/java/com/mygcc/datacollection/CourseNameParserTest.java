@@ -56,4 +56,39 @@ public class CourseNameParserTest extends JerseyTest {
                 "CALCULUS III",
                 null).equals("Calculus III");
     }
+
+    @Test
+    public void testPrinciplesOfAccounting() {
+        assert CourseNameParser.courseNameToReadable(
+                "PRINCIPLES OF ACCOUNTING I",
+                null).equals("Accounting I");
+    }
+
+    @Test
+    public void testIntermediateAccounting() {
+        assert CourseNameParser.courseNameToReadable(
+                "INTERMEDIATE ACCOUNTING I",
+                null).equals("Accounting I");
+    }
+
+    @Test
+    public void testHistArt() {
+        assert CourseNameParser.courseNameToReadable(
+                "HIST & APPREC OF ART I",
+                null).equals("Hist Of Art I");
+    }
+
+    @Test
+    public void testGalleryArt() {
+        assert CourseNameParser.courseNameToReadable(
+                "STUDY: GALLERY STUDIES",
+                null).equals("Gallery Studies");
+    }
+
+    @Test
+    public void testWriting() {
+        assert CourseNameParser.courseNameToReadable(
+                "FOUNDATIONS OF ACADEMIC DISCOURSE",
+                null).equals("Writing");
+    }
 }

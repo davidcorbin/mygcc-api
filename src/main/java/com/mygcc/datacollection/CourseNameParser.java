@@ -14,19 +14,37 @@ public final class CourseNameParser {
             "administration in",
             "advanced",
             "adv",
+            "analytical",
+            "applications",
             "applied",
+            "basic",
             "beginner",
             "beginning",
             "college",
+            "culturally relevant",
+            "early childhood",
+            "elementary",
+            "for engineers",
+            "for mus ed majors",
             "foundations of",
             "general",
             "intermediate",
             "intro to",
+            "intro to the",
+            "introduction to",
+            "introduction to the",
             "math",
+            "mthds of",
             "observational",
             "principles of",
+            "prin of",
+            "prin",
+            "professional",
             "teaching",
-            "& apprec",
+            "tech in",
+            "topics:",
+            "topics in",
+            "& apprec ",
 
             "^study:"
     };
@@ -45,6 +63,8 @@ public final class CourseNameParser {
         repCN = repCN.replaceAll("civ/literature", "Civ. Lit.");
         repCN = repCN.replaceAll("civ/the arts", "Civ. Arts");
         repCN = repCN.replaceAll("civ/biblical revelation", "Bib. Rev.");
+        repCN = repCN.replaceAll("foundations of academic discourse",
+                "Writing");
 
         // If there is a slash in the name
         String[] slashed = repCN.split("/");
