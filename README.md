@@ -1,7 +1,7 @@
 # Unofficial myGCC API
 
-[![Build Status](https://travis-ci.com/davidcorbin/mygcc-api.svg?token=dxqddm4qxdWvzPBrhpv6&branch=master)](https://travis-ci.com/davidcorbin/mygcc-api)
-[![Dependency Status](https://www.versioneye.com/user/projects/59f299a215f0d70039a4a8cf/badge.svg?style=flat)](https://www.versioneye.com/user/projects/59f299a215f0d70039a4a8cf)
+[![Build Status](https://img.shields.io/travis/davidcorbin/mygcc-api.svg)](https://travis-ci.org/davidcorbin/mygcc-api)
+[![Dependency Status](https://www.versioneye.com/user/projects/5a2b21e80fb24f469e308dda/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5a2b21e80fb24f469e308dda)
 
 REST API to interface with the myGCC website.
 
