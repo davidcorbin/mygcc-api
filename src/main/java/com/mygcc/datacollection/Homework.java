@@ -66,7 +66,7 @@ public class Homework extends MyGCCDataCollection {
      */
     public Homework(final Token token, final String courseCode) {
         this.auth = new Session(token);
-        this.ccode = courseCode;
+        this.ccode = sanitizeCourseCode(courseCode);
     }
 
     /**
@@ -266,5 +266,14 @@ public class Homework extends MyGCCDataCollection {
             throw new UnexpectedResponseException("unknown IOException "
                     + "occurred");
         }
+    }
+
+    /**
+     * Remove all non-alphanumeric characters.
+     * @param courseCode raw course code
+     * @return sanitized course code
+     */
+    private String sanitizeCourseCode(final String courseCode) {
+        return courseCode.replaceAll("[^A-Za-z0-9]", "");
     }
 }
