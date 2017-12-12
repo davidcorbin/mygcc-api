@@ -425,96 +425,107 @@ Days of the week correspond to letters:
 ###### Request
 
     GET /1/class/XXXXNNNX/homework
-    {
-        token: asdf1234asdf1234
-    }
     
 Replace XXXXNNNX With the course code of the class you want homework for. (e.g. BIOL101A or MATH213B)
 ###### Response
 
     [
         {
-            "BIOL 101 Lab Grades": [
+            BIOL 101 Lab Grades: [
                 {
-                    "due": "2017-12-19T12:0:00Z",
-                    "grade": {
-                        "received": "Open"
+                    assignment_url: https://my.gcc.edu/ICS/Academics/BIOL/BIOL_101/2017_10-BIOL_101-P____L/Coursework.jnz?portlet=Coursework&screen=StudentAssignmentDetailView&screenType=change&id=hgaginfd-uwe6-3asd-9fgs-djgfffdgfdsa,
+                    course_url: https://my.gcc.edu/ICS/Academics/BIOL/BIOL_101/2017_10-BIOL_101-P____L/Coursework.jnz,
+                    due: 2017-12-19T12:0:00Z,
+                    grade: {
+                        received: Open
                     },
-                    "description": "",
-                    "title": "BIOL 101 Lab Grade",
-                    "open": true
+                    description: ,
+                    title: BIOL 101 Lab Grade,
+                    open: true
                 }
             ],
-            "Extra Credit": [
+            Extra Credit: [
                 {
-                    "due": "",
-                    "grade": {
-                        "received": "3",
-                        "percent": "100",
-                        "points": "3"
+                    assignment_url: https://my.gcc.edu/ICS/Academics/BIOL/BIOL_101/2017_10-BIOL_101-P____L/Coursework.jnz?portlet=Coursework&screen=StudentAssignmentDetailView&screenType=change&id=hgaginfd-uwe6-3asd-9fgs-djgfffdgfdsa,
+                    course_url: https://my.gcc.edu/ICS/Academics/BIOL/BIOL_101/2017_10-BIOL_101-P____L/Coursework.jnz,
+                    due: ,
+                    grade: {
+                        received: 3,
+                        percent: 100,
+                        points: 3
                     },
-                    "description": "",
-                    "title": "Extra Credit (Psych Study)",
-                    "open": false
+                    description: ,
+                    title: Extra Credit (Psych Study),
+                    open: false
                 }
             ],
-            "BIOL 101 Exam Grades": [
+            BIOL 101 Exam Grades: [
                 {
-                    "due": "",
-                    "grade": {
-                        "letter": "A",
-                        "received": "49",
-                        "percent": "98",
-                        "points": "50"
+                    assignment_url: https://my.gcc.edu/ICS/Academics/BIOL/BIOL_101/2017_10-BIOL_101-P____L/Coursework.jnz?portlet=Coursework&screen=StudentAssignmentDetailView&screenType=change&id=hgaginfd-uwe6-3asd-9fgs-djgfffdgfdsa,
+                    course_url: https://my.gcc.edu/ICS/Academics/BIOL/BIOL_101/2017_10-BIOL_101-P____L/Coursework.jnz,
+                    due: ,
+                    grade: {
+                        letter: A,
+                        received: 49,
+                        percent: 98,
+                        points: 50
                     },
-                    "description": "",
-                    "title": "EXAM I GRADE",
-                    "open": false
+                    description: ,
+                    title: EXAM I GRADE,
+                    open: false
                 },
                 {
-                    "due": "",
-                    "grade": {
-                        "letter": "B-",
-                        "received": "40.5",
-                        "percent": "81",
-                        "points": "50"
+                    assignment_url: https://my.gcc.edu/ICS/Academics/BIOL/BIOL_101/2017_10-BIOL_101-P____L/Coursework.jnz?portlet=Coursework&screen=StudentAssignmentDetailView&screenType=change&id=hgaginfd-uwe6-3asd-9fgs-djgfffdgfdsa,
+                    course_url: https://my.gcc.edu/ICS/Academics/BIOL/BIOL_101/2017_10-BIOL_101-P____L/Coursework.jnz,
+                    due: ,
+                    grade: {
+                        letter: B-,
+                        received: 40.5,
+                        percent: 81,
+                        points: 50
                     },
-                    "description": "",
-                    "title": "EXAM II GRADE",
-                    "open": false
+                    description: ,
+                    title: EXAM II GRADE,
+                    open: false
                 },
                 {
-                    "due": "",
-                    "grade": {
-                        "letter": "A",
-                        "received": "49",
-                        "percent": "98",
-                        "points": "50"
+                    assignment_url: https://my.gcc.edu/ICS/Academics/BIOL/BIOL_101/2017_10-BIOL_101-P____L/Coursework.jnz?portlet=Coursework&screen=StudentAssignmentDetailView&screenType=change&id=hgaginfd-uwe6-3asd-9fgs-djgfffdgfdsa,
+                    course_url: https://my.gcc.edu/ICS/Academics/BIOL/BIOL_101/2017_10-BIOL_101-P____L/Coursework.jnz,
+                    due: ,
+                    grade: {
+                        letter: A,
+                        received: 49,
+                        percent: 98,
+                        points: 50
                     },
-                    "description": "",
-                    "title": "EXAM III GRADE",
-                    "open": false
+                    description: ,
+                    title: EXAM III GRADE,
+                    open: false
                 },
                 {
-                    "due": "2017-12-19T12:0:00Z",
-                    "grade": {
-                        "received": "Open"
+                    assignment_url: https://my.gcc.edu/ICS/Academics/BIOL/BIOL_101/2017_10-BIOL_101-P____L/Coursework.jnz?portlet=Coursework&screen=StudentAssignmentDetailView&screenType=change&id=hgaginfd-uwe6-3asd-9fgs-djgfffdgfdsa,
+                    course_url: https://my.gcc.edu/ICS/Academics/BIOL/BIOL_101/2017_10-BIOL_101-P____L/Coursework.jnz,
+                    due: 2017-12-19T12:0:00Z,
+                    grade: {
+                        received: Open
                     },
-                    "description": "",
-                    "title": "EXAM IV GRADE",
-                    "open": true
+                    description: ,
+                    title: EXAM IV GRADE,
+                    open: true
                 },
                 {
-                    "due": "2017-12-19T12:0:00Z",
-                    "grade": {
-                        "received": "Open"
+                    assignment_url: https://my.gcc.edu/ICS/Academics/BIOL/BIOL_101/2017_10-BIOL_101-P____L/Coursework.jnz?portlet=Coursework&screen=StudentAssignmentDetailView&screenType=change&id=hgaginfd-uwe6-3asd-9fgs-djgfffdgfdsa,
+                    course_url: https://my.gcc.edu/ICS/Academics/BIOL/BIOL_101/2017_10-BIOL_101-P____L/Coursework.jnz,
+                    due: 2017-12-19T12:0:00Z,
+                    grade: {
+                        received: Open
                     },
-                    "description": "",
-                    "title": "FINAL EXAM GRADE",
-                    "open": true
+                    description: ,
+                    title: FINAL EXAM GRADE,
+                    open: true
                 }
             ],
-            "Unit 1": []
+            Unit 1: []
         }
     ]
 Each element has the title of the section as shown on myGCC.

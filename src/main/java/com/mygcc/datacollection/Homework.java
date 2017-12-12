@@ -35,9 +35,14 @@ public class Homework extends MyGCCDataCollection {
             Integer.toString(Year.now().getValue());
 
     /**
+     * Base myGCC url.
+     */
+    private static final String BASEURL = "https://my.gcc.edu";
+
+    /**
      * URL to get users' homework.
      */
-    private static final String MYCON = "https://my.gcc.edu/ICS/Academics";
+    private static final String MYCON = BASEURL + "/ICS/Academics";
 
     /**
      * Authorization object to get homework.
@@ -148,8 +153,15 @@ public class Homework extends MyGCCDataCollection {
                     .select(".assignmentDisplay");
             for (Element d : assignments) {
                 Map<String, Object> assignmentArray = new HashMap<>();
+
+                // Get assignment title
                 assignmentArray.put("title",
                         d.select("div.assignmentText > a").text());
+
+                // Get assignment URL
+                assignmentArray.put("assignment_url",
+                        BASEURL + d.select("div.assignmentText > a")
+                        .attr("href"));
 
                 Map<String, Object> gradeArray = new HashMap<>();
                 String[] gradeString = d.select("div.assignmentText > span")
@@ -177,6 +189,14 @@ public class Homework extends MyGCCDataCollection {
                 assignmentArray.put("description",
                         d.select("div.assignmentDescription").text());
                 assignmentArray.put("open", d.hasClass("open"));
+
+                // Add class URL to assignment
+                try {
+                    assignmentArray.put("course_url", courseCodeToURL(ccode));
+                } catch (UnexpectedResponseException e) {
+                    throw new IllegalStateException("Unable to get URL");
+                }
+
                 sectionArray.add(assignmentArray);
             }
             mainArray.put(c.text(), sectionArray);
