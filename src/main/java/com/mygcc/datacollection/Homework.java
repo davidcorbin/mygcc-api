@@ -88,8 +88,7 @@ public class Homework extends MyGCCDataCollection {
         auth.createSession();
         String hwURL = courseCodeToURL(ccode);
         String rawHTML = getContentFromUrl(hwURL);
-        List<Object> prettyJSON = parseHomeworkHTML(rawHTML);
-        return prettyJSON;
+        return parseHomeworkHTML(rawHTML);
     }
 
     /**
@@ -232,14 +231,13 @@ public class Homework extends MyGCCDataCollection {
         if (rawParts[timeindicatorindex].equals("PM")) {
             pHour += timedifference;
         }
-        String newDate = String.format("%s-%d-%sT%02d:%02d:00Z",
+        return String.format("%s-%d-%sT%02d:%02d:00Z",
                 CURRENT_YEAR, pMonth, pDay, pHour, pMinute);
-        return newDate;
     }
 
     /**
      * Gets the raw HTML schedule from myGCC.
-     * @param url The url to get contect from.
+     * @param url The url to get content from.
      * @return The raw HTML schedule.
      * @throws UnexpectedResponseException When internet has problems.
      */
