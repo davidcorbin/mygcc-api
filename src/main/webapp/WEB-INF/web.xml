@@ -9,7 +9,10 @@
 
         <init-param>
             <param-name>jersey.config.server.provider.packages</param-name>
-            <param-value>com.mygcc</param-value>
+            <param-value>
+                com.mygcc,
+                com.fasterxml.jackson.jaxrs.json
+            </param-value>
         </init-param>
 
         <load-on-startup>1</load-on-startup>
