@@ -2,6 +2,7 @@
 
 [![Build Status](https://img.shields.io/travis/davidcorbin/mygcc-api.svg)](https://travis-ci.org/davidcorbin/mygcc-api)
 [![Dependency Status](https://www.versioneye.com/user/projects/5a2b21e80fb24f469e308dda/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5a2b21e80fb24f469e308dda)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fdavidcorbin%2Fmygcc-api.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fdavidcorbin%2Fmygcc-api?ref=badge_shield)
 
 REST API to interface with the myGCC website.
 
@@ -20,3 +21,7 @@ If tests are failing or skipping make sure you have four environmental variables
 
 ### Run server
 ```java -cp "target/classes:target/dependency/*" com.mygcc.api.Main```
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fdavidcorbin%2Fmygcc-api.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fdavidcorbin%2Fmygcc-api?ref=badge_large)
