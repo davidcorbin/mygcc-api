@@ -25,14 +25,18 @@ public class Homework extends MyGCCDataCollection {
     /**
      * This number's significance is unknown.
      * It must be included in the URL however.
+     *
+     * There may be a pattern:
+     * F17=10
+     * S18=30
      */
-    private static final String MAGIC_URL_NUMBER = "10";
+    private static final String MAGIC_URL_NUMBER = "30";
 
     /**
      * Current Year, not sure how this changes so for now it is a variable.
+     * Note: It is still '2017' for the spring 2018 semester.
      */
-    private static final String CURRENT_YEAR =
-            Integer.toString(Year.now().getValue());
+    private static final String CURRENT_YEAR = "2017";
 
     /**
      * Base myGCC url.
@@ -231,7 +235,7 @@ public class Homework extends MyGCCDataCollection {
         if (rawParts[timeindicatorindex].equals("PM")) {
             pHour += timedifference;
         }
-        return String.format("%s-%d-%sT%02d:%02d:00Z",
+        return String.format("%s-%02d-%sT%02d:%02d:00Z",
                 CURRENT_YEAR, pMonth, pDay, pHour, pMinute);
     }
 
