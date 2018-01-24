@@ -13,8 +13,6 @@ See [API.md](API.md) for examples and a reference.
 ```mvn clean package```
 
 If tests are failing or skipping make sure you have four environmental variables set:
-- `myGCC_username` A **valid** myGCC username/id number.
-- `myGCC_password` The password for that username.
 - `enckey` A 16 character string for encrypting the tokens.
 - `initvect` Another 16 character string for encrypting the tokens.
 
