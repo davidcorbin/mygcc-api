@@ -22,6 +22,11 @@ import java.util.Scanner;
  */
 public abstract class MyGCCDataCollection {
     /**
+     * Base myGCC url.
+     */
+    public static final String BASEURL = "https://my.gcc.edu";
+
+    /**
      * Convert InputStream to String.
      * @param is InputStream to convert
      * @return String of InputStream data
@@ -157,5 +162,14 @@ public abstract class MyGCCDataCollection {
         }
 
         return http;
+    }
+
+    /**
+     * Convert relative URL to absolute URL.
+     * @param relURL relative URL string
+     * @return absolute URL string
+     */
+    public final String relToAbsURL(final String relURL) {
+        return BASEURL + relURL.trim();
     }
 }
