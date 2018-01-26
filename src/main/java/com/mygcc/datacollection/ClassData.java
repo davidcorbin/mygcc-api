@@ -150,6 +150,18 @@ public abstract class ClassData extends MyGCCDataCollection {
     }
 
     /**
+     * Get collaboration url for a given class.
+     * @param courseCode myGCC course code
+     * @return URL to collaboration page
+     * @throws UnexpectedResponseException unexpected response from myGCC
+     */
+    public final String getCollaborationURL(final String courseCode)
+            throws UnexpectedResponseException {
+        return courseCodeToURL(courseCode)
+                + "Collaboration.jnz?portlet=Coursemates";
+    }
+
+    /**
      * Gets the raw HTML from myGCC.
      * @param url The url to get content from.
      * @return The raw HTML schedule.

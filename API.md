@@ -12,6 +12,7 @@
 - [Class Schedule](#class-schedule)
 - [Homework](#homework)
 - [Grades](#grades)
+- [Collaboration](#collaboration)
 - [Crimson Cash](#crimson-cash)
 - [Vehicle Information](#vehicle-information)
 
@@ -543,6 +544,42 @@ The date is given in ISO 8601 format.
 ###### Response
 
 ###### Errors
+
+### Collaboration
+
+###### Request
+
+    GET /1/class/XXXXNNNX/collaboration
+Replace XXXXNNNX With the course code of the class you want homework for. (e.g. BIOL101A or MATH213B)
+
+###### Response
+
+    {
+        "data": [
+            {
+                "image": "/ICS/icsfs/307890.jpg?target=166963f2-3b3c-474f-933d-26a64b343057",
+                "isFaculty": false,
+                "name": "John Franklin Deere",
+                "id": "307890"
+            },
+            {
+                "image": "/ICS/icsfs/201708.jpg?target=1a873b1e-1ae9-4c9a-807c-b81bb74fbddc",
+                "isFaculty": false,
+                "name": "Anne Virginia Madison",
+                "id": "201708"
+            },
+            {
+                "image": "/ICS/icsfs/911911.jpg?target=4c66a08a-8bd7-4ee4-920c-84477c863eb6",
+                "isFaculty": true,
+                "name": "Franklin Madison Lee",
+                "id": "911911"
+            }
+        ]
+    }
+
+###### Errors
+- Class or collaboration page does not exist (400)
+- User not in class (422)
 
 ### Crimson Cash
 
