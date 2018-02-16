@@ -13,6 +13,7 @@
 - [Homework](#homework)
 - [Grades](#grades)
 - [Collaboration](#collaboration)
+- [Files](#files)
 - [Crimson Cash](#crimson-cash)
 - [Vehicle Information](#vehicle-information)
 
@@ -550,7 +551,7 @@ The date is given in ISO 8601 format.
 ###### Request
 
     GET /1/class/XXXXNNNX/collaboration
-Replace XXXXNNNX With the course code of the class you want homework for. (e.g. BIOL101A or MATH213B)
+Replace XXXXNNNX With the course code of the class you want collaboration for. (e.g. BIOL101A or MATH213B)
 
 ###### Response
 
@@ -580,6 +581,38 @@ Replace XXXXNNNX With the course code of the class you want homework for. (e.g. 
 ###### Errors
 - Class or collaboration page does not exist (400)
 - User not in class (422)
+
+### Files
+
+###### Request
+
+    GET /1/class/XXXXNNNX/files
+Replace XXXXNNNX With the course code of the class you want files for. (e.g. BIOL101A or MATH213B)
+
+###### Response
+
+    {
+        "data": [
+            {
+                "size": "99K",
+                "name": "Reading from Augustine and Aquinas",
+                "type": ".doc",
+                "url": "/ICS/Portlets/ICS/Handoutportlet/viewhandler.ashx?handout_id=5f0502e8-23c3-6969-gucc-i854de426701"
+            },
+            {
+                "size": "51K",
+                "name": "Hobbes and Locke reading",
+                "type": ".doc",
+                "url": "/ICS/Portlets/ICS/Handoutportlet/viewhandler.ashx?handout_id=5eaa3464-775c-420a-yylm-a0934953120f"
+            },
+            {
+                "size": "16K",
+                "name": "Selection from John Stuart Mill",
+                "type": ".docx",
+                "url": "/ICS/Portlets/ICS/Handoutportlet/viewhandler.ashx?handout_id=a6931f93-d3e2-911l-0nel-ye923e4ee41e"
+            }
+        ]
+    }
 
 ### Crimson Cash
 

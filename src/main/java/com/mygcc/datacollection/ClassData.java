@@ -104,7 +104,7 @@ public abstract class ClassData extends MyGCCDataCollection {
      * @return URL to course
      * @throws UnexpectedResponseException unexpected response from myGCC
      */
-    private String courseCodeToURL(final String courseCode)
+    public final String courseCodeToURL(final String courseCode)
             throws UnexpectedResponseException {
         String[] parts = courseCode.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
         if (parts.length != EXPECTED_CC_LENGTH) {
