@@ -202,9 +202,19 @@ public class Biography extends MyGCCDataCollection {
      */
     private Map<String, String> getUserDataFromHTML(final String html) throws
             UnexpectedResponseException {
+        final int lastNameInt = 3;
+        final int middleNameInt = 2;
+        final int firstNameInt = 1;
         Document doc = Jsoup.parse(html);
+        String studentName = getDataFromHTML(doc, BiographyID.NAME.id());
+        String[] studentNameParts = studentName.split(" ");
         return new HashMap<String, String>() { {
-            put("name", getDataFromHTML(doc, BiographyID.NAME.id()));
+            put("name", studentName);
+            put("name_short", studentNameParts[firstNameInt] + " "
+                    + studentNameParts[lastNameInt]);
+            put("name_long", studentNameParts[firstNameInt] + " "
+                    + studentNameParts[middleNameInt] + " "
+                    + studentNameParts[lastNameInt]);
             put("major", getDataFromHTML(doc, BiographyID.MAJOR.id()));
             put("degree", getDataFromHTML(doc, BiographyID.DEGREE.id()));
             put("email", getDataFromHTML(doc, BiographyID.EMAIL.id()));
