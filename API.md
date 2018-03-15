@@ -2,6 +2,7 @@
 
 [Authentication Endpoint](#authentication-endpoint)
 - [Authenticate User](#authenticate-user)
+- [Verify Credentials](#verify-credentials)
 - [Deauthenticate User](#deauthenticate-user)
 
 [User Endpoint](#user-endpoint)
@@ -42,7 +43,29 @@ You must send this token as the content of a HTTP header named `Authorization` i
 ###### Errors
 
 - Invalid credentials (401)
-        
+
+### Verify Credentials
+
+###### Request
+
+    GET /1/auth/verify
+    
+###### Response
+If authorization credentials are valid:
+
+    {
+        "isValid": true
+    }
+
+If they are invalid, then there will be an error similar to:
+
+    {
+        "date": 1521132021,
+        "message": "Last unit does not have enough valid bits"
+    }
+###### Errors
+
+- Invalid credentials (401)        
     
 ### Deauthenticate User
 
@@ -65,7 +88,9 @@ User deauthentication is not currently supported since myGCC automatically kills
         "gender": "Male",
         "major": "Computer Science",
         "marital": "Single",
-        "name": "Mr. First Middle Last"
+        "name": "Mr. John Frederick Stephen Deere",
+        "name_long": "John Frederick Deere",
+        "name_short": "John Deere"
     }
     
 ###### Errors
