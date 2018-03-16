@@ -27,6 +27,7 @@ public final class CourseNameParser {
             "for engineers",
             "for mus ed majors",
             "foundations of",
+            "foundations",
             "general",
             "intermediate",
             "intro to",
@@ -45,8 +46,12 @@ public final class CourseNameParser {
             "topics:",
             "topics in",
             "& apprec ",
+            "comp ",
 
-            "^study:"
+            "^study:",
+
+            ":*",
+            "-*",
     };
 
     /**
@@ -65,6 +70,7 @@ public final class CourseNameParser {
         repCN = repCN.replaceAll("civ/biblical revelation", "Bib. Rev.");
         repCN = repCN.replaceAll("foundations of academic discourse",
                 "Writing");
+        repCN = repCN.replaceAll("fitness [&|and] wellness .*", "Fitwell");
 
         // If there is a slash in the name
         String[] slashed = repCN.split("/");
@@ -89,6 +95,11 @@ public final class CourseNameParser {
 
         // Most general replacements
         repCN = repCN.replaceAll("(&|and).*?(?=I)", "");
+
+        //Remove any words after "I" (e.g. Physics II-Engineering)
+        repCN = repCN.replaceAll(" iii.*", " iii");
+        repCN = repCN.replaceAll(" ii[^i].*", " ii");
+        repCN = repCN.replaceAll(" i[^ii].*", " i");
 
         // Check if the last word is made up of i's and if so capitalize all i's
         // in the last word of the string
