@@ -33,7 +33,7 @@ public class CourseNameParserTest extends JerseyTest {
     public void testProgramming2() {
         assert CourseNameParser.courseNameToReadable(
                 "COMP PROGRAMMING II",
-                null).equals("Comp Programming II");
+                null).equals("Programming II");
     }
 
     @Test
