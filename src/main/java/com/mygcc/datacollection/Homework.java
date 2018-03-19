@@ -1,5 +1,6 @@
 package com.mygcc.datacollection;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -88,16 +89,18 @@ public class Homework extends ClassData {
                 gradeString = Arrays.stream(gradeString)
                         .filter(s -> (s != null && s.length() > 0))
                         .toArray(String[]::new);
-                gradeArray.put("received", gradeString[0]);
-                if (gradeString.length > 1) {
-                    gradeArray.put("points", gradeString[1]);
-                    if (gradeString.length >= gradestringlength) {
-                        gradeArray.put("letter", gradeString[2]);
-                        gradeArray.put("percent", gradeString[percentindex]
-                                .replaceAll("%", ""));
-                    } else {
-                        gradeArray.put("percent", gradeString[2]
-                                .replaceAll("%", ""));
+                if (StringUtils.isNumeric(gradeString[1])) {
+                    gradeArray.put("received", gradeString[0]);
+                    if (gradeString.length > 1) {
+                        gradeArray.put("points", gradeString[1]);
+                        if (gradeString.length >= gradestringlength) {
+                            gradeArray.put("letter", gradeString[2]);
+                            gradeArray.put("percent", gradeString[percentindex]
+                                    .replaceAll("%", ""));
+                        } else {
+                            gradeArray.put("percent", gradeString[2]
+                                    .replaceAll("%", ""));
+                        }
                     }
                 }
 
