@@ -89,9 +89,9 @@ public class Homework extends ClassData {
                 gradeString = Arrays.stream(gradeString)
                         .filter(s -> (s != null && s.length() > 0))
                         .toArray(String[]::new);
-                if (StringUtils.isNumeric(gradeString[1])) {
-                    gradeArray.put("received", gradeString[0]);
-                    if (gradeString.length > 1) {
+                if (gradeString.length > 1) {
+                    if (StringUtils.isNumeric(gradeString[1])) {
+                        gradeArray.put("received", gradeString[0]);
                         gradeArray.put("points", gradeString[1]);
                         if (gradeString.length >= gradestringlength) {
                             gradeArray.put("letter", gradeString[2]);
