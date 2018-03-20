@@ -556,6 +556,11 @@ Replace XXXXNNNX With the course code of the class you want homework for. (e.g. 
 Each element has the title of the section as shown on myGCC.
 The date is given in ISO 8601 format.
 
+The keys contained in the grade attribute of the response can vary. The state of an assignment can classified into one of three categories: assigned, turned in, and graded. 
+- When an assignment is assigned, `open` is true.
+- When an assignment is turned in, `open` is false and `grade` contains either a points attribute if the total number of points are given or no attributes.
+- When an assignment is graded, `open` is false and `grade` contains a letter, received, percent, and points attribute.
+
 ###### Errors
 
 - User not found (404)
