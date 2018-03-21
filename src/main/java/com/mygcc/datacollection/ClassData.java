@@ -18,9 +18,14 @@ public abstract class ClassData extends MyGCCDataCollection {
     public static final String MAGIC_URL_NUMBER = "30";
 
     /**
-     * Current Year, not sure how this changes so for now it is a variable.
+     * Current Year.
      */
-    public static final String CURRENT_YEAR = "2017";
+    public static final String CURRENT_YEAR = "2018";
+
+    /**
+     * Current Year (according to MyGCC).
+     */
+    public static final String MYGCC_YEAR = "2017";
 
     /**
      * The expected number of course code sections.
@@ -118,11 +123,11 @@ public abstract class ClassData extends MyGCCDataCollection {
         url.append(String.format("/%s/%s_%s", subject, subject, number));
         if (section.length() > 1) {
             url.append(String.format("/%s_%s-%s_%s-%s____L/",
-                    CURRENT_YEAR, MAGIC_URL_NUMBER, subject,
+                    MYGCC_YEAR, MAGIC_URL_NUMBER, subject,
                     number, section.charAt(0)));
         } else {
             url.append(String.format("/%s_%s-%s_%s-%s/",
-                    CURRENT_YEAR, MAGIC_URL_NUMBER, subject, number, section));
+                    MYGCC_YEAR, MAGIC_URL_NUMBER, subject, number, section));
         }
         return url.toString();
     }
