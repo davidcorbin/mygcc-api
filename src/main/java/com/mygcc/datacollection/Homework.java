@@ -144,7 +144,7 @@ public class Homework extends ClassData {
         }
         String[] rawParts = rawDate.split(" ");
         int pMonth = Arrays.asList(months).indexOf(rawParts[1]) + 1;
-        String pDay = rawParts[2];
+        int pDay = Integer.parseInt(rawParts[2]);
         int pHour = Integer.parseInt(rawParts[timeindex].split(":")[0]);
         int pMinute = Integer.parseInt(rawParts[timeindex].split(":")[1]);
         if (rawParts[timeindicatorindex].equals("AM")
@@ -154,7 +154,7 @@ public class Homework extends ClassData {
         if (rawParts[timeindicatorindex].equals("PM")) {
             pHour += timedifference;
         }
-        return String.format("%s-%02d-%sT%02d:%02d:00Z",
+        return String.format("%s-%02d-%02dT%02d:%02d:00Z",
                 CURRENT_YEAR, pMonth, pDay, pHour, pMinute);
     }
 }
