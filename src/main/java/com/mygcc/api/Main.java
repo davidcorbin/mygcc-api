@@ -4,6 +4,9 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.servlet.ServletContainer;
+import java.io.IOException;
+import java.net.DatagramSocket;
+import java.net.ServerSocket;
 
 /**
  * This class launches the web application in an embedded Jetty container. This
@@ -25,6 +28,11 @@ final class Main {
             webPort = "8080";
         }
 
+        // Check that port is open
+        if (!portAvailable(Integer.parseInt(webPort))) {
+            return;
+        }
+
         final Server server = new Server(Integer.parseInt(webPort));
 
         ServletContextHandler ctx =
@@ -39,6 +47,39 @@ final class Main {
 
         server.start();
         server.join();
+    }
+
+    /**
+     * Checks to see if a specific port is available.
+     *
+     * @param port the port to check for availability
+     * @return whether the port is available
+     */
+    private static boolean portAvailable(final int port) {
+        ServerSocket ss = null;
+        DatagramSocket ds = null;
+        try {
+            ss = new ServerSocket(port);
+            ss.setReuseAddress(true);
+            ds = new DatagramSocket(port);
+            ds.setReuseAddress(true);
+            return true;
+        } catch (IOException e) {
+        } finally {
+            if (ds != null) {
+                ds.close();
+            }
+
+            if (ss != null) {
+                try {
+                    ss.close();
+                } catch (IOException e) {
+                    /* should not be thrown */
+                }
+            }
+        }
+
+        return false;
     }
 
     /**
