@@ -84,6 +84,7 @@ public class Collaboration extends ClassData {
 
                 String studentId = "";
                 if (!imageURL.isEmpty()) {
+                    imageURL = imageURL.toLowerCase();
                     studentId = imageURL.substring(imageURL
                                     .lastIndexOf("/") + 1,
                             imageURL.indexOf(".jpg"));
