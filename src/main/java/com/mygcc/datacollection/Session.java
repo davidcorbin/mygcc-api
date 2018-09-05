@@ -1,8 +1,12 @@
 package com.mygcc.datacollection;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -162,6 +166,18 @@ public class Session extends MyGCCDataCollection {
             }
             String seshidstr = cookies.get(1);
 
+            final InputStream inputStream = connection.getInputStream();
+            final String html = convertStreamToString(inputStream);
+            inputStream.close();
+
+            Document doc = Jsoup.parse(html);
+
+            Elements viewStateEl = doc.select("#__VIEWSTATE");
+            this.viewstate = viewStateEl.val();
+
+            Elements browserRefreshEl = doc.select("#___BrowserRefresh");
+            this.browserRefresh = browserRefreshEl.val();
+
             // Get the session ID parameter
             this.sessionID = StringUtils.substringBetween(seshidstr,
                     "ASP.NET_SessionId=",
@@ -198,8 +214,7 @@ public class Session extends MyGCCDataCollection {
             put("___BrowserRefresh", "");
             put("userName", token.getUsername());
             put("password", token.getPassword());
-            put("btnLogin", "Login");
-            put("ctl04$tbSearch", "Search...");
+            put("siteNavBar$btnLogin", "Login");
         } };
 
         String postData = postData(postValues, getBoundary());
