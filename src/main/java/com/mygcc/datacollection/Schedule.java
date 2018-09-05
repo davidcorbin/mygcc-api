@@ -67,16 +67,21 @@ public class Schedule {
         final int profNumber = 6;
         final int timeNumber = 7;
         final int locationNumber = 9;
+        final int minimumValidFields = 10;
         Document doc = Jsoup.parse(raw);
-        Elements rows = doc.select(".gbody > tr:not(.subitem)");
+        Elements rows = doc.select(".gbody > tr:not(.subItem)");
         List<Object> classArray = new ArrayList<>();
         for (Element c : rows) {
+            Elements tdel = c.select("td");
+            if (tdel.size() < minimumValidFields) {
+                continue;
+            }
             Map<String, Object> clas = new HashMap<>();
-            clas.put("course", c.select("td").get(1).text());
-            clas.put("code", c.select("td").get(1).text()
+            clas.put("course", tdel.get(1).text());
+            clas.put("code", tdel.get(1).text()
                     .replaceAll(" ", ""));
-            clas.put("title", c.select("td").get(2).text());
-            clas.put("credits", c.select("td").get(creditNumber).text());
+            clas.put("title", tdel.get(2).text());
+            clas.put("credits", tdel.get(creditNumber).text());
             clas.put("name", CourseNameParser.courseNameToReadable(
                     (String) clas.get("title"),
                     (String) clas.get("code")));
@@ -110,8 +115,6 @@ public class Schedule {
                     currDay.put("end", stringparts[2]);
                     timesList.add(currDay);
                 }
-
-
             }
             clas.put("times", timesList);
 
