@@ -67,39 +67,30 @@ public class Collaboration extends ClassData {
             throw new StudentNotInClassException();
         }
 
-        Elements rows = doc.select(".pContent tr");
-        for (Element currRow : rows) {
-            Elements students = currRow.select("td");
-            for (Element currStudent: students) {
-                Map<String, Object> studentMap = new HashMap<>();
-                String studentName = currStudent.select(".accessibility")
-                        .text();
-                String[] nameParts = studentName.split(", ");
-                if (nameParts.length > 1) {
-                    studentName = nameParts[1] + " " + nameParts[0];
-                }
-
-                String imageURL = currStudent.select(".gPhotoImage")
-                        .attr("src");
-
-                String studentId = "";
-                if (!imageURL.isEmpty()) {
-                    studentId = imageURL.substring(imageURL
-                                    .lastIndexOf("/") + 1,
-                            imageURL.indexOf(".jpg"));
-                } else {
-                    continue;
-                }
-
-                String role = currStudent.select(".HLRoleItem").text();
-                Boolean isFaculty = role.contains("Faculty");
-
-                studentMap.put("name", studentName);
-                studentMap.put("id", studentId);
-                studentMap.put("image", imageURL);
-                studentMap.put("isFaculty", isFaculty);
-                mainArray.add(studentMap);
+        Elements rows = doc.select(".masonry > div");
+        for (Element student : rows) {
+            Map<String, Object> studentMap = new HashMap<>();
+            String studentName = student
+                    .select(".people-card-name-container > span").text();
+            String imageURL = student
+                    .select(".people-card-header-container > img")
+                    .attr("src");
+            String studentId = "";
+            if (!imageURL.isEmpty()) {
+                studentId = imageURL.substring(imageURL
+                                .lastIndexOf("/") + 1,
+                        imageURL.indexOf(".jpg"));
+            } else {
+                continue;
             }
+            boolean isFaculty = student.attr("data-rolename").equals("Faculty");
+
+            studentMap.put("name", studentName);
+            studentMap.put("id", studentId);
+            studentMap.put("image", imageURL);
+            studentMap.put("isFaculty", isFaculty);
+            mainArray.add(studentMap);
+            //}
         }
         return mainArray;
     }
