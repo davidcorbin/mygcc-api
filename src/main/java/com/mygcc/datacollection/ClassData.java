@@ -15,7 +15,7 @@ public abstract class ClassData extends MyGCCDataCollection {
      * This number's significance is unknown.
      * It must be included in the URL however.
      */
-    public static final String MAGIC_URL_NUMBER = "30";
+    public static final String MAGIC_URL_NUMBER = "10";
 
     /**
      * Current Year.
@@ -25,7 +25,7 @@ public abstract class ClassData extends MyGCCDataCollection {
     /**
      * Current Year (according to MyGCC).
      */
-    public static final String MYGCC_YEAR = "2017";
+    public static final String MYGCC_YEAR = "2018";
 
     /**
      * The expected number of course code sections.
