@@ -107,7 +107,7 @@ public abstract class ClassData extends MyGCCDataCollection {
      * Convert course code to URL.
      * @param courseCode course code
      * @return URL to course
-     * @throws UnexpectedResponseException unexpected response from myGCC
+     * @throws ClassDoesNotExistException course code does not exist
      */
     public final String courseCodeToURL(final String courseCode)
             throws ClassDoesNotExistException {
@@ -136,7 +136,7 @@ public abstract class ClassData extends MyGCCDataCollection {
      * Get coursework url for a given class.
      * @param courseCode myGCC course code
      * @return URL to coursework page
-     * @throws UnexpectedResponseException unexpected response from myGCC
+     * @throws ClassDoesNotExistException course code does not exist
      */
     public final String getCourseworkURL(final String courseCode)
             throws ClassDoesNotExistException {
@@ -147,7 +147,7 @@ public abstract class ClassData extends MyGCCDataCollection {
      * Get course information url for a given class.
      * @param courseCode myGCC course code
      * @return URL to course information page
-     * @throws UnexpectedResponseException unexpected response from myGCC
+     * @throws ClassDoesNotExistException course code does not exist
      */
     public final String getCourseInfoURL(final String courseCode)
             throws ClassDoesNotExistException {
@@ -158,7 +158,7 @@ public abstract class ClassData extends MyGCCDataCollection {
      * Get collaboration url for a given class.
      * @param courseCode myGCC course code
      * @return URL to collaboration page
-     * @throws UnexpectedResponseException unexpected response from myGCC
+     * @throws ClassDoesNotExistException course code does not exist
      */
     public final String getCollaborationURL(final String courseCode)
             throws ClassDoesNotExistException {
@@ -170,7 +170,7 @@ public abstract class ClassData extends MyGCCDataCollection {
      * Get files url for a given class.
      * @param courseCode myGCC course code
      * @return URL to files page
-     * @throws UnexpectedResponseException unexpected response from myGCC
+     * @throws ClassDoesNotExistException course code does not exist
      */
     public final String getFilesURL(final String courseCode)
             throws ClassDoesNotExistException {
