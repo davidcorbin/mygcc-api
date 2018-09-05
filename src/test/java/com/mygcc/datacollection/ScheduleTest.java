@@ -18,7 +18,7 @@ public final class ScheduleTest extends JerseyTest {
     protected Application configure() {
         enable(TestProperties.LOG_TRAFFIC);
         enable(TestProperties.DUMP_ENTITY);
-        return new ResourceConfig(Insurance.class);
+        return new ResourceConfig(Schedule.class);
     }
 
     /**
