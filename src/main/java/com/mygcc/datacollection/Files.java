@@ -39,7 +39,7 @@ public class Files extends ClassData {
             NetworkException, ClassDoesNotExistException,
             StudentNotInClassException {
         getAuth().createSession();
-        String hwURL = courseCodeToURL(getCcode());
+        String hwURL = getFilesURL(getCcode());
         String rawHTML = getContentFromUrl(hwURL);
 
         // Workaround for abstract class.
@@ -57,8 +57,6 @@ public class Files extends ClassData {
      */
     private List<Object> parseFilesHTML(final String raw)
             throws ClassDoesNotExistException, StudentNotInClassException {
-        final int gradestringlength = 4;
-        final int percentindex = 3;
         List<Object> mainArray = new LinkedList<>();
         Document doc = Jsoup.parse(raw);
         Elements notFound = doc.select(".notFound");
@@ -67,17 +65,17 @@ public class Files extends ClassData {
         } else if (notFound.text().contains("permissions to view")) {
             throw new StudentNotInClassException();
         }
-        Elements handoutsSection = doc.select(
-                ".Handouts tbody.gbody tr");
-        for (Element c : handoutsSection) {
+        Elements handouts = doc.select(".card");
+        for (Element h : handouts) {
             Map<String, Object> fileMap = new HashMap<>();
-            Elements currFile = c.select("a");
-            String fileUrl = currFile.attr("href");
-            String fileName = currFile.text();
-            String[] fileInfo = c.select("td").first().ownText()
-                    .replaceAll("[\\(\\)]", "").split(", ");
+            Element title = h.select(".row").first();
+            String fileName = title.attr("aria-label");
+            String fileUrl = title.select(".title").attr("href");
+            String[] fileInfo = h.select(".sub-info").first()
+                    .text().replaceAll("[\\(\\)]", "").split(", ");
             String fileType = fileInfo[0];
             String fileSize = fileInfo[1];
+
             fileMap.put("url", fileUrl);
             fileMap.put("name", fileName);
             fileMap.put("type", fileType);

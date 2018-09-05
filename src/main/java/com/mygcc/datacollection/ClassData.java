@@ -167,6 +167,19 @@ public abstract class ClassData extends MyGCCDataCollection {
     }
 
     /**
+     * Get files url for a given class.
+     * @param courseCode myGCC course code
+     * @return URL to files page
+     * @throws UnexpectedResponseException unexpected response from myGCC
+     */
+    public final String getFilesURL(final String courseCode)
+            throws UnexpectedResponseException {
+        return courseCodeToURL(courseCode)
+                + "Main_Page.jnz?portlet=Handouts&screen=MainView"
+                + "&screenType=next&viewType=Card";
+    }
+
+    /**
      * Gets the raw HTML from myGCC.
      * @param url The url to get content from.
      * @return The raw HTML schedule.
