@@ -110,10 +110,10 @@ public abstract class ClassData extends MyGCCDataCollection {
      * @throws UnexpectedResponseException unexpected response from myGCC
      */
     public final String courseCodeToURL(final String courseCode)
-            throws UnexpectedResponseException {
+            throws ClassDoesNotExistException {
         String[] parts = courseCode.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
         if (parts.length != EXPECTED_CC_LENGTH) {
-            throw new UnexpectedResponseException();
+            throw new ClassDoesNotExistException();
         }
         String subject = parts[0];
         String number = parts[1];
@@ -139,7 +139,7 @@ public abstract class ClassData extends MyGCCDataCollection {
      * @throws UnexpectedResponseException unexpected response from myGCC
      */
     public final String getCourseworkURL(final String courseCode)
-            throws UnexpectedResponseException {
+            throws ClassDoesNotExistException {
         return courseCodeToURL(courseCode) + "Coursework.jnz";
     }
 
@@ -150,7 +150,7 @@ public abstract class ClassData extends MyGCCDataCollection {
      * @throws UnexpectedResponseException unexpected response from myGCC
      */
     public final String getCourseInfoURL(final String courseCode)
-            throws UnexpectedResponseException {
+            throws ClassDoesNotExistException {
         return courseCodeToURL(courseCode) + "Course_Information.jnz";
     }
 
@@ -161,7 +161,7 @@ public abstract class ClassData extends MyGCCDataCollection {
      * @throws UnexpectedResponseException unexpected response from myGCC
      */
     public final String getCollaborationURL(final String courseCode)
-            throws UnexpectedResponseException {
+            throws ClassDoesNotExistException {
         return courseCodeToURL(courseCode)
                 + "Collaboration.jnz?portlet=Coursemates";
     }
@@ -173,7 +173,7 @@ public abstract class ClassData extends MyGCCDataCollection {
      * @throws UnexpectedResponseException unexpected response from myGCC
      */
     public final String getFilesURL(final String courseCode)
-            throws UnexpectedResponseException {
+            throws ClassDoesNotExistException {
         return courseCodeToURL(courseCode)
                 + "Main_Page.jnz?portlet=Handouts&screen=MainView"
                 + "&screenType=next&viewType=Card";

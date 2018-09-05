@@ -59,8 +59,8 @@ public class Homework extends ClassData {
         final int percentindex = 3;
         Map<String, Object> mainArray = new HashMap<>();
         Document doc = Jsoup.parse(raw);
-        Elements notFound = doc.select(".notFound");
-        if (notFound.text().contains("require you to be")) {
+        Elements notFound = doc.select(".page-not-found");
+        if (notFound.text().contains("Please log in")) {
             throw new ClassDoesNotExistException();
         } else if (notFound.text().contains("permissions to view")) {
             throw new StudentNotInClassException();
@@ -116,7 +116,7 @@ public class Homework extends ClassData {
                 try {
                     assignmentArray.put("course_url", getCourseworkURL(
                             getCcode()));
-                } catch (UnexpectedResponseException e) {
+                } catch (ClassDoesNotExistException e) {
                     throw new IllegalStateException("Unable to get URL");
                 }
 
