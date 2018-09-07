@@ -178,9 +178,9 @@ public class Biography extends MyGCCDataCollection {
      * @return string of HTML
      * @throws IOException if the data can't be retrieved
      */
-    public String getHTMLData(final String url,
-                              final String seshid,
-                              final String aspxauth)
+    private String getHTMLData(final String url,
+                               final String seshid,
+                               final String aspxauth)
             throws IOException {
         URLConnection conn = new URL(url).openConnection();
 
