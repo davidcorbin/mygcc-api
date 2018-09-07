@@ -1,14 +1,19 @@
 package com.mygcc.datacollection;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.HttpURLConnection;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Chapel class.
@@ -19,7 +24,13 @@ public class Biography extends MyGCCDataCollection {
     /**
      * myGCC chapel URL.
      */
-    private static final String URL = "https://my.gcc.edu/ICS/";
+    private static final String ABOUTURL = "https://my.gcc.edu/ICS/?tool=myProfileSettings";
+
+    private static final String CONTACTURL =
+            "https://my.gcc.edu/ICS/?tool=myProfileSettings&screen=ContactInformationView";
+
+    private static final String ACADEMICURL =
+            "https://my.gcc.edu/ICS/?tool=myProfileSettings&screen=AcademicInformationView";
 
     /**
      * Enumeration of Biography Info page HTML selectors for relevant data.
@@ -28,47 +39,59 @@ public class Biography extends MyGCCDataCollection {
         /**
          * Degree.
          */
-        DEGREE("#CP_V_rptEducation_ctl00_lblDegreeDesc"),
+        DEGREE("#CP_V_AcademicInformationCards_ctl00_AcademicInformationCard_"
+                + "InformationSetsRepeater_ctl00_InformationItemsRepeater_ctl00_Value"),
 
         /**
          * Major.
          */
-        MAJOR("#CP_V_rptEducation_ctl00_lblMajorDesc"),
+        MAJOR("#CP_V_AcademicInformationCards_ctl00_AcademicInformationCard_"
+                + "InformationSetsRepeater_ctl00_InformationItemsRepeater_ctl00_Value"),
 
         /**
-         * Name.
+         * First name.
          */
-        NAME("#CP_V_lblUserName"),
+        FIRSTNAME("#CP_V_CampusName"),
+
+        /**
+         * Middle name.
+         */
+        MIDDLENAME("#CP_V_MiddleName"),
+
+        /**
+         * Last name.
+         */
+        LASTNAME("#CP_V_LastName"),
 
         /**
          * Email.
          */
-        EMAIL("#CP_V_divOtherAddresses table tbody tr:eq(0) td:eq(1)"),
+        EMAIL("#emailTable tbody tr td"),
 
         /**
          * Birth date.
          */
-        BIRTHDATE("#CP_V_txtBirthdate"),
+        BIRTHDATE("#CP_V_DateOfBirth"),
 
         /**
          * Marital status.
          */
-        MARITALSTAT("#CP_V_txtMaritalStatus"),
+        MARITALSTAT("#CP_V_MaritalStatus option"),
 
         /**
          * Gender.
          */
-        GENDER("#CP_V_txtGender"),
+        GENDER("#CP_V_Gender option"),
 
         /**
          * Ethnicity.
          */
-        ETHNICITY("#CP_V_txtEthnicity"),
+        ETHNICITY("#CP_V_Ethnicity option"),
 
         /**
          * ID number.
          */
-        IDNUMBER("#CP_V_txtIDNumber");
+        IDNUMBER("#CP_V_ViewHeader_SiteManagerLabel");
 
         /**
          * Identifier.
@@ -119,110 +142,129 @@ public class Biography extends MyGCCDataCollection {
         // Create session
         auth.createSession();
 
+        String aspxauth = auth.getASPXAuth();
+        String seshid = auth.getSessionID();
+
         try {
-            // Make first request to open the personal info site.
-            LinkedHashMap<String, String> postValues = new
-                    LinkedHashMap<String, String>() { {
-                put("_scriptManager_HiddenField", "");
-                put("__EVENTTARGET", "welcomeBackBar");
-                put("__EVENTARGUMENT", "accountInfo");
-                put("__VIEWSTATE", auth.getViewstate());
-                put("__VIEWSTATEGENERATOR", "38ABEAAB");
-                put("___BrowserRefresh", auth.getBrowserRefresh());
-                put("ctl04$tbSearch", "Search...");
-                put("CP$V$PreferredName", "");
-                put("CP$V$HideMiddleName", "on");
-                put("CP$V$Prefix", "");
-                put("CP$V$Suffix", "");
-            } };
+            String aboutHTML = getHTMLData(ABOUTURL, seshid, aspxauth);
+            String contactHTML = getHTMLData(CONTACTURL, seshid, aspxauth);
+            String academicHTML = getHTMLData(ACADEMICURL, seshid, aspxauth);
 
-            String postData = postData(postValues, auth.getBoundary());
-
-            HttpURLConnection http = createPOST(URL,
-                    new HashMap<String, String>() { {
-                        put("Content-Type",
-                                "multipart/form-data; boundary="
-                                        + auth.getBoundary());
-                        put("Cookie",
-                                "ASP.NET_SessionId=" + auth.getSessionID()
-                                        + "; .ASPXAUTH=" + auth.getASPXAuth());
-                        put("Accept", "text/html,application/xhtml+xml,"
-                                + "application/xml;q=0.9,*/*;q=0.8");
-                    } }, postData);
-
-            String html = convertStreamToString(http.getInputStream());
-            auth.setBrowserRefresh(parseBrowserRefresh(html));
-            auth.setViewstate(parseViewState(html));
-
-            // Make second request to open the biography info tab.
-            LinkedHashMap<String, String> postValues2 = new
-                    LinkedHashMap<String, String>() { {
-                        put("_scriptManager_HiddenField", "");
-                        put("__EVENTTARGET", "CP$t6");
-                        put("__EVENTARGUMENT", "Biography View");
-                        put("__VIEWSTATE", auth.getViewstate());
-                        put("__VIEWSTATEGENERATOR", "38ABEAAB");
-                        put("___BrowserRefresh", auth.getBrowserRefresh());
-                        put("ctl04$tbSearch", "Search...");
-                        put("CP$V$PreferredName", "");
-                        put("CP$V$HideMiddleName", "on");
-                        put("CP$V$Prefix", "");
-                        put("CP$V$Suffix", "");
-                    } };
-
-            String postData2 = postData(postValues2, auth.getBoundary());
-
-            HttpURLConnection http2 = createPOST(URL,
-                    new HashMap<String, String>() { {
-                        put("Content-Type",
-                                "multipart/form-data; boundary="
-                                        + auth.getBoundary());
-                        put("Cookie",
-                                "ASP.NET_SessionId=" + auth.getSessionID()
-                                        + "; .ASPXAUTH=" + auth.getASPXAuth());
-                        put("Accept", "text/html,application/xhtml+xml,"
-                                + "application/xml;q=0.9,*/*;q=0.8");
-                    } }, postData2);
-
-            String bioHTML = convertStreamToString(http2.getInputStream());
-
-            return getUserDataFromHTML(bioHTML);
+            return getUserDataFromHTML(aboutHTML, contactHTML, academicHTML);
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new UnexpectedResponseException("unknown IOException "
-                    + "occurred");
+            System.out.println(e.getMessage());
+
+            throw new UnexpectedResponseException(e.getMessage());
         }
+    }
+
+    public String getHTMLData(String url, String seshid, String aspxauth) throws IOException {
+        URLConnection conn = new URL(url).openConnection();
+
+        conn.setRequestProperty("Cookie", "ASP.NET_SessionId=" + seshid
+                + "; .ASPXAUTH=" + aspxauth);
+
+        // Get HTML data from request
+        BufferedReader in = new BufferedReader(new InputStreamReader(
+                conn.getInputStream(), "UTF-8"));
+
+        // Get HTML data
+        String htmldata = in.lines().collect(Collectors.joining());
+
+        // Close input stream
+        in.close();
+
+        return htmldata;
     }
 
     /**
      * Parse HTML and get user data.
-     * @param html data
+     *
+     * @param aboutMeHtml String of HTML for the about me page
+     * @param contactInfoHTML String of HTML for the contact info page
+     * @param academicInfoHTML String of HTML for the academic info page
      * @return Map of data
      * @throws UnexpectedResponseException unexpected response from myGCC
      */
-    private Map<String, String> getUserDataFromHTML(final String html) throws
+    private Map<String, String> getUserDataFromHTML(final String aboutMeHtml,
+                                                    final String contactInfoHTML,
+                                                    final String academicInfoHTML) throws
             UnexpectedResponseException {
-        final int middleNameInt = 2;
-        final int firstNameInt = 1;
-        Document doc = Jsoup.parse(html);
-        String studentName = getDataFromHTML(doc, BiographyID.NAME.id());
+        Document doc = Jsoup.parse(aboutMeHtml);
+        String studentNameIDRaw = getDataFromHTML(doc, BiographyID.IDNUMBER.id());
+        String studentName = trim(StringUtils.substringBetween(studentNameIDRaw,
+                "My profile and settings - ", ","));
+        String studentID = trim(StringUtils.substringAfter(studentNameIDRaw, "#"));
+
+        String firstName = trim(getValueAttrFromHTML(doc, BiographyID.FIRSTNAME.id()));
+        String middleName = trim(getValueAttrFromHTML(doc, BiographyID.MIDDLENAME.id()));
+        String lastName = trim(getValueAttrFromHTML(doc, BiographyID.LASTNAME.id()));
+
+        Document contactDoc = Jsoup.parse(contactInfoHTML);
+        String email = trim(contactDoc.select(BiographyID.EMAIL.id()).get(1).text());
+
+        Document academicDoc = Jsoup.parse(academicInfoHTML);
+
         String[] studentNameParts = studentName.split(" ");
         return new HashMap<String, String>() { {
             put("name", studentName);
-            put("name_short", studentNameParts[firstNameInt] + " "
-                    + studentNameParts[studentNameParts.length - 1]);
-            put("name_long", studentNameParts[firstNameInt] + " "
-                    + studentNameParts[middleNameInt] + " "
-                    + studentNameParts[studentNameParts.length - 1]);
-            put("major", getDataFromHTML(doc, BiographyID.MAJOR.id()));
-            put("degree", getDataFromHTML(doc, BiographyID.DEGREE.id()));
-            put("email", getDataFromHTML(doc, BiographyID.EMAIL.id()));
-            put("birth", getDataFromHTML(doc, BiographyID.BIRTHDATE.id()));
-            put("marital", getDataFromHTML(doc, BiographyID.MARITALSTAT.id()));
-            put("gender", getDataFromHTML(doc, BiographyID.GENDER.id()));
-            put("ethnicity", getDataFromHTML(doc, BiographyID.ETHNICITY.id()));
-            put("ID", getDataFromHTML(doc, BiographyID.IDNUMBER.id()));
+            put("name_short", getShortName(firstName, lastName));
+            put("name_long", getLongName(firstName, middleName, lastName));
+            put("major", getDataFromHTML(academicDoc, BiographyID.MAJOR.id()));
+            put("degree", getDataFromHTML(academicDoc, BiographyID.DEGREE.id()));
+            put("email", email);
+            put("birth", getValueAttrFromHTML(doc, BiographyID.BIRTHDATE.id()));
+            put("marital", getValueFromHTMLSelect(doc, BiographyID.MARITALSTAT.id()));
+            put("gender", getValueFromHTMLSelect(doc, BiographyID.GENDER.id()));
+            put("ethnicity", getValueFromHTMLSelect(doc, BiographyID.ETHNICITY.id()));
+            put("ID", studentID);
         } };
+    }
+
+    /**
+     * Get the first and last name.
+     *
+     * Removes all names except the first and the last name.
+     * @param studentName full name
+     * @return first and last name separated by a space
+     */
+    private String getShortName(String studentName) {
+        String[] studentNameParts = studentName.split(" ");
+        return studentNameParts[0] + " " + studentNameParts[studentNameParts.length - 1];
+    }
+
+    /**
+     * Get the first and last name when each value can be reliably separated.
+     * @param firstName first name
+     * @param lastName last name
+     * @return short name string
+     */
+    private String getShortName(String firstName, String lastName) {
+        return firstName + " " + lastName;
+    }
+
+    /**
+     * Get the full name.
+     *
+     * Note: This is the same as the name field. Before Jenzabar v9, name was returned in the form:
+     * Mr. <Last Name>, <First Name> <Middle Name>
+     *
+     * @param studentName full name
+     * @return full name
+     */
+    private String getLongName(String studentName) {
+        return studentName;
+    }
+
+    /**
+     * Get the full name when each value can be reliably separated.
+     * @param firstName first name
+     * @param middleName middle name
+     * @param lastName last name
+     * @return full name
+     */
+    private String getLongName(String firstName, String middleName, String lastName) {
+        return firstName + " " + middleName + " " + lastName;
     }
 
     /**
@@ -234,6 +276,33 @@ public class Biography extends MyGCCDataCollection {
     private String getDataFromHTML(final Document html, final String selector) {
         Elements name = html.select(selector);
         return trim(name.text());
+    }
+
+    /**
+     * Get value attribute of input field from HTML.
+     * @param html document to parse
+     * @param selector HTML selector
+     * @return selected value
+     */
+    private String getValueAttrFromHTML(final Document html, final String selector) {
+        Elements name = html.select(selector);
+        return trim(name.val());
+    }
+
+    /**
+     * Get selected text value of option in HTML select element.
+     * @param html document to parse
+     * @param selector HTML selector
+     * @return selected value or empty string
+     */
+    private String getValueFromHTMLSelect(final Document html, final String selector) {
+        Elements selectElement = html.select(selector);
+        for (Element el : selectElement) {
+            if (el.hasAttr("selected")) {
+                return trim(el.text());
+            }
+        }
+        return "";
     }
 
     /**
