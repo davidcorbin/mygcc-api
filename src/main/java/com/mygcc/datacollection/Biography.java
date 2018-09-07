@@ -16,21 +16,31 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Chapel class.
+ * Biography class.
  *
- * The Chapel class is used to get Chapel data from myGCC.
+ * The Biography class is used to get data about the authenticated user from
+ * myGCC.
  */
 public class Biography extends MyGCCDataCollection {
     /**
-     * myGCC chapel URL.
+     * myGCC About Me URL.
      */
-    private static final String ABOUTURL = "https://my.gcc.edu/ICS/?tool=myProfileSettings";
+    private static final String ABOUTURL =
+            "https://my.gcc.edu/ICS/?tool=myProfileSettings";
 
+    /**
+     * myGCC Contact Information URL.
+     */
     private static final String CONTACTURL =
-            "https://my.gcc.edu/ICS/?tool=myProfileSettings&screen=ContactInformationView";
+            "https://my.gcc.edu/ICS/?tool=myProfileSettings&screen="
+                    + "ContactInformationView";
 
+    /**
+     * myGCC Academic Information URL.
+     */
     private static final String ACADEMICURL =
-            "https://my.gcc.edu/ICS/?tool=myProfileSettings&screen=AcademicInformationView";
+            "https://my.gcc.edu/ICS/?tool=myProfileSettings&screen="
+                    + "AcademicInformationView";
 
     /**
      * Enumeration of Biography Info page HTML selectors for relevant data.
@@ -40,13 +50,15 @@ public class Biography extends MyGCCDataCollection {
          * Degree.
          */
         DEGREE("#CP_V_AcademicInformationCards_ctl00_AcademicInformationCard_"
-                + "InformationSetsRepeater_ctl00_InformationItemsRepeater_ctl00_Value"),
+                + "InformationSetsRepeater_ctl00_InformationItemsRepeater_"
+                + "ctl00_Value"),
 
         /**
          * Major.
          */
         MAJOR("#CP_V_AcademicInformationCards_ctl00_AcademicInformationCard_"
-                + "InformationSetsRepeater_ctl00_InformationItemsRepeater_ctl00_Value"),
+                + "InformationSetsRepeater_ctl00_InformationItemsRepeater_"
+                + "ctl00_Value"),
 
         /**
          * First name.
@@ -158,7 +170,18 @@ public class Biography extends MyGCCDataCollection {
         }
     }
 
-    public String getHTMLData(String url, String seshid, String aspxauth) throws IOException {
+    /**
+     * Gets string of HTML from the given URL.
+     * @param url url to retrieve
+     * @param seshid session ID
+     * @param aspxauth ASPX auth token
+     * @return string of HTML
+     * @throws IOException if the data can't be retrieved
+     */
+    public String getHTMLData(final String url,
+                              final String seshid,
+                              final String aspxauth)
+            throws IOException {
         URLConnection conn = new URL(url).openConnection();
 
         conn.setRequestProperty("Cookie", "ASP.NET_SessionId=" + seshid
@@ -181,42 +204,54 @@ public class Biography extends MyGCCDataCollection {
      * Parse HTML and get user data.
      *
      * @param aboutMeHtml String of HTML for the about me page
-     * @param contactInfoHTML String of HTML for the contact info page
-     * @param academicInfoHTML String of HTML for the academic info page
+     * @param contactHTML String of HTML for the contact info page
+     * @param academicHTML String of HTML for the academic info page
      * @return Map of data
      * @throws UnexpectedResponseException unexpected response from myGCC
      */
     private Map<String, String> getUserDataFromHTML(final String aboutMeHtml,
-                                                    final String contactInfoHTML,
-                                                    final String academicInfoHTML) throws
-            UnexpectedResponseException {
+                                                    final String contactHTML,
+                                                    final String academicHTML)
+            throws UnexpectedResponseException {
         Document doc = Jsoup.parse(aboutMeHtml);
-        String studentNameIDRaw = getDataFromHTML(doc, BiographyID.IDNUMBER.id());
+        String studentNameIDRaw = getDataFromHTML(doc,
+                BiographyID.IDNUMBER.id());
         String studentName = trim(StringUtils.substringBetween(studentNameIDRaw,
                 "My profile and settings - ", ","));
-        String studentID = trim(StringUtils.substringAfter(studentNameIDRaw, "#"));
+        String studentID = trim(StringUtils.substringAfter(studentNameIDRaw,
+                "#"));
 
-        String firstName = trim(getValueAttrFromHTML(doc, BiographyID.FIRSTNAME.id()));
-        String middleName = trim(getValueAttrFromHTML(doc, BiographyID.MIDDLENAME.id()));
-        String lastName = trim(getValueAttrFromHTML(doc, BiographyID.LASTNAME.id()));
+        String firstName = trim(getValueAttrFromHTML(doc,
+                BiographyID.FIRSTNAME.id()));
+        String middleName = trim(getValueAttrFromHTML(doc,
+                BiographyID.MIDDLENAME.id()));
+        String lastName = trim(getValueAttrFromHTML(doc,
+                BiographyID.LASTNAME.id()));
 
-        Document contactDoc = Jsoup.parse(contactInfoHTML);
-        String email = trim(contactDoc.select(BiographyID.EMAIL.id()).get(1).text());
+        Document contactDoc = Jsoup.parse(contactHTML);
+        String email = trim(contactDoc.select(BiographyID.EMAIL.id())
+                .get(1).text());
 
-        Document academicDoc = Jsoup.parse(academicInfoHTML);
+        Document academicDoc = Jsoup.parse(academicHTML);
 
         String[] studentNameParts = studentName.split(" ");
         return new HashMap<String, String>() { {
             put("name", studentName);
             put("name_short", getShortName(firstName, lastName));
             put("name_long", getLongName(firstName, middleName, lastName));
-            put("major", getDataFromHTML(academicDoc, BiographyID.MAJOR.id()));
-            put("degree", getDataFromHTML(academicDoc, BiographyID.DEGREE.id()));
+            put("major", getDataFromHTML(academicDoc,
+                    BiographyID.MAJOR.id()));
+            put("degree", getDataFromHTML(academicDoc,
+                    BiographyID.DEGREE.id()));
             put("email", email);
-            put("birth", getValueAttrFromHTML(doc, BiographyID.BIRTHDATE.id()));
-            put("marital", getValueFromHTMLSelect(doc, BiographyID.MARITALSTAT.id()));
-            put("gender", getValueFromHTMLSelect(doc, BiographyID.GENDER.id()));
-            put("ethnicity", getValueFromHTMLSelect(doc, BiographyID.ETHNICITY.id()));
+            put("birth", getValueAttrFromHTML(doc,
+                    BiographyID.BIRTHDATE.id()));
+            put("marital", getValueFromHTMLSelect(doc,
+                    BiographyID.MARITALSTAT.id()));
+            put("gender", getValueFromHTMLSelect(doc,
+                    BiographyID.GENDER.id()));
+            put("ethnicity", getValueFromHTMLSelect(doc,
+                    BiographyID.ETHNICITY.id()));
             put("ID", studentID);
         } };
     }
@@ -228,9 +263,10 @@ public class Biography extends MyGCCDataCollection {
      * @param studentName full name
      * @return first and last name separated by a space
      */
-    private String getShortName(String studentName) {
+    private String getShortName(final String studentName) {
         String[] studentNameParts = studentName.split(" ");
-        return studentNameParts[0] + " " + studentNameParts[studentNameParts.length - 1];
+        return studentNameParts[0] + " "
+                + studentNameParts[studentNameParts.length - 1];
     }
 
     /**
@@ -239,20 +275,22 @@ public class Biography extends MyGCCDataCollection {
      * @param lastName last name
      * @return short name string
      */
-    private String getShortName(String firstName, String lastName) {
+    private String getShortName(final String firstName,
+                                final String lastName) {
         return firstName + " " + lastName;
     }
 
     /**
      * Get the full name.
      *
-     * Note: This is the same as the name field. Before Jenzabar v9, name was returned in the form:
+     * Note: This is the same as the name field. Before Jenzabar v9,
+     * name was returned in the form:
      * Mr. <Last Name>, <First Name> <Middle Name>
      *
      * @param studentName full name
      * @return full name
      */
-    private String getLongName(String studentName) {
+    private String getLongName(final String studentName) {
         return studentName;
     }
 
@@ -263,7 +301,9 @@ public class Biography extends MyGCCDataCollection {
      * @param lastName last name
      * @return full name
      */
-    private String getLongName(String firstName, String middleName, String lastName) {
+    private String getLongName(final String firstName,
+                               final String middleName,
+                               final String lastName) {
         return firstName + " " + middleName + " " + lastName;
     }
 
@@ -273,7 +313,8 @@ public class Biography extends MyGCCDataCollection {
      * @param selector HTML selector
      * @return selected value
      */
-    private String getDataFromHTML(final Document html, final String selector) {
+    private String getDataFromHTML(final Document html,
+                                   final String selector) {
         Elements name = html.select(selector);
         return trim(name.text());
     }
@@ -284,7 +325,8 @@ public class Biography extends MyGCCDataCollection {
      * @param selector HTML selector
      * @return selected value
      */
-    private String getValueAttrFromHTML(final Document html, final String selector) {
+    private String getValueAttrFromHTML(final Document html,
+                                        final String selector) {
         Elements name = html.select(selector);
         return trim(name.val());
     }
@@ -295,7 +337,8 @@ public class Biography extends MyGCCDataCollection {
      * @param selector HTML selector
      * @return selected value or empty string
      */
-    private String getValueFromHTMLSelect(final Document html, final String selector) {
+    private String getValueFromHTMLSelect(final Document html,
+                                          final String selector) {
         Elements selectElement = html.select(selector);
         for (Element el : selectElement) {
             if (el.hasAttr("selected")) {
