@@ -219,7 +219,7 @@
                         <format>html</format>
                         <format>xml</format>
                     </formats>
-                    <check />
+                    <check/>
                 </configuration>
             </plugin>
 
@@ -252,7 +252,7 @@
     </reporting>
 
     <properties>
-        <jersey.version>2.26</jersey.version>
+        <jersey.version>2.36</jersey.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jetty.version>9.4.8.v20171121</jetty.version>
     </properties>
